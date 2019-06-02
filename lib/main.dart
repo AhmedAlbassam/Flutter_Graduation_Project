@@ -8,9 +8,10 @@ class QuickBee extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '',
-      debugShowCheckedModeBanner: false,
-      // Set Raleway as the default app font hahaha
+      debugShowCheckedModeBanner: true,
+      // Set Raleway as the default app font
       theme: ThemeData(
+
         fontFamily: 'Roboto',
       ),
 
