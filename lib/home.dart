@@ -45,14 +45,15 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           iconTheme: new IconThemeData(color: Color(0xFF18D191))),
-      body: MainContent(),
+   //   body: MainContent(),
     );
   }
 }
-
-class MainContent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-
-  }
-}
+//
+//class MainContent extends StatelessWidget {
+//  @override
+//  Widget build(BuildContext context) {
+//
+//
+//  }
+//}
