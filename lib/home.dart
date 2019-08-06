@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import'Event.dart';
+import 'Wallet.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => new _HomePageState();
@@ -28,7 +29,13 @@ class _HomePageState extends State<HomePage> {
           ),
           new BottomNavigationBarItem(
               title: new Text(''),
-              icon: new Icon(Icons.local_offer)
+              icon: new Icon(Icons.local_offer),
+                activeIcon: new RaisedButton( onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => Wallet(),
+                  ));
+                }, )
+
           ),
           new BottomNavigationBarItem(
               title: new Text(''),

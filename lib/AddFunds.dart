@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:async';
-import 'package:intl/intl.dart';
+//import 'package:intl/intl.dart';
 
 void main() => runApp(new Funds());
 

@@ -123,7 +123,7 @@ class Eventstates extends State<EventPage> {
             ));
           },
           child:Text('Participate',
-            style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic) ),
+            style: TextStyle(color: Colors.orangeAccent, fontStyle: FontStyle.italic) ),
 
       ),
 

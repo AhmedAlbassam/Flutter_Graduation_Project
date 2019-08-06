@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'AddFunds.dart';
+import 'addbeni.dart';
+import 'TransferFunds.dart';
+import 'withdraw.dart';
 class Wallet extends StatelessWidget{
 
   Widget build(context){
@@ -67,29 +71,37 @@ class Walletstates extends State<WalletPage>{
           RaisedButton(
             child: Text('Transfer Money', style:TextStyle(color:Colors.white)),
             color: Colors.lightBlue,
-            onPressed: (){
-
-            },
+    onPressed: () {
+      Navigator.push(context, MaterialPageRoute(
+        builder: (context) => Transfer(),
+      ));
+    },
           ),
           RaisedButton(
             child: Text('add money', style:TextStyle(color:Colors.white)),
             color: Colors.lightBlue,
-            onPressed: (){
-
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => Funds(),
+              ));
             },
           ),
           RaisedButton(
             child: Text('withdraw Money', style:TextStyle(color:Colors.white)),
             color: Colors.lightBlue,
-            onPressed: (){
-
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => displaywithdraw(),
+              ));
             },
           ),
           RaisedButton(
             child: Text('add beni', style:TextStyle(color:Colors.white)),
             color: Colors.lightBlue,
-            onPressed: (){
-
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => displayaddbeni(),
+              ));
             },
           ),
         ],
