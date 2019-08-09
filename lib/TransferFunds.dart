@@ -11,7 +11,20 @@ class Transfer extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new TransferPage(title: 'Add Balance'),
+      home: Scaffold(
+        body:
+        TransferPage(),
+
+        appBar: AppBar(
+          backgroundColor: Colors.lightBlueAccent,
+          title : Text('Transfer money', textAlign: TextAlign.center,),
+          leading: BackButton(),
+
+
+
+        ),
+        backgroundColor: Colors.white,
+      ),
     );
   }
 }

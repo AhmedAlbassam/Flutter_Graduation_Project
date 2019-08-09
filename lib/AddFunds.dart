@@ -9,11 +9,26 @@ class Funds extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
+
       title: 'Add balance demo',
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: new AddFundsPage(title: 'Add Balance'),
+      home: Scaffold(
+        body:
+        AddFundsPage(),
+
+        appBar: AppBar(
+          backgroundColor: Colors.lightBlueAccent,
+          title : Text('Add Funds', textAlign: TextAlign.center,),
+          leading: BackButton(),
+
+
+
+        ),
+        backgroundColor: Colors.white,
+      ),
+
     );
   }
 }

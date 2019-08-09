@@ -8,7 +8,20 @@ class StartPage extends StatelessWidget {
           primaryColor: Colors.red
       ),
       debugShowCheckedModeBanner: false,
-      home: new HomePage(),
+      home: Scaffold(
+        body:
+        HomePage(),
+
+        appBar: AppBar(
+          backgroundColor: Colors.lightBlueAccent,
+          title : Text('Participation', textAlign: TextAlign.center,),
+          leading: BackButton(),
+
+
+
+        ),
+        backgroundColor: Colors.white,
+      ),
     );
   }
 }
