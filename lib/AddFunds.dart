@@ -14,20 +14,7 @@ class Funds extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        body:
-        AddFundsPage(),
-
-        appBar: AppBar(
-          backgroundColor: Colors.lightBlueAccent,
-          title : Text('Add Funds', textAlign: TextAlign.center,),
-          leading: BackButton(),
-
-
-
-        ),
-        backgroundColor: Colors.white,
-      ),
+      home: AddFundsPage(title: 'Add balance',),
 
     );
   }
@@ -69,7 +56,8 @@ class _AddFundsPageState extends State<AddFundsPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.title),
+        title: new Text(widget.title, textAlign: TextAlign.center,),
+        leading: BackButton(),
       ),
       body: new SafeArea(
           top: false,

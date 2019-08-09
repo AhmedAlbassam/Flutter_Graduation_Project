@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
           new BottomNavigationBarItem(
               title: new Text(''),
               icon: new Icon(Icons.local_offer),
+
                 activeIcon: new RaisedButton( onPressed: () {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) => Wallet(),

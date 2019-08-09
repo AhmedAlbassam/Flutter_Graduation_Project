@@ -11,20 +11,7 @@ class Transfer extends StatelessWidget {
       theme: new ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Scaffold(
-        body:
-        TransferPage(),
-
-        appBar: AppBar(
-          backgroundColor: Colors.lightBlueAccent,
-          title : Text('Transfer money', textAlign: TextAlign.center,),
-          leading: BackButton(),
-
-
-
-        ),
-        backgroundColor: Colors.white,
-      ),
+      home: TransferPage(title: 'Transfer',),
     );
   }
 }
@@ -43,7 +30,8 @@ class _TransferPageState extends State<TransferPage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text(widget.title),
+        title: new Text(widget.title, textAlign: TextAlign.center,),
+        leading: BackButton(),
       ),
       body: new SafeArea(
           top: false,
