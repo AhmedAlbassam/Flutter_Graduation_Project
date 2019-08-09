@@ -96,7 +96,8 @@ class LoginPage extends StatelessWidget {
                   ));
                 },
                     child: new Text("Create A New Account ",style: new TextStyle(
-                        fontSize: 17.0, color: Color(0xFF2196F3),fontWeight: FontWeight.bold)),
+                        fontSize: 17.0, color: Color(0xFF2196F3),
+                        fontWeight: FontWeight.bold)),
                     ),
                   ),
                 ],
