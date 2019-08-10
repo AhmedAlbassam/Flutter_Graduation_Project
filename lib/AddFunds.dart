@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'dart:async';
-//import 'package:intl/intl.dart';
 
-void main() => runApp(new Funds());
 
 class Funds extends StatelessWidget {
   @override
@@ -29,29 +26,8 @@ class AddFundsPage extends StatefulWidget {
 
 class _AddFundsPageState extends State<AddFundsPage> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  var txt = TextEditingController();
-  DateTime date = new DateTime.now();
 
-  Future<Null> selectDate(BuildContext context) async {
-    DateTime picked = await showDatePicker(
-        context: context,
-        initialDate:date,
-        firstDate: new DateTime(2016),
-        lastDate: new DateTime(2022),
-        builder: (BuildContext context, Widget child) {
-          return FittedBox(
-              child: Theme(
-                  child: child,
-                  data: ThemeData(
-                    primaryColor: Colors.blue[300],
 
-                  )));
-        });
-    setState((){
-      date = picked;
-      txt.text = date.toString();
-    });
-  }
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -95,18 +71,11 @@ class _AddFundsPageState extends State<AddFundsPage> {
                   ),
 
                   TextFormField(
-                    controller: txt,
                     decoration: InputDecoration(
                         hintText:'Card Expiry Date',
                         labelText:'Card Expiry Date',
-
-                        suffixIcon: IconButton(
-                            icon: Icon(Icons.calendar_today),
-                            onPressed: () {
-                              selectDate(context);
-                            }
-
-                        )),
+                        ),
+                    keyboardType: TextInputType.datetime
                   ),
 
                   new TextFormField(
@@ -122,6 +91,15 @@ class _AddFundsPageState extends State<AddFundsPage> {
                     ],
                   )
                   ,
+          new TextFormField(
+            decoration: InputDecoration(
+
+              hintText: 'Enter Amount added to balance',
+              labelText: 'Amount',
+            )
+            ,
+            keyboardType: TextInputType.number ,
+          ),
                   new Container(
                       padding: const EdgeInsets.only(top: 20.0),
                       child: new RaisedButton(

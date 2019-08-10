@@ -65,7 +65,15 @@ class _TransferPageState extends State<TransferPage> {
                       child: new RaisedButton(
                         child: const Text('Submit'),
                         onPressed: null,        // API HERE ????
-                      )),
+                      ),)
+                  ,
+                  new Container(
+                    padding: const EdgeInsets.only(top: 100.0),
+
+                    child: new RaisedButton(
+                      child: const Text('Scan QR Code'),
+                      onPressed: null,
+                    ),)
                 ],
               ))),
     );

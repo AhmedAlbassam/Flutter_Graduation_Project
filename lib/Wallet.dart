@@ -104,6 +104,12 @@ class Walletstates extends State<WalletPage>{
             onPressed: (){
 
             },
+          ), RaisedButton(
+            child: Text('Display QR Code', style:TextStyle(color:Colors.white)),
+            color: Colors.lightBlue,
+            onPressed: (){
+
+            },
           ),
         ],
 
