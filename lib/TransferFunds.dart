@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-void main() => runApp(new Transfer());
-
 class Transfer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

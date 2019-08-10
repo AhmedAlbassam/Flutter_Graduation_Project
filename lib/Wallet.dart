@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'AddFunds.dart';
-import 'addbeni.dart';
 import 'TransferFunds.dart';
-import 'withdraw.dart';
 class Wallet extends StatelessWidget{
 
   Widget build(context){
@@ -69,39 +67,42 @@ class Walletstates extends State<WalletPage>{
         children: <Widget>[
           // first icon
           RaisedButton(
+//            child: Text('Transfer Money', style:TextStyle(color:Colors.white)),
+//            color: Colors.lightBlue,
+//            onPressed:() {},
+          color: Colors.lightBlue,
+          child: GestureDetector(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Transfer(),));
+              },
             child: Text('Transfer Money', style:TextStyle(color:Colors.white)),
-            color: Colors.lightBlue,
-    onPressed: () {
-      Navigator.push(context, MaterialPageRoute(
-        builder: (context) => Transfer(),
-      ));
-    },
           ),
-          RaisedButton(
-            child: Text('add money', style:TextStyle(color:Colors.white)),
-            color: Colors.lightBlue,
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) => Funds(),
-              ));
-            },
           ),
+//
+
+
+
+    RaisedButton(
+      color: Colors.lightBlue,
+      child: GestureDetector(
+        onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Funds(),));
+        },
+        child: Text('Add Funds', style:TextStyle(color:Colors.white)),
+      ),
+    ),
           RaisedButton(
             child: Text('withdraw Money', style:TextStyle(color:Colors.white)),
             color: Colors.lightBlue,
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) => displaywithdraw(),
-              ));
+            onPressed: (){
+
             },
           ),
           RaisedButton(
             child: Text('add beni', style:TextStyle(color:Colors.white)),
             color: Colors.lightBlue,
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(
-                builder: (context) => displayaddbeni(),
-              ));
+            onPressed: (){
+
             },
           ),
         ],
