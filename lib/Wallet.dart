@@ -11,15 +11,16 @@ class Wallet extends StatelessWidget{
           WalletPage(),
 
           appBar: AppBar(
+          automaticallyImplyLeading: true,
             backgroundColor: Colors.lightBlueAccent,
             title : Text('Wallet', textAlign: TextAlign.center,),
-            leading: BackButton(),
+            leading: IconButton(icon:Icon(Icons.arrow_back),
+              onPressed:() => Navigator.pop(context, false),
+    ),
 
-
-
-          ),
+    ),
           backgroundColor: Colors.grey,
-        )
+        ),
     );
   }
 }

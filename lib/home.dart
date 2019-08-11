@@ -11,77 +11,55 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      bottomNavigationBar: new BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        fixedColor: Color(0XFF29D091),
-        currentIndex: _bottomNavIndex,
-        onTap: (int index){
-          setState((){
-            _bottomNavIndex = index;
-
-          });
-        },
-
-        items: [
-          new BottomNavigationBarItem(
-              title: new Text(''),
-              icon: new Icon(Icons.home)
-          ),
-          new BottomNavigationBarItem(
-              title: new Text(''),
-              icon: new Icon(Icons.local_offer),
-
-                activeIcon: new RaisedButton( onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => Wallet(),
-                  ));
-                }, )
-
-          ),
-          new BottomNavigationBarItem(
-              title: new Text(''),
-              icon: new Icon(Icons.message)
-          ),
-          new BottomNavigationBarItem(
-              title: new Text(''),
-              icon: new Icon(Icons.notifications)
-          )
-
-        ],
+      endDrawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Text('Drawer Header'),
+              decoration: BoxDecoration(
+                color: Colors.blueGrey
+              ),
+            ),
+            ListTile(
+              title: Text('Wallet'),
+              leading: new Icon(Icons.account_balance_wallet),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => Wallet(),
+                ));
+              },
+            ),
+            ListTile(
+              title: Text('Tickets'),
+              leading: new Icon(Icons.event_note),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => Wallet(),
+                ));
+              },
+            ),
+            ListTile(
+              title: Text('Settings'),
+              leading: new Icon(Icons.settings),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => Wallet(),
+                ));
+              },
+            )
+          ],
+        ),
       ),
+
       appBar: new AppBar(
-          backgroundColor: Colors.transparent,
+          backgroundColor: Colors.blueGrey,
           elevation: 0.0,
           iconTheme: new IconThemeData(color: Color(0xFF18D191))),
    //   body: MainContent(),
-      body: EventButton(),
-    );
-  }
-  Widget EventButton(){
-    return RaisedButton(
-      color: Colors.orangeAccent,
-      child: GestureDetector(
-
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) => Event(),
-          ));
-        },
-        child:Text('Event details',
-       style: TextStyle(color: Colors.white),),
-
-      ),
-
 
     );
   }
+
 }
 //
-//class MainContent extends StatelessWidget {
-//  @override
-//  Widget build(BuildContext context) {
-//
-// Text('Event details',
-//        style: TextStyle(color: Colors.white),),
-//  }
-//}
