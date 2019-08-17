@@ -5,13 +5,16 @@ class displayaddbeni extends StatelessWidget{
     return MaterialApp(
 
         home: Scaffold(
+          resizeToAvoidBottomInset: false,
           body:
           addbenipage(),
 
           appBar: AppBar(
             backgroundColor: Colors.lightBlueAccent,
             title : Text('Add beni', textAlign: TextAlign.center,),
-            leading: BackButton(),
+            leading: IconButton(icon:Icon(Icons.arrow_back),
+              onPressed:() => Navigator.pop(context, false),
+            ),
 
 
 

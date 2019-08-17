@@ -27,9 +27,12 @@ class _TransferPageState extends State<TransferPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: new AppBar(
         title: new Text(widget.title, textAlign: TextAlign.center,),
-        leading: BackButton(),
+    leading: IconButton(icon:Icon(Icons.arrow_back),
+    onPressed:() => Navigator.pop(context, false),
+    ),
       ),
       body: new SafeArea(
           top: false,
@@ -64,7 +67,7 @@ class _TransferPageState extends State<TransferPage> {
                       padding: const EdgeInsets.only(top: 30.0),
                       child: new RaisedButton(
                         child: const Text('Submit'),
-                        onPressed: null,        // API HERE ????
+                        onPressed: (){},        // API HERE ????
                       ),)
                   ,
                   new Container(
@@ -72,7 +75,7 @@ class _TransferPageState extends State<TransferPage> {
 
                     child: new RaisedButton(
                       child: const Text('Scan QR Code'),
-                      onPressed: null,
+                      onPressed: (){},
                     ),)
                 ],
               ))),

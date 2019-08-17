@@ -72,12 +72,16 @@ class Walletstates extends State<WalletPage>{
 //            color: Colors.lightBlue,
 //            onPressed:() {},
           color: Colors.lightBlue,
+
           child: GestureDetector(
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => Transfer(),));
               },
             child: Text('Transfer Money', style:TextStyle(color:Colors.white)),
           ),
+            onPressed: (){
+
+            },
           ),
 //
 
@@ -91,6 +95,7 @@ class Walletstates extends State<WalletPage>{
         },
         child: Text('Add Funds', style:TextStyle(color:Colors.white)),
       ),
+      onPressed: (){},
     ),
           RaisedButton(
             child: Text('withdraw Money', style:TextStyle(color:Colors.white)),

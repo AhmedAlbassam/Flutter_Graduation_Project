@@ -12,7 +12,9 @@ class Event extends StatelessWidget{
           appBar: AppBar(
             backgroundColor: Colors.orangeAccent,
             title : Text('Event details', textAlign: TextAlign.center,),
-            leading: BackButton(),
+            leading: IconButton(icon:Icon(Icons.arrow_back),
+              onPressed:() => Navigator.pop(context, false),
+            ),
 
 
 
@@ -114,7 +116,11 @@ class Eventstates extends State<EventPage> {
   }
   Widget participate(){
     return RaisedButton(
-      color: Colors.orangeAccent,
+      color: Colors.white,
+      onPressed: () {
+
+      }
+      ,
       child: GestureDetector(
 
           onTap: () {

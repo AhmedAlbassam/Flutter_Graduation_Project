@@ -31,9 +31,12 @@ class _AddFundsPageState extends State<AddFundsPage> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: new AppBar(
         title: new Text(widget.title, textAlign: TextAlign.center,),
-        leading: BackButton(),
+    leading: IconButton(icon:Icon(Icons.arrow_back),
+    onPressed:() => Navigator.pop(context, false),
+    ),
       ),
       body: new SafeArea(
           top: false,

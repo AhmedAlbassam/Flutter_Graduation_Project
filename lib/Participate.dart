@@ -9,13 +9,16 @@ class StartPage extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         body:
         HomePage(),
 
         appBar: AppBar(
           backgroundColor: Colors.lightBlueAccent,
           title : Text('Participation', textAlign: TextAlign.center,),
-          leading: BackButton(),
+          leading: IconButton(icon:Icon(Icons.arrow_back),
+            onPressed:() => Navigator.pop(context, false),
+          ),
 
 
 

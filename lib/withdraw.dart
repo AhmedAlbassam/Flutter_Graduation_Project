@@ -5,13 +5,16 @@ class displaywithdraw extends StatelessWidget{
     return MaterialApp(
 
         home: Scaffold(
+          resizeToAvoidBottomInset: false,
           body:
           WithdrawPage(),
 
           appBar: AppBar(
             backgroundColor: Colors.lightBlueAccent,
             title : Text('Withdraw', textAlign: TextAlign.center,),
-            leading: BackButton(),
+            leading: IconButton(icon:Icon(Icons.arrow_back),
+              onPressed:() => Navigator.pop(context, false),
+            ),
 
 
 
