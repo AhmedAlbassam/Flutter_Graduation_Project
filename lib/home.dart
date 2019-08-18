@@ -18,7 +18,7 @@ class _HomePageState extends State<HomePage> {
             DrawerHeader(
               child: Text('Drawer Header'),
               decoration: BoxDecoration(
-                color: Colors.blueGrey
+                  color: Colors.blueGrey
               ),
             ),
             ListTile(
@@ -56,10 +56,9 @@ class _HomePageState extends State<HomePage> {
           backgroundColor: Colors.blueGrey,
           elevation: 0.0,
           iconTheme: new IconThemeData(color: Color(0xFF18D191))),
-   //   body: MainContent(),
+      //   body: MainContent(),
 
     );
   }
 
 }
-//
