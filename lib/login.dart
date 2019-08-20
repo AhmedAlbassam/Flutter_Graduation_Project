@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'CreateAccount.dart';
 import 'home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 
 
 
 
 class LoginPage extends StatelessWidget {
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +56,9 @@ class LoginPage extends StatelessWidget {
                     padding: const EdgeInsets.only(
                         left: 20.0, right: 5.0, top: 10.0),
                     child: GestureDetector(
+
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => HomePage()
-                        ));
+
                       },
                       child: new Container(
                           alignment: Alignment.center,
