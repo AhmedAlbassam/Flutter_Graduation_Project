@@ -5,7 +5,7 @@ class StartPage extends StatelessWidget {
     return new MaterialApp(
       title: "New Task",
       theme: ThemeData(
-          primaryColor: Colors.red
+          primaryColor: Colors.lightBlue
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -70,10 +70,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final appTitle = 'Registration form';
+
     return MaterialApp(
       debugShowCheckedModeBanner : false,
-      title: appTitle,
       home: Scaffold(
         body: MyCustomForm(),
       ),
@@ -178,10 +177,8 @@ class MyCustomFormState extends State<MyCustomForm> {
 class MyApp1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final appTitle = 'Registration form';
     return MaterialApp(
       debugShowCheckedModeBanner : false,
-      title: appTitle,
       home: Scaffold(
         body: BoothSeller(),
       ),
