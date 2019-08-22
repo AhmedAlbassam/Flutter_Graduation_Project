@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 void main() => runApp(QuickBee());
 
@@ -21,6 +23,26 @@ class QuickBee extends StatelessWidget {
 }
 
   class MyHomePage extends StatelessWidget {
+
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+
+    Future<FirebaseUser> _handleSignIn() async {
+      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleAuth = await googleUser
+          .authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final FirebaseUser user = (await _auth.signInWithCredential(credential))
+          .user;
+      print("signed in " + user.displayName);
+      return user;
+    }
+
     @override
     Widget build(BuildContext context) {
       return new Scaffold(
@@ -63,13 +85,13 @@ class QuickBee extends StatelessWidget {
                                     fontSize: 20.0, color: Colors.white))),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
               new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Expanded(
+                 /* Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(
                           left: 20.0, right: 5.0, top: 10.0),
@@ -83,20 +105,26 @@ class QuickBee extends StatelessWidget {
                               style: new TextStyle(
                                   fontSize: 20.0, color: Colors.white))),
                     ),
-                  ),
+                  ),*/
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 10.0, right: 20.0, top: 10.0),
-                      child: new Container(
-                          alignment: Alignment.center,
-                          height: 60.0,
-                          decoration: new BoxDecoration(
-                              color: Color(0xFFDF513B),
-                              borderRadius: new BorderRadius.circular(9.0)),
-                          child: new Text("Google",
-                              style: new TextStyle(
-                                  fontSize: 20.0, color: Colors.white))),
+                      padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          _handleSignIn()
+                              .then((FirebaseUser user) => print(user))
+                              .catchError((e) => print(e));
+                        },
+                        child: new Container(
+                            alignment: Alignment.center,
+                            height: 60.0,
+                            decoration: new BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: new BorderRadius.circular(9.0)),
+                            child: new Text("Sign In With Google",
+                                style: new TextStyle(
+                                    fontSize: 20.0, color: Colors.white))),
+                      ),
                     ),
                   )
                 ],

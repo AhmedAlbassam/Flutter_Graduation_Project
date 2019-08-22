@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 
 class SignupPage extends StatefulWidget {
+
   @override
   _SignupPageState createState() => _SignupPageState();
+
+
 }
 
+
+
 class _SignupPageState extends State<SignupPage> {
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -75,7 +83,9 @@ class _SignupPageState extends State<SignupPage> {
                         color: Colors.blueAccent,
                         elevation: 7.0,
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+
+                          },
                           child: Center(
                             child: Text(
                               'Signup',

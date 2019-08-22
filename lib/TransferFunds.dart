@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'Wallet.dart';
 
 class Transfer extends StatelessWidget {
   @override
