@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'CreateAccount.dart';
@@ -9,9 +10,10 @@ class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
+
 class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin{
+
   TabController _tabController;
-  final _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     _tabController = new TabController(length: 2, vsync: this);
@@ -43,7 +45,45 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     );
   }
 }
-class Individual extends StatelessWidget {
+class IndividualLogIn extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner : false,
+      home: Scaffold(
+        body: Individual(),
+      ),
+    );
+  }
+}
+class Individual extends StatefulWidget {
+  @override
+  IndividualState createState() {
+    return IndividualState();
+  }
+}
+
+class IndividualState extends State<Individual> {
+
+  final _formKey = GlobalKey<FormState>();
+  String _email ,_password;
+
+
+  Future<void> Signin() async {
+    final formState = _formKey.currentState;
+    if (formState.validate()) {
+      formState.save();
+      try {
+        FirebaseUser user = (await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+            email: _email, password: _password)) as FirebaseUser;
+        Navigator.push(context, MaterialPageRoute(builder: (Context) => HomePage()));
+      } catch (e) {
+        print(e.message);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -52,17 +92,29 @@ class Individual extends StatelessWidget {
     ));
     return new Scaffold(
 //
-      body: Container(
-        width: double.infinity,
+      body: Form(
+       key: _formKey ,
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.center,
 
+
           children: <Widget>[
+
             Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
-              child: new TextField(
+
+              child: TextFormField(
                 decoration: new InputDecoration(labelText: 'Email'),
+
+                validator: (input){
+
+                  if(input.isEmpty){
+                    return 'please enter your email';
+                  }
+                  return null;
+                },
+                onSaved: (input) => _email = input,
               ),
             ),
             new SizedBox(
@@ -71,9 +123,17 @@ class Individual extends StatelessWidget {
             Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
-              child: new TextField(
-                obscureText: true,
+              child: TextFormField(
                 decoration: new InputDecoration(labelText: 'Password'),
+
+                validator: (input){
+
+                  if(input.length < 6){
+                    return 'please enter your Password Correctily';
+                  }
+                  return null;
+                },
+                onSaved: (input) => _password = input,
               ),
             ),
             new Row(
@@ -85,9 +145,7 @@ class Individual extends StatelessWidget {
                         left: 20.0, right: 5.0, top: 10.0),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => HomePage()
-                        ));
+                        Signin();
                       },
                       child: new Container(
                           alignment: Alignment.center,

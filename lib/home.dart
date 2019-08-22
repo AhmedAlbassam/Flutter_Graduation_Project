@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
               leading: new Icon(Icons.event_note),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => Wallet(),
+                 // builder: (context) => Wallet(),
                 ));
               },
             ),
@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
               leading: new Icon(Icons.settings),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => Wallet(),
+                  //builder: (context) => Wallet(),
                 ));
               },
             )

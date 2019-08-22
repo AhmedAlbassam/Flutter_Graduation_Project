@@ -13,9 +13,12 @@ class Wallet extends StatelessWidget{
           appBar: AppBar(
           automaticallyImplyLeading: true,
             backgroundColor: Colors.lightBlueAccent,
+            elevation: 0.0,
             title : Text('Wallet', textAlign: TextAlign.center,),
             leading: IconButton(icon:Icon(Icons.arrow_back),
-              onPressed:() => Navigator.pop(context, false),
+              onPressed:() {
+
+              }
     ),
 
     ),
