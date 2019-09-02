@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'home.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignupPage extends StatefulWidget {
 
@@ -12,11 +8,10 @@ class SignupPage extends StatefulWidget {
 
 
 }
-
-
-
 class _SignupPageState extends State<SignupPage> {
-
+  String fullName;
+  int date;
+  final db = Firestore.instance;
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -83,9 +78,12 @@ class _SignupPageState extends State<SignupPage> {
                         color: Colors.blueAccent,
                         elevation: 7.0,
                         child: GestureDetector(
-                          onTap: () {
-
-                          },
+                          onTap: () async{
+                            await db.collection("flutter").add(
+                              {
+                          'fullName' : 'Aziz123'
+                              }
+                            );},
                           child: Center(
                             child: Text(
                               'Signup',
