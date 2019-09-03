@@ -16,8 +16,6 @@ class Event extends StatelessWidget{
               onPressed:() => Navigator.pop(context, false),
             ),
 
-
-
           ),
 
         )

@@ -66,8 +66,7 @@ class IndividualState extends State<Individual> {
 
       try {
         FirebaseUser user = (await FirebaseAuth.instance.
-        signInWithEmailAndPassword(email: email, password: password))
-            .user;
+        signInWithEmailAndPassword(email: email, password: password)).user;
         Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
       } catch (e) {
         print(e.message);
