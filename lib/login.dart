@@ -45,17 +45,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     );
   }
 }
-class IndividualLogIn extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner : false,
-      home: Scaffold(
-        body: Individual(),
-      ),
-    );
-  }
-}
+
 class Individual extends StatefulWidget {
   @override
   IndividualState createState() {
@@ -66,18 +56,19 @@ class Individual extends StatefulWidget {
 class IndividualState extends State<Individual> {
 
   final _formKey = GlobalKey<FormState>();
-  String _email ,_password;
+  String email ,password;
 
 
   Future<void> Signin() async {
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
+
       try {
-        FirebaseUser user = (await FirebaseAuth.instance
-            .signInWithEmailAndPassword(
-            email: _email, password: _password)) as FirebaseUser;
-        Navigator.push(context, MaterialPageRoute(builder: (Context) => HomePage()));
+        FirebaseUser user = (await FirebaseAuth.instance.
+        signInWithEmailAndPassword(email: email, password: password))
+            .user;
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
       } catch (e) {
         print(e.message);
       }
@@ -114,7 +105,7 @@ class IndividualState extends State<Individual> {
                   }
                   return null;
                 },
-                onSaved: (input) => _email = input,
+                onSaved: (input) => email = input,
               ),
             ),
             new SizedBox(
@@ -133,7 +124,7 @@ class IndividualState extends State<Individual> {
                   }
                   return null;
                 },
-                onSaved: (input) => _password = input,
+                onSaved: (input) => password = input,
               ),
             ),
             new Row(
@@ -144,9 +135,7 @@ class IndividualState extends State<Individual> {
                     padding: const EdgeInsets.only(
                         left: 20.0, right: 5.0, top: 10.0),
                     child: GestureDetector(
-                      onTap: () {
-                        Signin();
-                      },
+                      onTap: Signin,
                       child: new Container(
                           alignment: Alignment.center,
                           height: 60.0,
