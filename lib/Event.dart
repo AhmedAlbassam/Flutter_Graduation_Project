@@ -16,8 +16,6 @@ class Event extends StatelessWidget{
               onPressed:() => Navigator.pop(context, false),
             ),
 
-
-
           ),
 
         )
@@ -33,7 +31,7 @@ class EventPage extends StatefulWidget{
 }
 class Eventstates extends State<EventPage> {
   int ticketQnt = 1;
-  String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
+ // String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
   Widget build(context) {
 
     return Container(

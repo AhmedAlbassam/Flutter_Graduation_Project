@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'CreateAccount.dart';
 import 'login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -6,7 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 void main() => runApp(QuickBee());
 
 class QuickBee extends StatelessWidget {
-  @override
+
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '',
@@ -18,6 +19,11 @@ class QuickBee extends StatelessWidget {
       ),
 
       home: MyHomePage(),
+      routes: <String, WidgetBuilder>{
+        '/landingpage':(BuildContext context)=> new LoginPage(),
+        '/signup': (BuildContext context)=> new SignupPage()
+
+      }
     );
   }
 }

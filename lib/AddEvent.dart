@@ -1,14 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AddEventPage extends StatefulWidget {
   @override
   _AddEventPageState createState() => _AddEventPageState();
 }
-
 class _AddEventPageState extends State<AddEventPage> {
-  @override
+
+  final _formKey = GlobalKey<FormState>();
+  final db = Firestore.instance;
+  var eventName;
+  var eventType;
+  var eventDate;
+  var eventLoc;
+
+  Future<void> addEvent() async {
+    final formState = _formKey.currentState;
+    if (formState.validate()) {
+      formState.save();
+      try {
+          await db.collection("Events").add(
+              {
+                'eventName':eventName,
+                'eventType':eventType,
+                'eventDate':eventDate,
+                'eventLocation':eventLoc
+              }
+          );
+      } catch (e) {
+        print(e.message);
+      }
+    }
+  }
+
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
@@ -16,82 +41,110 @@ class _AddEventPageState extends State<AddEventPage> {
             elevation: 0.0,
             iconTheme: new IconThemeData(color: Color(0xFF18D191))),
         resizeToAvoidBottomPadding: false,
-        body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-          Container(
-              padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
-              child: Column(
-                children: <Widget>[
-                  TextField(
-                    decoration: InputDecoration(
-                        hintText: 'Event name',
-                        labelText: 'Name',
-                        labelStyle: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
+      body: Form(
+        key: _formKey ,
+        child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
 
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green))),
-                  ),
-                  TextField(
-                    decoration: InputDecoration(
-                        hintText: 'Event Type',
-                        labelText: 'Type',
-                        labelStyle: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
-                        //  hintText: 'example@example.com',
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green))),
-                  ),
-                  SizedBox(height: 10.0),
-                  TextFormField(
-                      decoration: InputDecoration(
-                        hintText:'Event Date',
-                        labelText:'Date',
+          children: <Widget>[
+            Padding(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+
+              child: TextFormField(
+                decoration: new InputDecoration(labelText: 'Event Name'),
+
+                validator: (input){
+
+                  if(input.isEmpty){
+                    return 'please enter event name';
+                  }
+                  return null;
+                },
+                onSaved: (input) => eventName = input,
+              ),
+            ),
+            Padding(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+
+              child: TextFormField(
+                decoration: new InputDecoration(labelText: 'Event Type'),
+
+                validator: (input){
+
+                  if(input.isEmpty){
+                    return 'please enter event type';
+                  }
+                  return null;
+                },
+                onSaved: (input) => eventType = input,
+              ),
+            ),
+            Padding(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+
+              child: TextFormField(
+                decoration: new InputDecoration(labelText: 'Event Date'),
+
+                validator: (input){
+
+                  if(input.isEmpty){
+                    return 'please enter event date';
+                  }
+                  return null;
+                },
+                onSaved: (input) => eventDate = input,
+              ),
+            ),
+
+            new SizedBox(
+              height: 15.0,
+            ),
+            Padding(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+              child: TextFormField(
+                decoration: new InputDecoration(labelText: 'Event Location'),
+
+                validator: (input){
+
+                  if(input.isEmpty){
+                    return 'please enter event Location';
+                  }
+                  return null;
+                },
+                onSaved: (input) => eventLoc = input,
+              ),
+            ),
+            new Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 20.0, right: 5.0, top: 10.0),
+                    child: GestureDetector(
+                      onTap: addEvent,
+                      child: new Container(
+                          alignment: Alignment.center,
+                          height: 60.0,
+                          decoration: new BoxDecoration(
+                              color: Color(0xFF2196F3),
+                              borderRadius: new BorderRadius.circular(9.0)),
+                          child: new Text("Add Event",
+                              style: new TextStyle(
+                                  fontSize: 20.0, color: Colors.white))
                       ),
-                      keyboardType: TextInputType.datetime
+                    ),
                   ),
-                  SizedBox(height: 10.0),
-                  TextField(
-                      decoration: InputDecoration(
-                          hintText: 'Event Location',
-                          labelText: 'Location ',
-                          labelStyle: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.grey),
-                          focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.green))),
-                      obscureText: true
-                  ),
-                  SizedBox(height: 50.0),
-                  Container(
-                      height: 40.0,
-                      child: Material(
-                        borderRadius: BorderRadius.circular(20.0),
-                        shadowColor: Colors.orangeAccent,
-                        color: Colors.blueAccent,
-                        elevation: 7.0,
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Center(
-                            child: Text(
-                              'Add',
-                              style: TextStyle(
-                                fontSize: 17.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )),
-                  SizedBox(height: 20.0),
+                ),
 
-                ],
-              )),
-
-        ]));
+              ],
+            ),
+          ],
+        ),
+      ),);
   }
 }
