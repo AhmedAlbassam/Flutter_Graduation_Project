@@ -4,7 +4,7 @@ import 'login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-void main() => runApp(QuickBee());
+  void main() => runApp(QuickBee());
 
 class QuickBee extends StatelessWidget {
 
@@ -59,10 +59,9 @@ class QuickBee extends StatelessWidget {
               new Stack(
                 alignment: Alignment.topCenter,
                 children: <Widget>[
-                  new Image.asset(
-                    'Images/mainLogo.png',
-                    height: 300.0,
-                    width: 300.0,
+                   Image.asset('assets/images/events.jpg',
+                    height: 350.0,
+                    width: 350.0,
 
                   ),
                 ],
