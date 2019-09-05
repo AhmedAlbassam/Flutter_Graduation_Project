@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 class StartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Registration Form"),
         bottom: TabBar(
           unselectedLabelColor: Colors.white,
           labelColor: Colors.amber,
@@ -60,70 +60,65 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       ),
       body: TabBarView(
         children: [
-          MyApp(),MyApp1()
+          Volunteer(),BoothSeller()
         ],
         controller: _tabController,),
     );
   }
 }
 //=============================================================================================================================================================================
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
 
-    return MaterialApp(
-      debugShowCheckedModeBanner : false,
-      home: Scaffold(
-        body: MyCustomForm(),
-      ),
-    );
-  }
-}
-// Create a Form widget.
-class MyCustomForm extends StatefulWidget {
+class Volunteer extends StatefulWidget {
   @override
-  MyCustomFormState createState() {
-    return MyCustomFormState();
+  VolunteerState createState() {
+    return VolunteerState();
   }
 }
-// Create a corresponding State class.
-// This class holds data related to the form.
-class MyCustomFormState extends State<MyCustomForm> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
+class VolunteerState extends State<Volunteer> {
+
   final _formKey = GlobalKey<FormState>();
+  final db = Firestore.instance;
+  var volName;
+  var volEmail;
+  var volPhone;
+  var volExp;
+
+  Future<void> addVol() async {
+    final formState = _formKey.currentState;
+    if (formState.validate()) {
+      formState.save();
+      try {
+        await db.collection("Volunteers").add(
+            {
+              'volName':volName,
+              'volEmail':volEmail,
+              'volPhone':volPhone,
+              'volExp':volExp
+            }
+        );
+      } catch (e) {
+        print(e.message);
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    return Container(
+    return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
             decoration: InputDecoration(
-                hintText: 'First name'
+                hintText: 'Full name'
             ),
             validator: (value) {
               if (value.isEmpty) {
                 return 'this field must not be empty';
               }
               return null;
-            },
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-                hintText: 'Last name'
-            ),
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'this field must not be empty';
-              }
-              return null;
-            },
+            },  onSaved: (input) => volName = input,
           ),
           TextFormField(
             decoration: InputDecoration(
@@ -134,7 +129,7 @@ class MyCustomFormState extends State<MyCustomForm> {
                 return 'this field must not be empty';
               }
               return null;
-            },
+            },  onSaved: (input) => volEmail = input,
           ),
           TextFormField(
             decoration: InputDecoration(
@@ -145,27 +140,19 @@ class MyCustomFormState extends State<MyCustomForm> {
                 return 'this field must not be empty';
               }
               return null;
-            },
+            },  onSaved: (input) => volPhone = input,
           ),
-          TextField(
+          TextFormField(
             decoration: InputDecoration(
                 hintText: 'have you volunteered before? If so, name the events'
-            ),
+            ),  onSaved: (input) => volExp = input,
             maxLines: 3,
           ),
           Padding(
             padding:
             const EdgeInsets.symmetric(horizontal: 150,vertical: 50),
             child: RaisedButton(
-              onPressed: () {
-                // Validate returns true if the form is valid, or false
-                // otherwise.
-                if (_formKey.currentState.validate()) {
-                  // If the form is valid, display a Snackbar.
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
-                }
-              },
+              onPressed: addVol,
               child: Text('Submit'),
             ),
           ),
@@ -174,63 +161,62 @@ class MyCustomFormState extends State<MyCustomForm> {
     );
   }
 }
-class MyApp1 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner : false,
-      home: Scaffold(
-        body: BoothSeller(),
-      ),
-    );
-  }
-}
-// Create a Form widget.
 //=============================================================================================================================================================================
 class BoothSeller extends StatefulWidget {
   @override
-  MyCustomFormState2 createState() {
-    return MyCustomFormState2();
+  BoothSellerState createState() {
+    return BoothSellerState();
   }
 }
 // Create a corresponding State class.
 // This class holds data related to the form.
-class MyCustomFormState2 extends State<BoothSeller> {
-  // Create a global key that uniquely identifies the Form widget
-  // and allows validation of the form.
-  //
-  // Note: This is a GlobalKey<FormState>,
-  // not a GlobalKey<MyCustomFormState>.
+class BoothSellerState extends State<BoothSeller> {
+
   final _formKey = GlobalKey<FormState>();
+  final db = Firestore.instance;
+  var bsName;
+  var bsEmail;
+  var bsPhone;
+  var noOfBooth;
+  var activityType;
+
+  Future<void> addBS() async {
+    final formState = _formKey.currentState;
+    if (formState.validate()) {
+      formState.save();
+      try {
+        await db.collection("Booth Sellers").add(
+            {
+              'bsName':bsName,
+              'bsEmail':bsEmail,
+              'bsPhone':bsPhone,
+              'Number of booths':noOfBooth,
+              'Business Activity':activityType
+            }
+        );
+      } catch (e) {
+        print(e.message);
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     // Build a Form widget using the _formKey created above.
-    return Container(
+    return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
             decoration: InputDecoration(
-                hintText: 'First name'
+                hintText: 'Full Name'
             ),
             validator: (value) {
               if (value.isEmpty) {
                 return 'this field must not be empty';
               }
               return null;
-            },
-          ),
-          TextFormField(
-            decoration: InputDecoration(
-                hintText: 'Last name'
-            ),
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'this field must not be empty';
-              }
-              return null;
-            },
+            }, onSaved: (input) => bsName = input,
           ),
           TextFormField(
             decoration: InputDecoration(
@@ -241,7 +227,7 @@ class MyCustomFormState2 extends State<BoothSeller> {
                 return 'this field must not be empty';
               }
               return null;
-            },
+            }, onSaved: (input) => bsEmail = input,
           ),
           TextFormField(
             decoration: InputDecoration(
@@ -252,7 +238,7 @@ class MyCustomFormState2 extends State<BoothSeller> {
                 return 'this field must not be empty';
               }
               return null;
-            },
+            }, onSaved: (input) => bsPhone = input,
           ),
           TextFormField(
             decoration: InputDecoration(
@@ -263,7 +249,7 @@ class MyCustomFormState2 extends State<BoothSeller> {
                 return 'this field must not be empty';
               }
               return null;
-            },
+            }, onSaved: (input) => noOfBooth = input,
           ),
           TextFormField(
             decoration: InputDecoration(
@@ -274,20 +260,12 @@ class MyCustomFormState2 extends State<BoothSeller> {
                 return 'this field must not be empty';
               }
               return null;
-            },
+            }, onSaved: (input) => activityType = input,
           ),
           Padding(
             padding:  const EdgeInsets.symmetric(horizontal: 150,vertical: 50),
             child: RaisedButton(
-              onPressed: () {
-                // Validate returns true if the form is valid, or false
-                // otherwise.
-                if (_formKey.currentState.validate()) {
-                  // If the form is valid, display a Snackbar.
-                  Scaffold.of(context)
-                      .showSnackBar(SnackBar(content: Text('Processing Data')));
-                }
-              },
+              onPressed: addBS,
               child: Text('Submit'),
             ),
           ),

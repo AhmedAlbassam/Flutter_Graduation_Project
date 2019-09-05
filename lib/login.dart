@@ -5,14 +5,12 @@ import 'CreateAccount.dart';
 import 'home.dart';
 import 'Organization.dart';
 
-
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin{
-
   TabController _tabController;
   @override
   void initState() {
@@ -39,7 +37,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
       ),
       body: TabBarView(
         children: [
-          Individual(),Organization()
+          Individual(),Org()
         ],
         controller: _tabController,),
     );
@@ -189,24 +187,63 @@ class IndividualState extends State<Individual> {
     );
   }
 }
-class Organization extends StatelessWidget {
+// ==================================================================================================================================>
+class Org extends StatefulWidget {
+  @override
+  OrgState createState() {
+    return OrgState();
+  }
+}
+
+class OrgState extends State<Org> {
+  final _formKey = GlobalKey<FormState>();
+  String email ,password;
+  Future<void> OrgSignIn() async {
+    final formState = _formKey.currentState;
+    if (formState.validate()) {
+      formState.save();
+
+      try {
+        FirebaseUser user = (await FirebaseAuth.instance.
+        signInWithEmailAndPassword(email: email, password: password)).user;
+        Navigator.push(context, MaterialPageRoute(builder: (context) => OrganizationPage()));
+      } catch (e) {
+        print(e.message);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
       statusBarColor: Colors.orange, //or set color with: Color(0xFF0000FF)
     ));
     return new Scaffold(
-      body: Container(
-        width: double.infinity,
+//
+      body: Form(
+        key: _formKey ,
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.center,
 
+
           children: <Widget>[
+
             Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
-              child: new TextField(
+
+              child: TextFormField(
                 decoration: new InputDecoration(labelText: 'Email'),
+
+                validator: (input){
+
+                  if(input.isEmpty){
+                    return 'please enter your email';
+                  }
+                  return null;
+                },
+                onSaved: (input) => email = input,
               ),
             ),
             new SizedBox(
@@ -215,9 +252,17 @@ class Organization extends StatelessWidget {
             Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
-              child: new TextField(
-                obscureText: true,
+              child: TextFormField(
                 decoration: new InputDecoration(labelText: 'Password'),
+
+                validator: (input){
+
+                  if(input.length < 6){
+                    return 'please enter your Password Correctily';
+                  }
+                  return null;
+                },
+                onSaved: (input) => password = input,
               ),
             ),
             new Row(
@@ -228,11 +273,7 @@ class Organization extends StatelessWidget {
                     padding: const EdgeInsets.only(
                         left: 20.0, right: 5.0, top: 10.0),
                     child: GestureDetector(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => OrganizationPage()
-                        ));
-                      },
+                      onTap: OrgSignIn,
                       child: new Container(
                           alignment: Alignment.center,
                           height: 60.0,
@@ -265,16 +306,14 @@ class Organization extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 18.0),
+                    padding: const EdgeInsets.only(bottom:18.0),
                     child: GestureDetector(
                       onTap: () {
                         Navigator.push(context, MaterialPageRoute(
-                          builder: (context) =>
-                              SignupPage(), //Here we have to call create account page .
+                          builder: (context) => SignupPage(),   //Here we have to call create account page .
                         ));
                       },
-                      child: new Text(
-                          "Create A New Account ", style: new TextStyle(
+                      child: new Text("Create A New Account ",style: new TextStyle(
                           fontSize: 17.0, color: Color(0xFF2196F3),
                           fontWeight: FontWeight.bold)),
                     ),
@@ -288,7 +327,6 @@ class Organization extends StatelessWidget {
       ),
     );
   }
-
 }
 
 

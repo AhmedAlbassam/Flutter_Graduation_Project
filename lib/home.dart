@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import'Event.dart';
 import 'Wallet.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
+import 'Participate.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => new _HomePageState();
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
        bool _loadEvent = true;
 
     _getEvent() async{
-    Query q = _firestore.collection('Events').orderBy("eventType").limit(5);
+    Query q = _firestore.collection('Events').orderBy("eventType").limit(100);
     setState(() {
        _loadEvent =true;
     });
@@ -28,8 +29,6 @@ class _HomePageState extends State<HomePage> {
      setState(() {
         _loadEvent =false;
      });
-   
-
   }
   void initState(){
       super.initState();
@@ -42,9 +41,8 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text('Drawer Header'),
               decoration: BoxDecoration(
-                  color: Colors.blueGrey
+                  color : Colors.blueGrey
               ),
             ),
             ListTile(
@@ -66,11 +64,11 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              title: Text('Settings'),
+              title: Text('Testing Participate'),
               leading: new Icon(Icons.settings),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
-                  //builder: (context) => Wallet(),
+                  builder: (context) => StartPage(),
                 ));
               },
             )
