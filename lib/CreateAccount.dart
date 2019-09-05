@@ -59,19 +59,20 @@ class _SignupPageState extends State<SignupPage> {
                 padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
                 child: Column(
                   children: <Widget>[
-                    TextFormField(
-                    decoration: InputDecoration(
-                        labelText: 'Full name',
-                        labelStyle: TextStyle(
-                            fontFamily: 'Montserrat',
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
-                        //  hintText: 'example@example.com',
-                        focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green))),
 
-
-                  ),
+//                    TextFormField(
+//                    decoration: InputDecoration(
+//                        labelText: 'Full name',
+//                        labelStyle: TextStyle(
+//                            fontFamily: 'Montserrat',
+//                            fontWeight: FontWeight.bold,
+//                            color: Colors.grey),
+//                        //  hintText: 'example@example.com',
+//                        focusedBorder: UnderlineInputBorder(
+//                            borderSide: BorderSide(color: Colors.green))),
+//
+//
+//                  ),
                     TextFormField(
                       decoration: InputDecoration(
                           labelText: 'Email',
@@ -107,7 +108,7 @@ class _SignupPageState extends State<SignupPage> {
                       validator: (input){
 
                         if(input.length < 6){
-                          return 'please enter your Password Correctily';
+                          return 'please enter your Password Correctly';
                         }
                         return null;
                       },

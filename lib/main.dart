@@ -59,12 +59,12 @@ class QuickBee extends StatelessWidget {
               new Stack(
                 alignment: Alignment.topCenter,
                 children: <Widget>[
-//                  new Image.asset(
-//                    'Images/mainLogo.png',
-//                    height: 300.0,
-//                    width: 300.0,
-//
-//                  ),
+                  new Image.asset(
+                    'Images/mainLogo.png',
+                    height: 300.0,
+                    width: 300.0,
+
+                  ),
                 ],
               ),
 
