@@ -5,16 +5,16 @@ class Wallet extends StatelessWidget{
 
   Widget build(context){
     return MaterialApp(
-
+debugShowCheckedModeBanner: false,
         home: Scaffold(
           body:
           WalletPage(),
 
           appBar: AppBar(
           automaticallyImplyLeading: true,
-            backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: Colors.indigo[900],
             elevation: 0.0,
-            title : Text('Wallet', textAlign: TextAlign.center,),
+            title : Text('Wallet', textAlign: TextAlign.end,),
             leading: IconButton(icon:Icon(Icons.arrow_back),
               onPressed:() {
 
@@ -22,7 +22,12 @@ class Wallet extends StatelessWidget{
     ),
 
     ),
-          backgroundColor: Colors.grey,
+          floatingActionButton: FloatingActionButton.extended(
+            icon: Icon(Icons.camera_alt),
+             label: Text("Scan"),
+           backgroundColor: Colors.indigo[800],),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          backgroundColor: Colors.indigo[900],
         ),
     );
   }
@@ -50,10 +55,10 @@ class Walletstates extends State<WalletPage>{
       ),
 
     );
-
   }
   Widget balance(){
-    return Text('$bal', style: TextStyle(fontSize: 100),);
+
+    return Text('$bal', style:TextStyle(color:Colors.white,fontSize: 100),);
   }
   /*Widget buttons(){
     return Column (
@@ -66,63 +71,58 @@ class Walletstates extends State<WalletPage>{
   }*/
 
   Widget firstRow(){
+
     return Container(
+      padding: EdgeInsets.only(top: 70),
+
       child: Column(
+
+
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           // first icon
           RaisedButton(
-//            child: Text('Transfer Money', style:TextStyle(color:Colors.white)),
-//            color: Colors.lightBlue,
-//            onPressed:() {},
-          color: Colors.lightBlue,
-
+          color: Colors.indigo[800],
           child: GestureDetector(
             onTap: (){
               Navigator.push(context, MaterialPageRoute(builder: (context) => Transfer(),));
               },
-            child: Text('Transfer Money', style:TextStyle(color:Colors.white)),
+            child: Text('Transfer Funds', style:TextStyle(color:Colors.white)),
           ),
             onPressed: (){
 
             },
           ),
-//
-
-
 
     RaisedButton(
-      color: Colors.lightBlue,
+      color: Colors.indigo[800],
       child: GestureDetector(
         onTap: (){
           Navigator.push(context, MaterialPageRoute(builder: (context) => Funds(),));
         },
         child: Text('Add Funds', style:TextStyle(color:Colors.white)),
+
       ),
       onPressed: (){},
     ),
           RaisedButton(
-            child: Text('withdraw Money', style:TextStyle(color:Colors.white)),
-            color: Colors.lightBlue,
+            child: Text('Withdraw Balance', style:TextStyle(color:Colors.white)),
+            color: Colors.indigo[800],
             onPressed: (){
 
             },
           ),
           RaisedButton(
-            child: Text('add beni', style:TextStyle(color:Colors.white)),
-            color: Colors.lightBlue,
+            child: Text('Add Benificary', style:TextStyle(color:Colors.white)),
+            color: Colors.indigo[800],
             onPressed: (){
 
             },
-          ), RaisedButton(
-            child: Text('Display QR Code', style:TextStyle(color:Colors.white)),
-            color: Colors.lightBlue,
-            onPressed: (){
 
-            },
+
           ),
         ],
-
-      ),
+      ) ,
 
     );
   }
