@@ -14,6 +14,8 @@ class _AddEventPageState extends State<AddEventPage> {
   var eventType;
   var eventDate;
   var eventLoc;
+  var noOfTickets;
+  var ticketPrice;
 
   Future<void> addEvent() async {
     final formState = _formKey.currentState;
@@ -25,7 +27,9 @@ class _AddEventPageState extends State<AddEventPage> {
                 'eventName':eventName,
                 'eventType':eventType,
                 'eventDate':eventDate,
-                'eventLocation':eventLoc
+                'eventLocation':eventLoc,
+                'Number of tickets': noOfTickets,
+                'Ticket Price': ticketPrice,
               }
           );
       } catch (e) {
@@ -99,9 +103,7 @@ class _AddEventPageState extends State<AddEventPage> {
               ),
             ),
 
-            new SizedBox(
-              height: 15.0,
-            ),
+//
             Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
@@ -115,6 +117,30 @@ class _AddEventPageState extends State<AddEventPage> {
                   }
                   return null;
                 },
+                onSaved: (input) => eventLoc = input,
+              ),
+            ),
+            Padding(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+              child: TextFormField(
+                decoration: new InputDecoration(labelText: 'Number of Tickets'),
+
+                validator: (input){
+
+                  if(input.isEmpty){
+                    return 'please enter number of Tickets';
+                  }
+                  return null;
+                },
+                onSaved: (input) => eventLoc = input,
+              ),
+            ),
+            Padding(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+              child: TextFormField(
+                decoration: new InputDecoration(labelText: 'Ticket Price'),
                 onSaved: (input) => eventLoc = input,
               ),
             ),
