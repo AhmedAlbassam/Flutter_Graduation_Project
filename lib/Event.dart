@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'Participate.dart';
+import 'home.dart';
 class Event extends StatelessWidget{
+  final _name, _location, _type, _date;
 
-  Widget build(BuildContext context){
+
+  Event(this._name, this._location,this._type, this._date);
+
+    Widget build(BuildContext context){
 
     return MaterialApp(
 
         home: Scaffold(
 
-          body: EventPage(),
+          body: EventPage(this._name, this._location,this._type, this._date),
           appBar: AppBar(
             backgroundColor: Colors.orangeAccent,
             title : Text('Event details', textAlign: TextAlign.center,),
@@ -23,14 +28,21 @@ class Event extends StatelessWidget{
   }
 }
 class EventPage extends StatefulWidget{
+  final _name, _location, _type, _date;
+
+  EventPage(this._name, this._location,this._type, this._date);
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return Eventstates();
+    return Eventstates(this._name, this._location,this._type, this._date);
   }
 }
 class Eventstates extends State<EventPage> {
   int ticketQnt = 1;
+  final _name,_location, _type, _date;
+
+  Eventstates(this._name, this._location,this._type, this._date);
  // String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
   Widget build(context) {
 
@@ -60,11 +72,33 @@ class Eventstates extends State<EventPage> {
     );
   }
   Widget eventDetails(){
+
     //i can use Textspan to make it longer with diffirent styles
-    return Text(
-      'here the event name will be shown',
+    return Column(
+    children:[
+      Text(
+
+      '$_name' ,
       textAlign: TextAlign.left,
       style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+     ),
+
+      Text(
+        '$_location' ,
+        textAlign: TextAlign.left,
+        style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+      ),
+      Text(
+        '$_type' ,
+        textAlign: TextAlign.left,
+        style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+      ),
+      Text(
+        '$_date' ,
+        textAlign: TextAlign.left,
+        style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+      ),
+    ]
     );
   }
   Widget ticketQnts(){

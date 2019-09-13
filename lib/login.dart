@@ -124,6 +124,7 @@ class IndividualState extends State<Individual> {
                 onSaved: (input) => password = input,
               ),
             ),
+
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

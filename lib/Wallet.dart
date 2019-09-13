@@ -73,6 +73,7 @@ class Walletstates extends State<WalletPage>{
   Widget firstRow(){
 
     return Container(
+
       padding: EdgeInsets.only(top: 70),
 
       child: Column(
@@ -92,6 +93,7 @@ class Walletstates extends State<WalletPage>{
             onPressed: (){
 
             },
+
           ),
 
     RaisedButton(
