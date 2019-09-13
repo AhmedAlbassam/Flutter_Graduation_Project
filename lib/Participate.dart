@@ -6,26 +6,23 @@ class StartPage extends StatelessWidget {
     return new MaterialApp(
       title: "New Task",
       theme: ThemeData(
-          primaryColor: Colors.lightBlue
+          primaryColor: Colors.indigo[900]
       ),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         body:
         HomePage(),
-
-        appBar: AppBar(
-          backgroundColor: Colors.lightBlueAccent,
-          title : Text('Participation', textAlign: TextAlign.center,),
-          leading: IconButton(icon:Icon(Icons.arrow_back),
-            onPressed:() => Navigator.pop(context, false),
-          ),
-
+    appBar: AppBar(
+    backgroundColor: Colors.indigo[900],
+    title : Text('Participation', textAlign: TextAlign.center,),
+    leading: IconButton(icon:Icon(Icons.arrow_back),
+    onPressed:() => Navigator.pop(context, false),
+    ),
 
 
-        ),
-        backgroundColor: Colors.white,
-      ),
+    ),
+      )
     );
   }
 }
@@ -150,8 +147,10 @@ class VolunteerState extends State<Volunteer> {
           ),
           Padding(
             padding:
-            const EdgeInsets.symmetric(horizontal: 150,vertical: 50),
+             EdgeInsets.symmetric(horizontal: 150,vertical: 50),
             child: RaisedButton(
+              padding: EdgeInsets.all(5),
+
               onPressed: addVol,
               child: Text('Submit'),
             ),
@@ -265,6 +264,7 @@ class BoothSellerState extends State<BoothSeller> {
           Padding(
             padding:  const EdgeInsets.symmetric(horizontal: 150,vertical: 50),
             child: RaisedButton(
+              padding: EdgeInsets.all(5),
               onPressed: addBS,
               child: Text('Submit'),
             ),

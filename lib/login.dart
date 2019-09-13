@@ -20,7 +20,9 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+
       appBar: new AppBar(
+        backgroundColor: Colors.indigo[800],
         title: new Text("Login"),
         bottom: TabBar(
           unselectedLabelColor: Colors.white,
@@ -138,7 +140,7 @@ class IndividualState extends State<Individual> {
                           alignment: Alignment.center,
                           height: 60.0,
                           decoration: new BoxDecoration(
-                              color: Color(0xFF2196F3),
+                              color: Colors.indigo[900],
                               borderRadius: new BorderRadius.circular(9.0)),
                           child: new Text("Login",
                               style: new TextStyle(
@@ -156,7 +158,7 @@ class IndividualState extends State<Individual> {
                         height: 60.0,
                         child: new Text("Forgot Password?",
                             style: new TextStyle(
-                                fontSize: 17.0, color: Color(0xFF2196F3)))),
+                                fontSize: 17.0, color: Colors.indigo[900]))),
                   ),
                 )
               ],
@@ -174,7 +176,7 @@ class IndividualState extends State<Individual> {
                         ));
                       },
                       child: new Text("Create A New Account ",style: new TextStyle(
-                          fontSize: 17.0, color: Color(0xFF2196F3),
+                          fontSize: 17.0, color: Colors.indigo[900],
                           fontWeight: FontWeight.bold)),
                     ),
                   ),
@@ -279,7 +281,7 @@ class OrgState extends State<Org> {
                           alignment: Alignment.center,
                           height: 60.0,
                           decoration: new BoxDecoration(
-                              color: Color(0xFF2196F3),
+                              color: Colors.indigo[900],
                               borderRadius: new BorderRadius.circular(9.0)),
                           child: new Text("Login",
                               style: new TextStyle(
@@ -297,7 +299,7 @@ class OrgState extends State<Org> {
                         height: 60.0,
                         child: new Text("Forgot Password?",
                             style: new TextStyle(
-                                fontSize: 17.0, color: Color(0xFF2196F3)))),
+                                fontSize: 17.0, color: Colors.indigo[900]))),
                   ),
                 )
               ],
@@ -315,7 +317,7 @@ class OrgState extends State<Org> {
                         ));
                       },
                       child: new Text("Create A New Account ",style: new TextStyle(
-                          fontSize: 17.0, color: Color(0xFF2196F3),
+                          fontSize: 17.0, color: Colors.indigo[900],
                           fontWeight: FontWeight.bold)),
                     ),
                   ),
