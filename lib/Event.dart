@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gproject2020/home.dart' as pre;
 import 'Participate.dart';
 import 'home.dart';
 class Event extends StatelessWidget{
-  final _name, _location, _type, _date;
+  final _name, _location, _type, _date, _numoft;
 
 
-  Event(this._name, this._location,this._type, this._date);
+  Event(this._name, this._location,this._type, this._date,this._numoft);
 
     Widget build(BuildContext context){
 
@@ -13,7 +14,7 @@ class Event extends StatelessWidget{
 
         home: Scaffold(
 
-          body: EventPage(this._name, this._location,this._type, this._date),
+          body: EventPage(this._name, this._location,this._type, this._date, this._numoft),
           appBar: AppBar(
             backgroundColor: Colors.orangeAccent,
             title : Text('Event details', textAlign: TextAlign.center,),
@@ -28,21 +29,21 @@ class Event extends StatelessWidget{
   }
 }
 class EventPage extends StatefulWidget{
-  final _name, _location, _type, _date;
+  final _name, _location, _type, _date,_numoft;
 
-  EventPage(this._name, this._location,this._type, this._date);
+  EventPage(this._name, this._location,this._type, this._date,this._numoft);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return Eventstates(this._name, this._location,this._type, this._date);
+    return Eventstates(this._name, this._location,this._type, this._date,this._numoft);
   }
 }
 class Eventstates extends State<EventPage> {
   int ticketQnt = 1;
-  final _name,_location, _type, _date;
+  final _name,_location, _type, _date,_numoft;
 
-  Eventstates(this._name, this._location,this._type, this._date);
+  Eventstates(this._name, this._location,this._type, this._date,this._numoft);
  // String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
   Widget build(context) {
 
@@ -138,10 +139,13 @@ class Eventstates extends State<EventPage> {
     );
   }
   Widget buyButton(){
+    var h = new pre.HomePage();
     return RaisedButton(
       child: Text('Buy a Ticket',
         style: TextStyle(color: Colors.white),),
-      onPressed: (){},
+      onPressed: (){
+        h.ticket(_numoft);
+      },
       color: Colors.orangeAccent,
 
     );

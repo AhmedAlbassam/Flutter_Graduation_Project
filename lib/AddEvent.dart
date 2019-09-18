@@ -133,7 +133,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   }
                   return null;
                 },
-                onSaved: (input) => eventLoc = input,
+                onSaved : (input) => noOfTickets = int.parse(input),
               ),
             ),
             Padding(
@@ -141,7 +141,7 @@ class _AddEventPageState extends State<AddEventPage> {
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
               child: TextFormField(
                 decoration: new InputDecoration(labelText: 'Ticket Price'),
-                onSaved: (input) => eventLoc = input,
+                onSaved : (input) => ticketPrice= int.parse(input),
               ),
             ),
             new Row(

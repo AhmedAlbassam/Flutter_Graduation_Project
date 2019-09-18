@@ -4,6 +4,9 @@ import 'Wallet.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'Participate.dart';
 class HomePage extends StatefulWidget {
+  ticket(int t){
+    t--;
+  }
   @override
   _HomePageState createState() => new _HomePageState();
 }
@@ -16,25 +19,67 @@ class _HomePageState extends State<HomePage> {
       Firestore _firestore = Firestore.instance;
        List<DocumentSnapshot> _events = [];
        bool _loadEvent = true;
-        ScrollController _scroll;
+        ScrollController _scroll = ScrollController();
+
+        DocumentSnapshot _lastdoc;
+        bool _gettingmoreEvents = false;
+        bool _moreEventavaliable = true;
 
     _getEvent() async{
-    Query q = _firestore.collection('Events').orderBy("eventName").limit(100);
+      print('Events are coming');
+    Query q = _firestore.collection('Events').orderBy("eventName").limit(_events.length);
     setState(() {
        _loadEvent =true;
     });
-
-        QuerySnapshot _querysnap = await q.getDocuments();
-     _events = _querysnap.documents;
-     
+    QuerySnapshot querysnap = await q.getDocuments();
+     _events = querysnap.documents;
+     _lastdoc = querysnap.documents[querysnap.documents.length-1];
      setState(() {
         _loadEvent =false;
      });
   }
+  _getmoreEvent() async{
+      print('More events coming');
+      _gettingmoreEvents = true;
+
+      if(_moreEventavaliable == false){
+        return;
+      }
+
+      if(_gettingmoreEvents == true){
+        return;
+      }
+    Query q = _firestore.collection('Events')
+        .orderBy("eventName")
+        .startAfter([_lastdoc.data["eventName"]])
+        .limit(_events.length);
+    QuerySnapshot querysnap = await q.getDocuments();
+    if (querysnap.documents.length == 0) {
+      _moreEventavaliable = false;
+    }
+    _lastdoc = querysnap.documents[querysnap.documents.length-1];
+    _events.addAll( querysnap.documents);
+
+    setState(() {
+    });
+      _gettingmoreEvents = false;
+  }
   void initState(){
       super.initState();
       _getEvent();
+
+      _scroll.addListener( (){
+        double maxScroll = _scroll.position.maxScrollExtent;
+        double currentScroll = _scroll.position.pixels;
+        double delta = MediaQuery.of(context).size.height * 0.25;
+        if(maxScroll-currentScroll <= delta) {
+          _getmoreEvent();
+        }
+
+      });
   }
+
+
 
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -91,15 +136,23 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (BuildContext ctx, int i){
 
             return ListTile (
-              title:Text( _events[i].data['eventName'],
 
-              ),
+              title:Text( _events[i].data['eventName']),
+
+              trailing : _events[i].data['Number of tickets'] == 0 ||  _events[i].data['Number of tickets'] == null
+                  ? Icon(Icons.cancel, color: Colors.red,) : Icon(Icons.done, color: Colors.green,),
+
               onTap:(){
                 Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => Event(_events[i].data['eventName'],_events[i].data['eventLocation'], _events[i].data['eventType'], _events[i].data['eventDate']),
+                    builder: (context) => Event(_events[i].data['eventName'],
+                        _events[i].data['eventLocation'],
+                        _events[i].data['eventType'],
+                        _events[i].data['eventDate'],
+                        _events[i].data['Number of tickets']),
 
                 ));
               },
+
             );
           }),
         ),
