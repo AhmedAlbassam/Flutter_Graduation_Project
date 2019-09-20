@@ -8,7 +8,7 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => new _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState  extends State<HomePage> {
   // the scroll will be added in this class, and taken data from firebase that addded by org.
 
   int _bottomNavIndex=0;
