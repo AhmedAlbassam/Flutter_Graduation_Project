@@ -4,9 +4,6 @@ import 'Wallet.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'Participate.dart';
 class HomePage extends StatefulWidget {
-  ticket(int t){
-    t--;
-  }
   @override
   _HomePageState createState() => new _HomePageState();
 }

@@ -144,7 +144,7 @@ class Eventstates extends State<EventPage> {
       child: Text('Buy a Ticket',
         style: TextStyle(color: Colors.white),),
       onPressed: (){
-        h.ticket(_numoft);
+
       },
       color: Colors.orangeAccent,
 
