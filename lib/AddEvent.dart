@@ -14,8 +14,8 @@ class _AddEventPageState extends State<AddEventPage> {
   var eventType;
   var eventDate;
   var eventLoc;
-  var noOfTickets;
-  var ticketPrice;
+  int noOfTickets;
+  int ticketPrice;
 
   Future<void> addEvent() async {
     final formState = _formKey.currentState;
@@ -127,13 +127,12 @@ class _AddEventPageState extends State<AddEventPage> {
                 decoration: new InputDecoration(labelText: 'Number of Tickets'),
 
                 validator: (input){
-
                   if(input.isEmpty){
                     return 'please enter number of Tickets';
                   }
                   return null;
                 },
-                onSaved : (input) => noOfTickets = int.parse(input),
+                onSaved: (input) => noOfTickets = int.parse(input),
               ),
             ),
             Padding(
@@ -141,7 +140,7 @@ class _AddEventPageState extends State<AddEventPage> {
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
               child: TextFormField(
                 decoration: new InputDecoration(labelText: 'Ticket Price'),
-                onSaved : (input) => ticketPrice= int.parse(input),
+                onSaved: (input) => ticketPrice =int.parse(input),
               ),
             ),
             new Row(

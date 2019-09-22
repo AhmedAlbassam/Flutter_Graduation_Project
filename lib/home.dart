@@ -8,83 +8,35 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => new _HomePageState();
 }
 
-class _HomePageState  extends State<HomePage> {
+class _HomePageState extends State<HomePage> {
   // the scroll will be added in this class, and taken data from firebase that addded by org.
 
   int _bottomNavIndex=0;
   @override
       Firestore _firestore = Firestore.instance;
        List<DocumentSnapshot> _events = [];
-       bool loadEvent = true;
-        ScrollController _scroll = ScrollController();
-        DocumentSnapshot _lastdoc;
-        bool _gettingmoreEvents = false;
-        bool _moreEventavaliable = true;
+       bool _loadEvent = true;
+        ScrollController _scroll;
+
+
 
     _getEvent() async{
-      print('Events are coming');
-    Query q = _firestore.collection('Events').orderBy("eventName");
+    Query q = _firestore.collection('Events').orderBy("eventName").limit(100);
     setState(() {
-       loadEvent =true;
+       _loadEvent =true;
     });
-    QuerySnapshot querysnap = await q.getDocuments();
-     _events = querysnap.documents;
-     _lastdoc = querysnap.documents[querysnap.documents.length-1];
+
+        QuerySnapshot _querysnap = await q.getDocuments();
+     _events = _querysnap.documents;
+     
      setState(() {
-        loadEvent =false;
+        _loadEvent =false;
      });
   }
-
   void initState(){
       super.initState();
       _getEvent();
-
-      _scroll.addListener( (){
-        double maxScroll = _scroll.position.maxScrollExtent;
-        double currentScroll = _scroll.position.pixels;
-        double delta = MediaQuery.of(context).size.height * 0.25;
-        if(maxScroll-currentScroll <= delta) {
-          _getEvent();
-        }
-
-      });
   }
-  Widget displayEvent(){
-      return Container(
-        child : _events.length == 0 ? Center(
-          child: Text("there are no events available"),
-        ) : ListView.builder(
-           controller: _scroll,
-            itemCount: _events.length,
-            itemBuilder: (BuildContext ctx, int i){
-
-              return ListTile (
-
-                title:Text( _events[i].data['eventName']),
-
-                trailing : _events[i].data['Number of tickets'] == 0
-                    ||  _events[i].data['Number of tickets']
-                    == null
-                    ? Icon(Icons.cancel, color: Colors.red,) : Icon(Icons.done, color: Colors.green,),
-
-                onTap:(){
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => Event(_events[i].data['eventName'],
-                        _events[i].data['eventLocation'],
-                        _events[i].data['eventType'],
-                        _events[i].data['eventDate'],
-                        _events[i].data['Number of tickets']),
-
-                  ));
-                },
-
-              );
-            }),
-      );
-  }
-
-
-
 
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -132,7 +84,28 @@ class _HomePageState  extends State<HomePage> {
           backgroundColor: Colors.blueGrey,
           elevation: 0.0,
           iconTheme: new IconThemeData(color: Color(0xFF18D191))),
-        body: displayEvent(),
+        body:Container(
+          child : _events.length == 0 ? Center(
+            child: Text("there are no events available"),
+          ) : ListView.builder(
+                controller: _scroll,
+              itemCount: _events.length,
+              itemBuilder: (BuildContext ctx, int i){
+
+            return ListTile (
+              title:Text( _events[i].data['eventName'],
+
+              ),
+              onTap:(){
+                Navigator.push(context, MaterialPageRoute(
+                    builder: (context) => Event(_events[i].data['eventName'],_events[i].data['eventLocation'], _events[i].data['eventType'], _events[i].data['eventDate']),
+
+                ));
+              },
+           //   trailing: ,
+            );
+          }),
+        ),
 
     );
   }
