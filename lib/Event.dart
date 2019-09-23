@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gproject2020/Participate.dart' as prefix0;
 import 'package:gproject2020/home.dart' as pre;
 import 'Participate.dart';
 import 'home.dart';
@@ -161,7 +162,7 @@ class Eventstates extends State<EventPage> {
 
           onTap: () {
             Navigator.push(context, MaterialPageRoute(
-              builder: (context) => StartPage(),
+              builder: (context) => prefix0.HomePage(),
             ));
           },
           child:Text('Participate',

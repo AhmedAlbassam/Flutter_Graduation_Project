@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'AddEvent.dart';
+import 'applicants.dart';
 //import 'package:firebase_database/firebase_database.dart';
 class OrganizationPage extends StatefulWidget {
   @override
@@ -35,7 +36,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
               leading: new Icon(Icons.event_note),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
-                  //builder: (context) => ,
+                  builder: (context) => applicantsPage(),
                 ));
               },
             ),

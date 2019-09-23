@@ -1,31 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-class StartPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: "New Task",
-      theme: ThemeData(
-          primaryColor: Colors.indigo[900]
-      ),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body:
-        HomePage(),
-    appBar: AppBar(
-    backgroundColor: Colors.indigo[900],
-    title : Text('Participation', textAlign: TextAlign.center,),
-    leading: IconButton(icon:Icon(Icons.arrow_back),
-    onPressed:() => Navigator.pop(context, false),
-    ),
 
-
-    ),
-      )
-    );
-  }
-}
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();

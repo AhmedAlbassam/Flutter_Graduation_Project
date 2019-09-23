@@ -68,13 +68,9 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              title: Text('Testing Participate'),
+              title: Text('Testing Classes button'),
               leading: new Icon(Icons.settings),
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => StartPage(),
-                ));
-              },
+              onTap: (){},
             )
           ],
         ),
@@ -98,7 +94,9 @@ class _HomePageState extends State<HomePage> {
               ),
               onTap:(){
                 Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => Event(_events[i].data['eventName'],_events[i].data['eventLocation'], _events[i].data['eventType'], _events[i].data['eventDate']),
+                    builder: (context) => Event(_events[i].data['eventName'],_events[i].data['eventLocation'],
+                        _events[i].data['eventType'],
+                        _events[i].data['eventDate'],_events[i].data['numOft']),
 
                 ));
               },
