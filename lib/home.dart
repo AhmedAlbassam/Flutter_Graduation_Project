@@ -91,7 +91,10 @@ class _HomePageState extends State<HomePage> {
             return ListTile (
               title:Text( _events[i].data['eventName'],
 
+
               ),
+              trailing : _events[i].data['Number of tickets'] == 0 ||  _events[i].data['Number of tickets'] == null
+                  ? Icon(Icons.cancel, color: Colors.red,) : Icon(Icons.done, color: Colors.green,),
               onTap:(){
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context) => Event(_events[i].data['eventName'],_events[i].data['eventLocation'],

@@ -22,7 +22,10 @@ class _SignupPageState extends State<SignupPage> {
   int date;
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuth auth = FirebaseAuth.instance;
-
+  final db = Firestore.instance;
+  var _balance = 0;
+  var _QRcode = null;
+  bool added = false;
 
   Future<FirebaseUser>  SignUp(String email , String password) async {
 
@@ -39,9 +42,34 @@ class _SignupPageState extends State<SignupPage> {
       } catch (e) {
         print(e.message);
       }
+      added = true;
+    }
+    }
 
+  Future<void> addAcc(String email, String password) async {
+    if (added == true) {
+      final formState = _formKey.currentState;
+      if (formState.validate()) {
+        formState.save();
+        try {
+          await db.collection("Account").add(
+              {
+                'Email': _email,
+                'Password': _password,
+                'balance': _balance,
+                'QRcode': _QRcode,
+
+
+              }
+          );
+        } catch (e) {
+          print(e.message);
+        }
+      }
     }
-    }
+    else
+      return;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +163,7 @@ class _SignupPageState extends State<SignupPage> {
                           elevation: 7.0,
                           child: GestureDetector(
                             onTap: (){
-                              SignUp(_email,_password);
+                              SignUp(_email,_password); addAcc(_email,_password);
                             },
                             child: Center(
                               child: Text(
