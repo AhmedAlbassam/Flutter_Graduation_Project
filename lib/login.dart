@@ -8,9 +8,13 @@ import 'Organization.dart';
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
+
+
+
 }
 
 class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin{
+
   TabController _tabController;
   @override
   void initState() {
@@ -57,6 +61,7 @@ class IndividualState extends State<Individual> {
 
   final _formKey = GlobalKey<FormState>();
   String email ,password;
+  String UserName;
 
 
   Future<void> Signin() async {
@@ -68,11 +73,14 @@ class IndividualState extends State<Individual> {
         FirebaseUser user = (await FirebaseAuth.instance.
         signInWithEmailAndPassword(email: email, password: password)).user;
         Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
+        UserName=user.email;
+        OrganizationPage i = new OrganizationPage(email);
       } catch (e) {
         print(e.message);
       }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -201,6 +209,7 @@ class Org extends StatefulWidget {
 class OrgState extends State<Org> {
   final _formKey = GlobalKey<FormState>();
   String email ,password;
+
   Future<void> OrgSignIn() async {
     final formState = _formKey.currentState;
     if (formState.validate()) {
@@ -209,7 +218,7 @@ class OrgState extends State<Org> {
       try {
         FirebaseUser user = (await FirebaseAuth.instance.
         signInWithEmailAndPassword(email: email, password: password)).user;
-        Navigator.push(context, MaterialPageRoute(builder: (context) => OrganizationPage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => OrganizationPage(email)));
       } catch (e) {
         print(e.message);
       }

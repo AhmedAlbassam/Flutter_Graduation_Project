@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import'Event.dart';
 import 'Wallet.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'Participate.dart';
+import 'main.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => new _HomePageState();
@@ -68,10 +70,17 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              title: Text('Testing Classes button'),
+              title: Text('Settings'),
               leading: new Icon(Icons.settings),
               onTap: (){},
-            )
+            ),
+            ListTile(
+              title: Text('SignOut'),
+              leading: new Icon(Icons.arrow_back),
+              onTap: (){
+
+              },
+            ),
           ],
         ),
       ),
@@ -110,5 +119,15 @@ class _HomePageState extends State<HomePage> {
 
     );
   }
+  void _signOut() async {
+   await FirebaseAuth.instance.signOut();
+    Future<FirebaseUser> Function() user = FirebaseAuth.instance.currentUser;
+    //print('$user');
+   runApp(
+        new MaterialApp(
+          home: new MyHomePage(),
+        )
 
+    );
+  }
 }

@@ -12,6 +12,7 @@ class _AddEventPageState extends State<AddEventPage> {
   final db = Firestore.instance;
   var eventName;
   var eventType;
+  var emailOfOrg;
   var eventDate;
   var eventLoc;
   int noOfTickets;
@@ -25,6 +26,7 @@ class _AddEventPageState extends State<AddEventPage> {
           await db.collection("Events").add(
               {
                 'eventName':eventName,
+                'emailOrg':emailOfOrg,
                 'eventType':eventType,
                 'eventDate':eventDate,
                 'eventLocation':eventLoc,
@@ -51,6 +53,23 @@ class _AddEventPageState extends State<AddEventPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
 
           children: <Widget>[
+            Padding(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+
+              child: TextFormField(
+                decoration: new InputDecoration(labelText: 'Orgnazation Email'),
+
+                validator: (input){
+
+                  if(input.isEmpty){
+                    return 'please enter the Organazation email';
+                  }
+                  return null;
+                },
+                onSaved: (input) => emailOfOrg = input,
+              ),
+            ),
             Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),

@@ -47,6 +47,7 @@ class QuickBee extends StatelessWidget {
           .user;
       print("signed in " + user.displayName);
       return user;
+
     }
 */
     @override
