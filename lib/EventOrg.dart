@@ -3,22 +3,23 @@ import 'package:gproject2020/Participate.dart' as prefix0;
 import 'package:gproject2020/home.dart' as pre;
 import 'Participate.dart';
 import 'home.dart';
-class Event extends StatelessWidget{
+import 'applicants.dart';
+class Eventorg extends StatelessWidget{
   final _name, _location, _type, _date, _numoft;
 
 
-  Event(this._name, this._location,this._type, this._date,this._numoft);
+  Eventorg(this._name, this._location,this._type, this._date,this._numoft);
 
-    Widget build(BuildContext context){
+  Widget build(BuildContext context){
 
     return MaterialApp(
 
         home: Scaffold(
 
-          body: EventPage(this._name, this._location,this._type, this._date, this._numoft),
+          body: EventorgPage(this._name, this._location,this._type, this._date, this._numoft),
           appBar: AppBar(
             backgroundColor: Colors.orangeAccent,
-            title : Text('Event details', textAlign: TextAlign.center,),
+            title : Text('Event details for org', textAlign: TextAlign.center,),
             leading: IconButton(icon:Icon(Icons.arrow_back),
               onPressed:() => Navigator.pop(context, false),
             ),
@@ -29,23 +30,23 @@ class Event extends StatelessWidget{
     );
   }
 }
-class EventPage extends StatefulWidget{
+class EventorgPage extends StatefulWidget{
   final _name, _location, _type, _date,_numoft;
 
-  EventPage(this._name, this._location,this._type, this._date,this._numoft);
+  EventorgPage(this._name, this._location,this._type, this._date,this._numoft);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return Eventstates(this._name, this._location,this._type, this._date,this._numoft);
+    return Eventorgstates(this._name, this._location,this._type, this._date,this._numoft);
   }
 }
-class Eventstates extends State<EventPage> {
+class Eventorgstates extends State<EventorgPage> {
   int ticketQnt = 1;
   final _name,_location, _type, _date,_numoft;
 
-  Eventstates(this._name, this._location,this._type, this._date,this._numoft);
- // String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
+  Eventorgstates(this._name, this._location,this._type, this._date,this._numoft);
+  // String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
   Widget build(context) {
 
     return Container(
@@ -77,30 +78,30 @@ class Eventstates extends State<EventPage> {
 
     //i can use Textspan to make it longer with diffirent styles
     return Column(
-    children:[
-      Text(
+        children:[
+          Text(
 
-      '$_name' ,
-      textAlign: TextAlign.left,
-      style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
-     ),
+            '$_name' ,
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+          ),
 
-      Text(
-        '$_location' ,
-        textAlign: TextAlign.left,
-        style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
-      ),
-      Text(
-        '$_type' ,
-        textAlign: TextAlign.left,
-        style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
-      ),
-      Text(
-        '$_date' ,
-        textAlign: TextAlign.left,
-        style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
-      ),
-    ]
+          Text(
+            '$_location' ,
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+          ),
+          Text(
+            '$_type' ,
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+          ),
+          Text(
+            '$_date' ,
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+          ),
+        ]
     );
   }
   Widget ticketQnts(){
@@ -161,12 +162,12 @@ class Eventstates extends State<EventPage> {
       ,
       child: GestureDetector(
 
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => Participate(_name),
-            ));
-          },
-          child:Text('Participate',
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => applicantsPage(_name),
+          ));
+        },
+        child:Text('Participate',
             style: TextStyle(color: Colors.orangeAccent, fontStyle: FontStyle.italic) ),
 
       ),

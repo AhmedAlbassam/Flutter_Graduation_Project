@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'AddEvent.dart';
 import 'Event.dart';
+import 'EventOrg.dart';
 import 'applicants.dart';
 import 'login.dart';
 
@@ -67,7 +68,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
                 ),
                 onTap:(){
                   Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => Event(_events[i].data['eventName'],_events[i].data['eventLocation'],
+                    builder: (context) => Eventorg(_events[i].data['eventName'],_events[i].data['eventLocation'],
                         _events[i].data['eventType'],
                         _events[i].data['eventDate'],_events[i].data['numOft']),
 
@@ -103,7 +104,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
               leading: new Icon(Icons.event_note),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => applicantsPage(),
+                  builder: (context) => applicantsPage(""),
                 ));
               },
             ),

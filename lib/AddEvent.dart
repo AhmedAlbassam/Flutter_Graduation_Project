@@ -17,7 +17,7 @@ class _AddEventPageState extends State<AddEventPage> {
   var eventLoc;
   int noOfTickets;
   int ticketPrice;
-
+  String email;
   Future<void> addEvent() async {
     final formState = _formKey.currentState;
     if (formState.validate()) {
@@ -32,6 +32,7 @@ class _AddEventPageState extends State<AddEventPage> {
                 'eventLocation':eventLoc,
                 'Number of tickets': noOfTickets,
                 'Ticket Price': ticketPrice,
+                'Email' : email,
               }
           );
       } catch (e) {
@@ -152,6 +153,21 @@ class _AddEventPageState extends State<AddEventPage> {
                   return null;
                 },
                 onSaved: (input) => noOfTickets = int.parse(input),
+              ),
+            ),
+            Padding(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+              child: TextFormField(
+                decoration: new InputDecoration(labelText: 'Email'),
+
+                validator: (input){
+                  if(input.isEmpty){
+                    return 'please Email';
+                  }
+                  return null;
+                },
+                onSaved: (input) => email,
               ),
             ),
             Padding(

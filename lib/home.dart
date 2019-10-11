@@ -110,6 +110,8 @@ class _HomePageState extends State<HomePage> {
                         _events[i].data['eventType'],
                         _events[i].data['eventDate'],_events[i].data['numOft']),
 
+
+
                 ));
               },
            //   trailing: ,

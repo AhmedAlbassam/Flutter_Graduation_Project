@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
 
 class applicantsPage extends StatefulWidget {
+  final _name;
+  applicantsPage(this._name);
   @override
-  _applicantsPageState createState() => _applicantsPageState();
+  _applicantsPageState createState() => _applicantsPageState(this._name);
 }
 
 class _applicantsPageState extends State<applicantsPage> with SingleTickerProviderStateMixin{
+  final _name;
+  _applicantsPageState(this._name);
   TabController _tabController;
   @override
   void initState() {
@@ -35,7 +39,7 @@ class _applicantsPageState extends State<applicantsPage> with SingleTickerProvid
       ),
       body: TabBarView(
         children: [
-           volApp(),bsApp()
+           volApp(this._name),bsApp(this._name),
         ],
         controller: _tabController,),
     );
@@ -45,12 +49,16 @@ class _applicantsPageState extends State<applicantsPage> with SingleTickerProvid
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class volApp extends StatefulWidget {
+  final _name;
+  volApp(this._name);
   @override
   volAppState createState() {
-    return volAppState();
+    return volAppState(this._name);
   }
 }
 class volAppState extends State<volApp> {
+  final _name;
+  volAppState(this._name);
   Firestore _firestore = Firestore.instance;
   List<DocumentSnapshot> _vol = [];
   bool _loadEvent = true;
@@ -59,11 +67,11 @@ class volAppState extends State<volApp> {
 
 
   _getVol() async{
-    Query q = _firestore.collection('Volunteers').orderBy("volName").limit(100);
+    Query q = _firestore.collection('Volunteers').where('eventName', isEqualTo:_name).orderBy("volName").limit(100);
+    print(_name);
     setState(() {
       _loadEvent =true;
     });
-
     QuerySnapshot _volSnap = await q.getDocuments();
     _vol = _volSnap.documents;
 
@@ -106,12 +114,16 @@ class volAppState extends State<volApp> {
 // ==============================================================================================================================================================================>
 
 class bsApp extends StatefulWidget {
+  final _name;
+  bsApp(this._name);
   @override
   bsAppState createState() {
-    return bsAppState();
+    return bsAppState(this._name);
   }
 }
 class bsAppState extends State<bsApp> {
+  final _name;
+  bsAppState(this._name);
 
   Firestore _fireStore = Firestore.instance;
   List<DocumentSnapshot> _bs = [];
@@ -120,7 +132,7 @@ class bsAppState extends State<bsApp> {
 
 
   _getBS() async{
-    Query p = _fireStore.collection('Booth Sellers').orderBy("bsName").limit(100);
+    Query p = _fireStore.collection('Booth Sellers').where('eventName', isEqualTo: _name).orderBy("bsName").limit(100);
     setState(() {
       _loaderEvent =true;
     });
@@ -153,9 +165,7 @@ class bsAppState extends State<bsApp> {
                 isThreeLine: true,
                 title:Text( _bs[i].data['bsName'],
                 ),
-                subtitle: Text('Email: '+_bs[i].data['bsEmail']+'\nPhone: '+_bs[i].data['bsPhone']
-
-                ),
+                subtitle: Text('Email: '+_bs[i].data['bsEmail']+'\nPhone: '+_bs[i].data['bsPhone']),
                 //   trailing: ,
               );
             }),

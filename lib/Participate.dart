@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class HomePage extends StatefulWidget {
+class Participate extends StatefulWidget {
+  final _name;
+  Participate(this._name);
   @override
-  _HomePageState createState() => _HomePageState();
+  ParticipateState createState() => ParticipateState(this._name);
 }
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin{
+class ParticipateState extends State<Participate> with SingleTickerProviderStateMixin{
+  final _name;
+  ParticipateState(this._name);
   TabController _tabController;
   final _formKey = GlobalKey<FormState>();
   @override
@@ -32,7 +36,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       ),
       body: TabBarView(
         children: [
-          Volunteer(),BoothSeller()
+          Volunteer(this._name),BoothSeller(this._name)
         ],
         controller: _tabController,),
     );
@@ -42,12 +46,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
 class Volunteer extends StatefulWidget {
   @override
+  final _name;
+  Volunteer(this._name);
   VolunteerState createState() {
-    return VolunteerState();
+    return VolunteerState(this._name);
   }
 }
 class VolunteerState extends State<Volunteer> {
-
+final _name;
+VolunteerState(this._name);
   final _formKey = GlobalKey<FormState>();
   final db = Firestore.instance;
   var volName;
@@ -65,7 +72,8 @@ class VolunteerState extends State<Volunteer> {
               'volName':volName,
               'volEmail':volEmail,
               'volPhone':volPhone,
-              'volExp':volExp
+              'volExp':volExp,
+              'eventName':_name,
             }
         );
       } catch (e) {
@@ -137,15 +145,18 @@ class VolunteerState extends State<Volunteer> {
 }
 //=============================================================================================================================================================================
 class BoothSeller extends StatefulWidget {
+  final _name;
+  BoothSeller(this._name);
   @override
   BoothSellerState createState() {
-    return BoothSellerState();
+    return BoothSellerState(this._name);
   }
 }
 // Create a corresponding State class.
 // This class holds data related to the form.
 class BoothSellerState extends State<BoothSeller> {
-
+final _name;
+BoothSellerState(this._name);
   final _formKey = GlobalKey<FormState>();
   final db = Firestore.instance;
   var bsName;
@@ -165,7 +176,8 @@ class BoothSellerState extends State<BoothSeller> {
               'bsEmail':bsEmail,
               'bsPhone':bsPhone,
               'Number of booths':noOfBooth,
-              'Business Activity':activityType
+              'Business Activity':activityType,
+              'eventName':_name,
             }
         );
       } catch (e) {
