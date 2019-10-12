@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'EventOrg.dart';
+import 'home.dart';
+
 class AddEventPage extends StatefulWidget {
   @override
   _AddEventPageState createState() => _AddEventPageState();
@@ -38,7 +41,9 @@ class _AddEventPageState extends State<AddEventPage> {
       } catch (e) {
         print(e.message);
       }
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Eventorg(eventName,eventLoc,eventType,eventDate,noOfTickets)));
     }
+
   }
 
   Widget build(BuildContext context) {
@@ -183,6 +188,7 @@ class _AddEventPageState extends State<AddEventPage> {
               children: <Widget>[
                 Expanded(
                   child: Padding(
+
                     padding: const EdgeInsets.only(
                         left: 20.0, right: 5.0, top: 10.0),
                     child: GestureDetector(

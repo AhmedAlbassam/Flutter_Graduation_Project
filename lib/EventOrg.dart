@@ -58,8 +58,8 @@ class Eventorgstates extends State<EventorgPage> {
             children: [
               eventImage(),
               eventDetails(),
-              ticketQnts(),
-              buyButton(),
+           ticketQnts(),
+             // buyButton(),
               participate(),
             ]
         ),
@@ -69,8 +69,9 @@ class Eventorgstates extends State<EventorgPage> {
 
   }
   Widget eventImage(){
+
     return Container(
-      child : Image.network("https://i.pinimg.com/564x/b0/df/f0/b0dff0574f141d59c87f6067ea0fae37.jpg", width: 160, height: 160,),
+      child : Image.network("https://user-images.githubusercontent.com/48566979/54383061-9eb8d580-4667-11e9-9f82-e5a23078e8a5.png", width: 160, height: 160,),
 
     );
   }
@@ -79,6 +80,7 @@ class Eventorgstates extends State<EventorgPage> {
     //i can use Textspan to make it longer with diffirent styles
     return Column(
         children:[
+
           Text(
 
             '$_name' ,
@@ -108,51 +110,51 @@ class Eventorgstates extends State<EventorgPage> {
     return  Row(
 
       children: <Widget>[
-        Expanded(
-          child : Text('Qnt',
-              style: TextStyle(fontSize: 30)
-          ),
-        ),
+//        Expanded(
+//          child : Text('Qnt',
+//              style: TextStyle(fontSize: 30)
+//          ),
+//        ),
 
-        Flexible(
-          child: IconButton(icon:
-          Icon(Icons.add), onPressed: () {
-            setState(() {
-              ticketQnt++;
-            });
-          },)
-
-          ,),
-        Flexible(
-          child: Text('$ticketQnt', style: TextStyle(fontSize: 30),),
-        ),
-        Flexible(
-            child: IconButton(icon:
-            Icon(Icons.remove), onPressed: () {
-              setState(() {
-                ticketQnt--;
-                if(ticketQnt<=1)
-                  ticketQnt = 1;
-              });
-            },)
-        ),
+//        Flexible(
+//          child: IconButton(icon:
+//          Icon(Icons.add), onPressed: () {
+//            setState(() {
+//              ticketQnt++;
+//            });
+//          },)
+//
+//          ,),
+//        Flexible(
+//          child: Text('$ticketQnt', style: TextStyle(fontSize: 30),),
+//        ),
+//        Flexible(
+//            child: IconButton(icon:
+//            Icon(Icons.remove), onPressed: () {
+//              setState(() {
+//                ticketQnt--;
+//                if(ticketQnt<=1)
+//                  ticketQnt = 1;
+//              });
+//            },)
+//        ),
 
       ],
       mainAxisAlignment: MainAxisAlignment.center,
     );
   }
-  Widget buyButton(){
-    var h = new pre.HomePage();
-    return RaisedButton(
-      child: Text('Buy a Ticket',
-        style: TextStyle(color: Colors.white),),
-      onPressed: (){
-
-      },
-      color: Colors.orangeAccent,
-
-    );
-  }
+//  Widget buyButton(){
+//    var h = new pre.HomePage();
+//    return RaisedButton(
+//      child: Text('Buy a Ticket',
+//        style: TextStyle(color: Colors.white),),
+//      onPressed: (){
+//
+//      },
+//      color: Colors.orangeAccent,
+//
+//    );
+//  }
   Widget participate(){
     return RaisedButton(
       color: Colors.white,
@@ -161,14 +163,13 @@ class Eventorgstates extends State<EventorgPage> {
       }
       ,
       child: GestureDetector(
-
         onTap: () {
           Navigator.push(context, MaterialPageRoute(
             builder: (context) => applicantsPage(_name),
           ));
         },
-        child:Text('Participate',
-            style: TextStyle(color: Colors.orangeAccent, fontStyle: FontStyle.italic) ),
+        child:Text('See how are Participate in this event ',
+            style: TextStyle(color: Colors.deepOrange, fontStyle: FontStyle.normal)),
 
       ),
 
