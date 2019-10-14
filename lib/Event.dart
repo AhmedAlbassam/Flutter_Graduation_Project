@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:gproject2020/Participate.dart' as prefix0;
 import 'package:gproject2020/home.dart' as pre;
 import 'Participate.dart';
-import 'home.dart';
+import 'Ticket.dart';
+import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 class Event extends StatelessWidget{
-  final _name, _location, _type, _date, _numoft;
+  final _name, _location, _type, _date, _numoft, ticketPrice;
 
 
-  Event(this._name, this._location,this._type, this._date,this._numoft);
+  Event(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice);
 
     Widget build(BuildContext context){
 
@@ -15,7 +18,7 @@ class Event extends StatelessWidget{
 
         home: Scaffold(
 
-          body: EventPage(this._name, this._location,this._type, this._date, this._numoft),
+          body: EventPage(this._name, this._location,this._type, this._date, this._numoft, this.ticketPrice),
           appBar: AppBar(
             backgroundColor: Colors.orangeAccent,
             title : Text('Event details', textAlign: TextAlign.center,),
@@ -30,21 +33,47 @@ class Event extends StatelessWidget{
   }
 }
 class EventPage extends StatefulWidget{
-  final _name, _location, _type, _date,_numoft;
+  final _name, _location, _type, _date, _numoft, ticketPrice;
 
-  EventPage(this._name, this._location,this._type, this._date,this._numoft);
+
+  EventPage(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return Eventstates(this._name, this._location,this._type, this._date,this._numoft);
+    return Eventstates(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice);
   }
 }
-class Eventstates extends State<EventPage> {
+class Eventstates extends State<EventPage>  {
   int ticketQnt = 1;
-  final _name,_location, _type, _date,_numoft;
+  var _name,_location, _type, _date, _numoft, ticketPrice;
+  var _ticketId = 0;
+  var rand = new Random();
+  var _indiEmail = "";
+  Eventstates(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice);
+  final db = Firestore.instance;
+  Future<void> addTicket() async {
+    _ticketId =rand.nextInt(999999);
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final FirebaseUser user = await auth.currentUser();
+    _indiEmail = user.email;
+      try {
+        await db.collection("Tickets").add(
+            {
+              'ticketNo': _ticketId,
+              'eventName': _name,
+              'Edate': _date,
+              'eventLoc': _location,
+              'indiEmail': _indiEmail,
 
-  Eventstates(this._name, this._location,this._type, this._date,this._numoft);
+            }
+        );
+      } catch (e) {
+        print(e.message);
+      }
+
+    print('Added? is it here?');
+  }
  // String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
   Widget build(context) {
 
@@ -141,12 +170,11 @@ class Eventstates extends State<EventPage> {
     );
   }
   Widget buyButton(){
-    var h = new pre.HomePage();
     return RaisedButton(
       child: Text('Buy a Ticket',
         style: TextStyle(color: Colors.white),),
-      onPressed: (){
-
+      onPressed: () {
+        addTicket();
       },
       color: Colors.orangeAccent,
 

@@ -5,6 +5,7 @@ import 'Wallet.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'Participate.dart';
 import 'main.dart';
+import 'Ticket.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => new _HomePageState();
@@ -35,9 +36,11 @@ class _HomePageState extends State<HomePage> {
         _loadEvent =false;
      });
   }
+
+
   void initState(){
-      super.initState();
-      _getEvent();
+    super.initState();
+    _getEvent();
   }
 
   Widget build(BuildContext context) {
@@ -65,7 +68,7 @@ class _HomePageState extends State<HomePage> {
               leading: new Icon(Icons.event_note),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
-                 // builder: (context) => Wallet(),
+                  builder: (context) => TicketState(),
                 ));
               },
             ),
@@ -108,7 +111,8 @@ class _HomePageState extends State<HomePage> {
                 Navigator.push(context, MaterialPageRoute(
                     builder: (context) => Event(_events[i].data['eventName'],_events[i].data['eventLocation'],
                         _events[i].data['eventType'],
-                        _events[i].data['eventDate'],_events[i].data['numOft']),
+                        _events[i].data['eventDate'],_events[i].data['Number of tickets'],
+                    _events[i].data['Ticket Price']),
 
 
 

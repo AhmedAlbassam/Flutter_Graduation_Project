@@ -15,8 +15,8 @@ class _AddEventPageState extends State<AddEventPage> {
   var emailOfOrg;
   var eventDate;
   var eventLoc;
-  int noOfTickets;
-  int ticketPrice;
+  var noOfTickets;
+  var ticketPrice;
   String email;
   Future<void> addEvent() async {
     final formState = _formKey.currentState;
@@ -40,7 +40,6 @@ class _AddEventPageState extends State<AddEventPage> {
       }
     }
   }
-
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(
@@ -155,7 +154,7 @@ class _AddEventPageState extends State<AddEventPage> {
                 onSaved: (input) => noOfTickets = int.parse(input),
               ),
             ),
-            Padding(
+            /*Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
               child: TextFormField(
@@ -169,7 +168,7 @@ class _AddEventPageState extends State<AddEventPage> {
                 },
                 onSaved: (input) => email,
               ),
-            ),
+            ),*/
             Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
