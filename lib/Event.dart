@@ -77,7 +77,7 @@ class Eventstates extends State<EventPage>  {
  // String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
   Widget build(context) {
 
-    return Container(
+    return Container (
 
       margin: EdgeInsets.all(20.0),
       child: Form(
