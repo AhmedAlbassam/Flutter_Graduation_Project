@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gproject2020/Organization.dart';
 import 'package:gproject2020/Participate.dart' as prefix0;
 import 'package:gproject2020/home.dart' as pre;
 import 'Participate.dart';
+import 'UpdateEvent.dart';
 import 'home.dart';
 import 'applicants.dart';
 class Eventorg extends StatelessWidget{
@@ -44,7 +47,7 @@ class EventorgPage extends StatefulWidget{
 class Eventorgstates extends State<EventorgPage> {
   int ticketQnt = 1;
   final _name,_location, _type, _date,_numoft;
-
+  Firestore _firestore = Firestore.instance;
   Eventorgstates(this._name, this._location,this._type, this._date,this._numoft);
   // String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
   Widget build(context) {
@@ -61,6 +64,9 @@ class Eventorgstates extends State<EventorgPage> {
            ticketQnts(),
              // buyButton(),
               participate(),
+              EditEvent(),
+              DeleteEvent(),
+
             ]
         ),
       ),
@@ -168,8 +174,56 @@ class Eventorgstates extends State<EventorgPage> {
             builder: (context) => applicantsPage(_name),
           ));
         },
-        child:Text('See how are Participate in this event ',
+        child:Text('See who are Participate in this event ',
             style: TextStyle(color: Colors.deepOrange, fontStyle: FontStyle.normal)),
+
+      ),
+
+
+    );
+  }
+  Widget EditEvent(){
+    return RaisedButton(
+      color: Colors.orangeAccent,
+      onPressed: () {
+
+      }
+      ,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(
+
+            builder: (context) => UpdateEvent(_name),
+          ));
+        },
+        child:Text('Edit your event information ',
+            style: TextStyle(color: Colors.black87, fontStyle: FontStyle.normal)),
+
+      ),
+
+
+    );
+  }
+
+  Widget DeleteEvent(){
+    DocumentSnapshot doc;
+    return RaisedButton(
+      color: Colors.redAccent,
+      onPressed: ()async {
+        await
+        _firestore.collection('Events')
+            .document(doc.documentID)
+            .delete();
+      }
+      ,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(
+       //   builder: (context) => OrganizationPage(),
+          ));
+        },
+        child:Text('Delete your event ',
+            style: TextStyle(color: Colors.black87, fontStyle: FontStyle.normal)),
 
       ),
 
