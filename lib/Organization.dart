@@ -11,8 +11,10 @@ import 'login.dart';
 
 class OrganizationPage extends StatefulWidget {
   @override
+ // OrganizationPage();
   String userName;
-  OrganizationPage(this.userName);
+   OrganizationPage(this.userName);
+
   _OrganizationPageState createState() => new _OrganizationPageState(this.userName);
 
 }
@@ -33,6 +35,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
  _getEvent() async{
    print(userName+'this is my email ahmed ahmed');
     Query q = _firestore.collection('Events').where('emailOrg', isEqualTo: userName).orderBy("eventName").limit(100);
+
 
     setState(() {
       _loadEvent =true;
@@ -85,7 +88,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text('Drawer Header'),
+              child: Text(userName),
               decoration: BoxDecoration(
                   color: Colors.blueGrey
               ),
@@ -99,15 +102,15 @@ class _OrganizationPageState extends State<OrganizationPage> {
                 ));
               },
             ),
-            ListTile(
-              title: Text('Event Applications'),
-              leading: new Icon(Icons.event_note),
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(
-                  builder: (context) => applicantsPage(""),
-                ));
-              },
-            ),
+//            ListTile(
+//              title: Text('Event Applications'),
+//              leading: new Icon(Icons.event_note),
+//              onTap: (){
+//                Navigator.push(context, MaterialPageRoute(
+//                  builder: (context) => applicantsPage(""),
+//                ));
+//              },
+//            ),
             ListTile(
               title: Text('Settings'),
               leading: new Icon(Icons.settings),

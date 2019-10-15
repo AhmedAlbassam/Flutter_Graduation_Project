@@ -59,6 +59,7 @@ class Individual extends StatefulWidget {
 
 class IndividualState extends State<Individual> {
 
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   String email ,password;
   String UserName;
@@ -70,7 +71,7 @@ class IndividualState extends State<Individual> {
       formState.save();
 
       try {
-        FirebaseUser user = (await FirebaseAuth.instance.
+        FirebaseUser user = (await _firebaseAuth.
         signInWithEmailAndPassword(email: email, password: password)).user;
         Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
         UserName=user.email;
