@@ -47,14 +47,14 @@ class Ticket extends State<TicketState> {
             controller: _scroll,
             itemCount: _tickets.length,
             itemBuilder: (BuildContext ctx, int i){
-            String tickNo = _tickets[i].data['ticketNo'].toString();
+              String tickNo = _tickets[i].data['ticketNo'].toString();
               return ListTile (
                 trailing: Icon(Icons.business),
                 isThreeLine: true,
                 title:Text('Ticket number: '+ tickNo,
                 ),
                 subtitle: Text('Event name: '+_tickets[i].data['eventName']+'\nDate: '+_tickets[i].data['Edate']
-                + '\nLocation: '+ _tickets[i].data['eventLoc']),
+                    + '\nLocation: '+ _tickets[i].data['eventLoc']),
                 //   trailing: ,
               );
             }),
@@ -71,4 +71,4 @@ class Ticket extends State<TicketState> {
     );
   }
 
-  }
+}

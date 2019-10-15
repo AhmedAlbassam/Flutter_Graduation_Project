@@ -12,7 +12,7 @@ class Event extends StatelessWidget{
 
   Event(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice);
 
-    Widget build(BuildContext context){
+  Widget build(BuildContext context){
 
     return MaterialApp(
 
@@ -57,24 +57,24 @@ class Eventstates extends State<EventPage>  {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final FirebaseUser user = await auth.currentUser();
     _indiEmail = user.email;
-      try {
-        await db.collection("Tickets").add(
-            {
-              'ticketNo': _ticketId,
-              'eventName': _name,
-              'Edate': _date,
-              'eventLoc': _location,
-              'indiEmail': _indiEmail,
+    try {
+      await db.collection("Tickets").add(
+          {
+            'ticketNo': _ticketId,
+            'eventName': _name,
+            'Edate': _date,
+            'eventLoc': _location,
+            'indiEmail': _indiEmail,
 
-            }
-        );
-      } catch (e) {
-        print(e.message);
-      }
+          }
+      );
+    } catch (e) {
+      print(e.message);
+    }
 
     print('Added? is it here?');
   }
- // String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
+  // String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
   Widget build(context) {
 
     return Container (
@@ -106,30 +106,30 @@ class Eventstates extends State<EventPage>  {
 
     //i can use Textspan to make it longer with diffirent styles
     return Column(
-    children:[
-      Text(
+        children:[
+          Text(
 
-      '$_name' ,
-      textAlign: TextAlign.left,
-      style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
-     ),
+            '$_name' ,
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+          ),
 
-      Text(
-        '$_location' ,
-        textAlign: TextAlign.left,
-        style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
-      ),
-      Text(
-        '$_type' ,
-        textAlign: TextAlign.left,
-        style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
-      ),
-      Text(
-        '$_date' ,
-        textAlign: TextAlign.left,
-        style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
-      ),
-    ]
+          Text(
+            '$_location' ,
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+          ),
+          Text(
+            '$_type' ,
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+          ),
+          Text(
+            '$_date' ,
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+          ),
+        ]
     );
   }
   Widget ticketQnts(){
@@ -189,12 +189,12 @@ class Eventstates extends State<EventPage>  {
       ,
       child: GestureDetector(
 
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => Participate(_name),
-            ));
-          },
-          child:Text('Participate',
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => Participate(_name),
+          ));
+        },
+        child:Text('Participate',
             style: TextStyle(color: Colors.orangeAccent, fontStyle: FontStyle.italic) ),
 
       ),

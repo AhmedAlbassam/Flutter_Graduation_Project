@@ -23,18 +23,18 @@ class _AddEventPageState extends State<AddEventPage> {
     if (formState.validate()) {
       formState.save();
       try {
-          await db.collection("Events").add(
-              {
-                'eventName':eventName,
-                'emailOrg':emailOfOrg,
-                'eventType':eventType,
-                'eventDate':eventDate,
-                'eventLocation':eventLoc,
-                'Number of tickets': noOfTickets,
-                'Ticket Price': ticketPrice,
-                'Email' : email,
-              }
-          );
+        await db.collection("Events").add(
+            {
+              'eventName':eventName,
+              'emailOrg':emailOfOrg,
+              'eventType':eventType,
+              'eventDate':eventDate,
+              'eventLocation':eventLoc,
+              'Number of tickets': noOfTickets,
+              'Ticket Price': ticketPrice,
+              'Email' : email,
+            }
+        );
       } catch (e) {
         print(e.message);
       }
@@ -42,11 +42,11 @@ class _AddEventPageState extends State<AddEventPage> {
   }
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(
-            backgroundColor:Colors.transparent,
-            elevation: 0.0,
-            iconTheme: new IconThemeData(color: Color(0xFF18D191))),
-        resizeToAvoidBottomPadding: false,
+      appBar: new AppBar(
+          backgroundColor:Colors.transparent,
+          elevation: 0.0,
+          iconTheme: new IconThemeData(color: Color(0xFF18D191))),
+      resizeToAvoidBottomPadding: false,
       body: Form(
         key: _formKey ,
         child: new Column(
