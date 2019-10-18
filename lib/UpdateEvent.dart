@@ -123,7 +123,7 @@ class _UpdateEventState extends State<UpdateEvent> {
 @override
 void initState(){
   CRUDevent CRUD = new CRUDevent(_EmailOrg);
-  CRUD.getEvent().then(( results){
+  CRUD.getEvent().then((results){
      setState(() {
        events = results;
      });
@@ -155,7 +155,7 @@ super.initState();
     CRUDevent CRUD = new CRUDevent(_EmailOrg);
   //  if(events != null){
         return StreamBuilder(
-          stream: events,
+          stream: _firestore.collection('Events').snapshots(),
             builder: (context,snapshot){
               return ListView.builder(itemCount: snapshot.data.documents.length,
                 padding: EdgeInsets.all(5.0),
