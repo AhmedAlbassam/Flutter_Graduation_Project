@@ -30,6 +30,7 @@ class QuickBee extends StatelessWidget {
 
   class MyHomePage extends StatelessWidget {
 
+
    /* final GoogleSignIn _googleSignIn = GoogleSignIn();
     final FirebaseAuth _auth = FirebaseAuth.instance;
 

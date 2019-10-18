@@ -1,6 +1,10 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gproject2020/CRUD_Event.dart';
+import 'package:gproject2020/UpdateEvent.dart';
 import 'CreateAccount.dart';
 import 'home.dart';
 import 'Organization.dart';
@@ -59,7 +63,7 @@ class Individual extends StatefulWidget {
 
 class IndividualState extends State<Individual> {
 
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  //final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
   String email ,password;
   String UserName;
@@ -71,11 +75,13 @@ class IndividualState extends State<Individual> {
       formState.save();
 
       try {
-        FirebaseUser user = (await _firebaseAuth.
+        FirebaseUser user = (await FirebaseAuth.instance.
         signInWithEmailAndPassword(email: email, password: password)).user;
         Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
         UserName=user.email;
         OrganizationPage i = new OrganizationPage(email);
+        UpdateEvent ue = new UpdateEvent(email);
+        CRUDevent er = new CRUDevent(email);
       } catch (e) {
         print(e.message);
       }

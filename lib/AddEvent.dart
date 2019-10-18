@@ -21,7 +21,9 @@ class _AddEventPageState extends State<AddEventPage> {
   var eventLoc;
   var noOfTickets;
   var ticketPrice;
-  String email;
+  //String email;
+
+
   Future<void> addEvent() async {
     final formState = _formKey.currentState;
     if (formState.validate()) {
@@ -36,13 +38,12 @@ class _AddEventPageState extends State<AddEventPage> {
               'eventLocation':eventLoc,
               'Number of tickets': noOfTickets,
               'Ticket Price': ticketPrice,
-              'Email' : email,
             }
         );
       } catch (e) {
         print(e.message);
       }
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Eventorg(eventName,eventLoc,eventType,eventDate,noOfTickets)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Eventorg(eventName,eventLoc,eventType,eventDate,noOfTickets,emailOfOrg)));
     }
 
   }

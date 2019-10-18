@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gproject2020/UpdateEvent.dart';
 import 'AddEvent.dart';
 import 'Event.dart';
 import 'EventOrg.dart';
@@ -48,6 +49,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
       _loadEvent =false;
     });
   }
+
   void initState(){
     super.initState();
     _getEvent();
@@ -73,7 +75,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) => Eventorg(_events[i].data['eventName'],_events[i].data['eventLocation'],
                         _events[i].data['eventType'],
-                        _events[i].data['eventDate'],_events[i].data['numOft']),
+                        _events[i].data['eventDate'],_events[i].data['numOft'],_events[i].data['emailOrg']),
 
                   ));
                 },
@@ -102,15 +104,15 @@ class _OrganizationPageState extends State<OrganizationPage> {
                 ));
               },
             ),
-//            ListTile(
-//              title: Text('Event Applications'),
-//              leading: new Icon(Icons.event_note),
-//              onTap: (){
-//                Navigator.push(context, MaterialPageRoute(
-//                  builder: (context) => applicantsPage(""),
-//                ));
-//              },
-//            ),
+            ListTile(
+              title: Text('Edit and Delete Events'),
+              leading: new Icon(Icons.event_note),
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => UpdateEvent(userName),
+                ));
+              },
+            ),
             ListTile(
               title: Text('Settings'),
               leading: new Icon(Icons.settings),

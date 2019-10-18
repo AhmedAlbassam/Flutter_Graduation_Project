@@ -8,10 +8,10 @@ import 'UpdateEvent.dart';
 import 'home.dart';
 import 'applicants.dart';
 class Eventorg extends StatelessWidget{
-  final _name, _location, _type, _date, _numoft;
+  final _name, _location, _type, _date, _numoft,_emailorg;
 
 
-  Eventorg(this._name, this._location,this._type, this._date,this._numoft);
+  Eventorg(this._name, this._location,this._type, this._date,this._numoft,this._emailorg);
 
   Widget build(BuildContext context){
 
@@ -19,7 +19,7 @@ class Eventorg extends StatelessWidget{
 
         home: Scaffold(
 
-          body: EventorgPage(this._name, this._location,this._type, this._date, this._numoft),
+          body: EventorgPage(this._name, this._location,this._type, this._date, this._numoft,this._emailorg),
           appBar: AppBar(
             backgroundColor: Colors.orangeAccent,
             title : Text('Event details for org', textAlign: TextAlign.center,),
@@ -34,21 +34,21 @@ class Eventorg extends StatelessWidget{
   }
 }
 class EventorgPage extends StatefulWidget{
-  final _name, _location, _type, _date,_numoft;
+  final _name, _location, _type, _date,_numoft,_emailorg;
 
-  EventorgPage(this._name, this._location,this._type, this._date,this._numoft);
+  EventorgPage(this._name, this._location,this._type, this._date,this._numoft,this._emailorg);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return Eventorgstates(this._name, this._location,this._type, this._date,this._numoft);
+    return Eventorgstates(this._name, this._location,this._type, this._date,this._numoft,this._emailorg);
   }
 }
 class Eventorgstates extends State<EventorgPage> {
   int ticketQnt = 1;
-  final _name,_location, _type, _date,_numoft;
+  final _name,_location, _type, _date,_numoft,_emailorg;
   Firestore _firestore = Firestore.instance;
-  Eventorgstates(this._name, this._location,this._type, this._date,this._numoft);
+  Eventorgstates(this._name, this._location,this._type, this._date,this._numoft,this._emailorg);
   // String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
   Widget build(context) {
 
@@ -193,7 +193,7 @@ class Eventorgstates extends State<EventorgPage> {
         onTap: () {
           Navigator.push(context, MaterialPageRoute(
 
-            builder: (context) => UpdateEvent(_name),
+          builder: (context) => UpdateEvent(_emailorg),
           ));
         },
         child:Text('Edit your event information ',
@@ -209,15 +209,17 @@ class Eventorgstates extends State<EventorgPage> {
     DocumentSnapshot doc;
     return RaisedButton(
       color: Colors.redAccent,
-      onPressed: ()async {
-        await
-        _firestore.collection('Events')
-            .document(doc.documentID)
-            .delete();
+      onPressed: () {
+
       }
       ,
       child: GestureDetector(
-        onTap: () {
+        onTap: ()async {
+          await
+          _firestore.collection('Events')
+              .document(doc.documentID)
+              .delete();
+          
           Navigator.push(context, MaterialPageRoute(
        //   builder: (context) => OrganizationPage(),
           ));
