@@ -15,7 +15,6 @@ class OrganizationPage extends StatefulWidget {
  // OrganizationPage();
   String userName;
    OrganizationPage(this.userName);
-
   _OrganizationPageState createState() => new _OrganizationPageState(this.userName);
 
 }

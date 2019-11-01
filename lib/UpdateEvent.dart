@@ -24,158 +24,184 @@ class _UpdateEventState extends State<UpdateEvent> {
 
   final  _EmailOrg;
 
-
   _UpdateEventState(this._EmailOrg);
-
-
-  final _formKey = GlobalKey<FormState>();
- // final db = Firestore.instance;
-  var eventName;
-  var eventType;
- // var emailOfOrg;
-  var eventDate;
-  var eventLoc;
-  var noOfTickets;
-  var ticketPrice;
-  Firestore _firestore = Firestore.instance;
-  bool _loadEvent = true;
-  List<DocumentSnapshot> _events = [];
-
-  TextEditingController _controller = TextEditingController();
+  TextEditingController _namecontroller = TextEditingController();
+  TextEditingController _loccontroller = TextEditingController();
+  TextEditingController _datecontroller = TextEditingController();
+  TextEditingController _pricecontroller = TextEditingController();
+  TextEditingController _noOfTktcontroller = TextEditingController();
+  TextEditingController _typecontroller = TextEditingController();
   DocumentSnapshot _currentDocument;
-  Stream events;
+  _updateData() async {
+    await db
+        .collection('Events')
+        .document(_currentDocument.documentID)
+        .updateData({'eventName': _namecontroller.text});
+    await db
+        .collection('Events')
+        .document(_currentDocument.documentID)
+        .updateData({'eventLocation': _loccontroller.text});
+    await db
+        .collection('Events')
+        .document(_currentDocument.documentID)
+        .updateData({'eventType': _typecontroller.text});
+
+    await db
+        .collection('Events')
+        .document(_currentDocument.documentID)
+        .updateData({'eventDate': _datecontroller.text});
+
+    await db
+        .collection('Events')
+        .document(_currentDocument.documentID)
+        .updateData({'Ticket Price': _pricecontroller.text});
+
+    await db
+        .collection('Events')
+        .document(_currentDocument.documentID)
+        .updateData({'Number of tickets': _noOfTktcontroller.text});
 
 
-
-
-
-
-
-   UpdateDialoge(BuildContext context , selectedDoc) async{
-  CRUDevent CRUD = new CRUDevent(_EmailOrg);
-
-  return showDialog(context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context){
-    return AlertDialog(
-      title: Text('Update' ,style: TextStyle(fontSize: 15.0),),
-      content: Column(
-        children: <Widget>[
-          TextField(
-            decoration: InputDecoration(hintText: 'Enter Event Name'),
-            onChanged: (value){
-              this.eventName = value;
-            },
-          ),
-          SizedBox(height: 5.0,),
-          TextField(
-            decoration: InputDecoration(hintText: 'Enter event Location'),
-            onChanged: (value){
-              this.eventLoc =value;
-            },
-          ),
-          TextField(
-            decoration: InputDecoration(hintText: 'Enter event date'),
-            onChanged: (value){
-              this.eventDate =value;
-            },
-          ),TextField(
-            decoration: InputDecoration(hintText: 'Enter new Ticket price'),
-            onChanged: (value){
-              this.ticketPrice =value;
-            },
-          ),TextField(
-            decoration: InputDecoration(hintText: 'Enter amount of tickets'),
-            onChanged: (value){
-              this.noOfTickets =value;
-            },
-          ),TextField(
-            decoration: InputDecoration(hintText: 'Enter event Type'),
-            onChanged: (value){
-              this.eventType =value;
-            },
-          )
-        ],
-      ),
-      actions: <Widget>[
-        FlatButton(
-          child: Text('update'),
-          textColor: Colors.cyan,
-          onPressed: (){
-            Navigator.of(context).pop();
-            CRUD.UpdateData(selectedDoc
-                ,{  'eventName':eventName,
-              'eventType':eventType,
-              'eventDate':eventDate,
-              'eventLocation':eventLoc,
-              'Number of tickets': noOfTickets,
-              'Ticket Price': ticketPrice,}).then((result){
-
-            });
-          },
-        )
-      ],
-    );
-    }
-  );
-}
-
-@override
-void initState(){
-  CRUDevent CRUD = new CRUDevent(_EmailOrg);
-  CRUD.getEvent().then(( results){
-     setState(() {
-       events = results;
-     });
-  });
-
-super.initState();
-}
-
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: (){
-
-            },
-          )
-        ],
-          backgroundColor:Colors.transparent,
-          elevation: 0.0,
-          iconTheme: new IconThemeData(color: Color(0xFF18D191))),
-      resizeToAvoidBottomPadding: false,
-      body:_eventList()
-    );
+  }
+  _deleteData()async{
+    await db.collection("Events")
+        .document(_currentDocument.documentID)
+        .delete();
   }
 
-  Widget _eventList(){
-    CRUDevent CRUD = new CRUDevent(_EmailOrg);
-  //  if(events != null){
-        return StreamBuilder(
-          stream: events,
-            builder: (context,snapshot){
-              return ListView.builder(itemCount: snapshot.data.documents.length,
-                padding: EdgeInsets.all(5.0),
-                itemBuilder: (context,i){
-                  return ListTile(
-                    title: Text(snapshot.data.documents[i].data['eventName']),
-                    subtitle: Text(snapshot.data.documents[i].data['eventLocation']),
-                    onTap: (){
-                      UpdateDialoge(context, snapshot.data.documents[i].documentID);
-                    },
-                    onLongPress: (){
-                      CRUD.DeleteData(snapshot.data.documents[i].documntID);
-                    },
+  final db = Firestore.instance;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Update Data from Firestore")),
+      body: ListView(
+        padding: EdgeInsets.all(12.0),
+        children: <Widget>[
+          StreamBuilder<QuerySnapshot>(
+              stream: db.collection('Events').where('emailOrg', isEqualTo : _EmailOrg).snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Column(
+                    children: snapshot.data.documents.map((doc) {
+                      return ListTile(
+                        title: Text(doc.data['eventName']),
+                        trailing: RaisedButton(
+                          child: Text("Edit", style: TextStyle(color: Colors.white),),
+                          color: Colors.red,
+                          onPressed: () async {
+                            setState(() {
+                              _currentDocument = doc;
+                              _namecontroller.text = doc.data['eventName'];
+                            });
+                          },
+
+                        ),
+                        leading: RaisedButton(
+                          child: Text("delete",style: TextStyle(color: Colors.white)),
+                          color: Colors.red,
+                          onPressed: ()async{
+                            setState(() {
+                              _currentDocument = doc;
+                              _namecontroller.text = doc.data['eventName'];
+                            });
+                            _deleteData();
+                          },
+                        ),
+                      );
+                    }).toList(),
                   );
-                },);
-            },
-        );
-      //  }
-      //  else{
-        //  return Text("Loading , please wait");
-      //  }
+                } else {
+                  return SizedBox();
+                }
+              }),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 15.0),
+            child: TextField(
+              controller: _namecontroller,
+              decoration: InputDecoration(hintText: 'Enter Title'),
+            ),
+
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 15.0),
+            child: TextField(
+              controller: _loccontroller,
+              decoration: InputDecoration(hintText: 'Enter loc'),
+            ),
+
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 15.0),
+            child: TextField(
+              controller: _typecontroller,
+              decoration: InputDecoration(hintText: 'Enter type'),
+            ),
+
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 15.0),
+            child: TextField(
+              controller: _datecontroller,
+              decoration: InputDecoration(hintText: 'Enter date'),
+            ),
+
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 15.0),
+            child: TextField(
+              controller: _pricecontroller,
+              decoration: InputDecoration(hintText: 'Enter price'),
+            ),
+
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 15.0),
+            child: TextField(
+              controller: _noOfTktcontroller,
+              decoration: InputDecoration(hintText: 'Enter numoftkt'),
+            ),
+
+          ),
+
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: RaisedButton(
+              child: Text('Update'),
+              color: Colors.red,
+              onPressed: _updateData,
+            ),
+          ),
+          SizedBox(height: 20.0),
+
+        ],
+      ),
+    );
+
+
+  }
+  Widget successfulUpdate(){
+    return AlertDialog(
+      content: new Text('Event Updated succeffuly', style: TextStyle(color: Colors.lightBlue),),
+      actions: <Widget>[
+        new FlatButton(onPressed: (){
+          Navigator.of(context).pop();
+        }, child: Text('Close', style: TextStyle(color: Colors.lightBlue),)
+        ),
+      ],
+
+    );
+  }
+  Widget deletedSuccessfully(){
+    return AlertDialog(
+      content: new Text('Event deleted succeffuly', style: TextStyle(color: Colors.lightBlue),),
+      actions: <Widget>[
+        new FlatButton(onPressed: (){
+          Navigator.of(context).pop();
+        }, child: Text('Close', style: TextStyle(color: Colors.lightBlue),)
+        )
+      ],
+
+    );
   }
 }

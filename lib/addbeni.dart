@@ -1,60 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:qr_mobile_vision/qr_camera.dart';
 
-class displayaddbeni extends StatelessWidget{
-  Widget build(context){
-    return MaterialApp(
+class Scanner extends StatefulWidget {
+  @override
+  ScannerState createState() => new ScannerState();
+}
 
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body:
-          addbenipage(),
-
-          appBar: AppBar(
-            backgroundColor: Colors.lightBlueAccent,
-            title : Text('Add beni', textAlign: TextAlign.center,),
-            leading: IconButton(icon:Icon(Icons.arrow_back),
-              onPressed:() => Navigator.pop(context, false),
-            ),
-
-
-
-          ),
-          backgroundColor: Colors.white,
-        )
-    );
+class ScannerState extends State<Scanner> {
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+        debugShowCheckedModeBanner: false ,
+        home: new Scan());
   }
 }
 
-class addbenipage extends StatefulWidget{
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return addbeni();
-  }
+class Scan extends StatefulWidget {
+  @override
+  _ScanState createState() => new _ScanState();
 }
 
-class addbeni extends State<addbenipage>{
-  Widget build(context){
-    return Container(
-      margin: EdgeInsets.all(20),
-      child: Form(
-        child: Column(
+class _ScanState extends State<Scan> {
+  String qr;
+  bool camState = true;
+
+
+  @override
+  initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Scaffold(
+      //  backgroundColor: (Colors.black54),
+      body: new Center(
+        child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+
           children: <Widget>[
-            Text('Enter a wallet id to add a beni', style:TextStyle(fontStyle: FontStyle.italic),),
-            TextFormField(
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                  labelText: 'Wallet ID'
-              ),
-            ),
-            RaisedButton(
-              color: Colors.lightBlue,
-              child: Text('Submit'),
-              onPressed: (){},
-            )
+            new Expanded(
+                child: camState
+                    ? new Center(
+                  child: new SizedBox(
+                    width: 400.0,
+                    height: 500.0,
+                    child: new QrCamera(
+                      onError: (context, error) => Text(
+                        error.toString(),
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      qrCodeCallback: (code) {
+                        setState(() {
+                          qr = code;
+                        });
+                      },
+                      child: new Container(
+                        decoration: new BoxDecoration(
+                          color: Colors.transparent,
+                          //     border: Border.all(color: Colors.orange, width: 10.0, style: BorderStyle.solid),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+                    : new Center(child: new Text("Camera inactive"))),
+            new Text("QRCODE: $qr"),
           ],
         ),
       ),
-
     );
   }
 }

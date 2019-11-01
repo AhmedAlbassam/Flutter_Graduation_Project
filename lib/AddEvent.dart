@@ -43,6 +43,7 @@ class _AddEventPageState extends State<AddEventPage> {
       } catch (e) {
         print(e.message);
       }
+
       Navigator.push(context, MaterialPageRoute(builder: (context) => Eventorg(eventName,eventLoc,eventType,eventDate,noOfTickets,emailOfOrg)));
     }
 
@@ -193,7 +194,10 @@ class _AddEventPageState extends State<AddEventPage> {
                     padding: const EdgeInsets.only(
                         left: 20.0, right: 5.0, top: 10.0),
                     child: GestureDetector(
-                      onTap: addEvent,
+                      onTap: (){
+                        addEvent();
+                        added();
+                      },
                       child: new Container(
                           alignment: Alignment.center,
                           height: 60.0,
@@ -213,5 +217,17 @@ class _AddEventPageState extends State<AddEventPage> {
           ],
         ),
       ),);
+  }
+  Widget added(){
+    return AlertDialog(
+      content: new Text('Added succeffuly', style: TextStyle(color: Colors.lightBlue),),
+      actions: <Widget>[
+        new FlatButton(onPressed: (){
+          Navigator.of(context).pop();
+        }, child: Text('Close', style: TextStyle(color: Colors.lightBlue),)
+        )
+      ],
+
+    );
   }
 }

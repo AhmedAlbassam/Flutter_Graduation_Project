@@ -1,99 +1,60 @@
 import 'package:flutter/material.dart';
-
-class displaywithdraw extends StatelessWidget{
-  Widget build(context){
+import 'package:qr/qr.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+class GenerateScreen extends StatelessWidget {
+String indiemail;
+GenerateScreen(this.indiemail);
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
-
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body:
-          WithdrawPage(),
-
-          appBar: AppBar(
-            backgroundColor: Colors.lightBlueAccent,
-            title : Text('Withdraw', textAlign: TextAlign.center,),
-            leading: IconButton(icon:Icon(Icons.arrow_back),
-              onPressed:() => Navigator.pop(context, false),
-            ),
-
-
-
-          ),
-          backgroundColor: Colors.white,
-        )
+      title: 'Flutter - QR CODE',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: HomePage(indiemail),
     );
   }
 }
 
-class WithdrawPage extends StatefulWidget{
+class HomePage extends StatelessWidget {
+  String indiemail;
+  HomePage(this.indiemail);
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return withdraw();
-  }
-}
-
-
-
-
-class withdraw extends State<WithdrawPage>{
-  Widget build(context){
-    return Container(
-      margin: EdgeInsets.all(20),
-      child: Form(
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("QR CODE"),
+      ),
+      body: Center(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            amount(),
-            creditCardInfo(),
-            submitbutt(),
+            Text("Code generated with the text:\n $indiemail",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 24,
+              ),
+            ),
+
+            SizedBox(height: 16,),
+
+            QrImage(
+              data: indiemail,
+              gapless: true,
+              size: 150,
+              errorCorrectionLevel: QrErrorCorrectLevel.H,
+            ),
+            RaisedButton(
+                color: Colors.indigo[800],
+                child: GestureDetector(
+                  onTap: (){
+                    QrImage();
+                  },))
           ],
         ),
       ),
-
-    );
-  }
-  Widget amount(){
-    return TextFormField(
-      keyboardType: TextInputType.number ,
-      decoration: InputDecoration(
-        labelText: 'Enter the amount',
-        hintText: '100',
-      ),
-    );
-  }
-  Widget creditCardInfo(){
-    return Column(
-      children: <Widget>[
-        TextFormField(
-          decoration: InputDecoration(
-              labelText: 'name on card'
-          ),
-        ),
-        TextFormField(
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-              labelText: 'Card number'
-          ),
-        ),
-        TextFormField(
-          keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-              labelText: 'CVV'
-          ),
-        ),
-        TextFormField(
-          decoration: InputDecoration(
-              labelText: 'Expired date'
-          ),
-        ),
-      ],
-    );
-  }
-  Widget submitbutt(){
-    return RaisedButton(
-      color: Colors.lightBlue,
-      child: Text('Submit'),
-      onPressed: (){},
     );
   }
 }

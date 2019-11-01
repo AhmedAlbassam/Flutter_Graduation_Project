@@ -25,6 +25,7 @@ class Ticket extends State<TicketState> {
     QuerySnapshot _querysnap = await q.getDocuments();
     _tickets = _querysnap.documents;
 
+
     setState(() {
       _loadEvent =false;
     });
@@ -42,7 +43,7 @@ class Ticket extends State<TicketState> {
 
       body:Container(
         child : _tickets.length == 0 ? Center(
-          child: Text("there are no applicants"),
+          child: Text("there are no Tickets"),
         ) : ListView.builder(
             controller: _scroll,
             itemCount: _tickets.length,

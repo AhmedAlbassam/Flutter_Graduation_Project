@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gproject2020/addbeni.dart';
 import'Event.dart';
 import 'Wallet.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -13,15 +14,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   // the scroll will be added in this class, and taken data from firebase that addded by org.
-
   int _bottomNavIndex=0;
   @override
   Firestore _firestore = Firestore.instance;
   List<DocumentSnapshot> _events = [];
   bool _loadEvent = true;
   ScrollController _scroll;
-
-
 
   _getEvent() async{
     Query q = _firestore.collection('Events').orderBy("eventName").limit(100);
@@ -99,12 +97,8 @@ class _HomePageState extends State<HomePage> {
             controller: _scroll,
             itemCount: _events.length,
             itemBuilder: (BuildContext ctx, int i){
-
               return ListTile (
-                title:Text( _events[i].data['eventName'],
-
-
-                ),
+                title:Text( _events[i].data['eventName'],),
                 trailing : _events[i].data['Number of tickets'] == 0 ||  _events[i].data['Number of tickets'] == null
                     ? Icon(Icons.cancel, color: Colors.red,) : Icon(Icons.done, color: Colors.green,),
                 onTap:(){

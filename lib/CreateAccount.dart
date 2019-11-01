@@ -12,6 +12,10 @@ class SignupPage extends StatefulWidget {
 
   @override
   _SignupPageState createState() => _SignupPageState();
+  _SignupPageState id = _SignupPageState();
+String getrefID(){
+  return id.getId();
+}
 
 }
 
@@ -26,6 +30,7 @@ class _SignupPageState extends State<SignupPage> {
   var _balance = 0;
   var _QRcode = null;
   bool added = false;
+  String id;
 
   Future<FirebaseUser>  SignUp(String email , String password) async {
 
@@ -48,11 +53,10 @@ class _SignupPageState extends State<SignupPage> {
 
   Future<void> addAcc(String email, String password) async {
     if (added == true) {
-      final formState = _formKey.currentState;
-      if (formState.validate()) {
-        formState.save();
+      //final formState = _formKey.currentState;
+
         try {
-          await db.collection("Account").add(
+      DocumentReference ref = await db.collection("Account").add(
               {
                 'Email': _email,
                 'Password': _password,
@@ -62,13 +66,20 @@ class _SignupPageState extends State<SignupPage> {
 
               }
           );
+          setState(() {
+            id = ref.documentID;
+          });
         } catch (e) {
           print(e.message);
         }
-      }
+
     }
     else
       return;
+  }
+
+ String getId(){
+    return id;
   }
 
   @override
