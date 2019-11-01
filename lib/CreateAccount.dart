@@ -2,41 +2,73 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart' as prefix0;
-
+import 'package:gproject2020/AddFunds.dart';
 import 'home.dart';
 import 'login.dart';
-
+import 'addbeni.dart';
+import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
+import 'package:flutter/services.dart';
+import 'dart:async';
+import 'dart:typed_data';
+import 'dart:ui';
+import 'dart:io';
+import 'package:flutter/rendering.dart';
+import 'package:path_provider/path_provider.dart';
 
 
 class SignupPage extends StatefulWidget {
 
   @override
-  _SignupPageState createState() => _SignupPageState();
-  _SignupPageState id = _SignupPageState();
-String getrefID(){
-  return id.getId();
-}
+  SignupPageState createState() => SignupPageState();
+
+
 
 }
 
-class _SignupPageState extends State<SignupPage> {
-
+class SignupPageState extends State<SignupPage> {
+  String id;
 
   String _email , _password;
   int date;
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final db = Firestore.instance;
-  var _balance = 0;
-  var _QRcode = null;
-  bool added = false;
-  String id;
+  bool added;
+  var balance = 0;
+  GlobalKey globalKey = new GlobalKey();
+  var qrCode;
+  String _inputErrorText;
+  final TextEditingController _textController =  TextEditingController();
+
+  Future<void> _captureAndSharePng() async {
+    try {
+      RenderRepaintBoundary boundary = globalKey.currentContext.findRenderObject();
+      var image = await boundary.toImage();
+      ByteData byteData = await image.toByteData(format: ImageByteFormat.png);
+      Uint8List pngBytes = byteData.buffer.asUint8List();
+
+      final tempDir = await getTemporaryDirectory();
+      final file = await new File('${tempDir.path}/image.png').create();
+      await file.writeAsBytes(pngBytes);
+
+      final channel = const MethodChannel('channel:me.alfian.share/share');
+      channel.invokeMethod('shareFile', 'image.png');
+
+    } catch(e) {
+      print(e.toString());
+    }
+  }
+
+
+
 
   Future<FirebaseUser>  SignUp(String email , String password) async {
 
     final formState = _formKey.currentState;
     if (formState.validate()) {
       formState.save();
+
       try {
     final FirebaseUser user = (await auth.createUserWithEmailAndPassword(
       email: email,
@@ -51,39 +83,35 @@ class _SignupPageState extends State<SignupPage> {
     }
     }
 
-  Future<void> addAcc(String email, String password) async {
-    if (added == true) {
-      //final formState = _formKey.currentState;
+  Future<void> addAcc() async {
+        if (added == true) {
+      final formState = _formKey.currentState;
+      if (formState.validate()) {
+        _formKey.currentState.save();
 
-        try {
-      DocumentReference ref = await db.collection("Account").add(
+        DocumentReference ref = await db.collection("Accounts").add(
               {
                 'Email': _email,
                 'Password': _password,
-                'balance': _balance,
-                'QRcode': _QRcode,
+                'balance': balance,
+                'QRcode': qrCode,
+              });
 
+        setState(() => id = ref.documentID);
+        print('I GOT PRINTED :DDDDDDDDDDD>>>>>>>>>>>>>>>>> :: '+ref.documentID);
+        print('my id is '+id);
 
-              }
-          );
-          setState(() {
-            id = ref.documentID;
-          });
-        } catch (e) {
-          print(e.message);
-        }
-
+      }
     }
-    else
-      return;
   }
 
- String getId(){
-    return id;
-  }
 
   @override
   Widget build(BuildContext context) {
+
+    final bodyHeight = MediaQuery.of(context).size.height - MediaQuery.of(context).viewInsets.bottom;
+
+
     return new Scaffold(
         appBar: new AppBar(
             backgroundColor:Colors.transparent,
@@ -98,19 +126,6 @@ class _SignupPageState extends State<SignupPage> {
                 child: Column(
                   children: <Widget>[
 
-//                    TextFormField(
-//                    decoration: InputDecoration(
-//                        labelText: 'Full name',
-//                        labelStyle: TextStyle(
-//                            fontFamily: 'Montserrat',
-//                            fontWeight: FontWeight.bold,
-//                            color: Colors.grey),
-//                        //  hintText: 'example@example.com',
-//                        focusedBorder: UnderlineInputBorder(
-//                            borderSide: BorderSide(color: Colors.green))),
-//
-//
-//                  ),
                     TextFormField(
                       decoration: InputDecoration(
                           labelText: 'Email',
@@ -174,7 +189,15 @@ class _SignupPageState extends State<SignupPage> {
                           elevation: 7.0,
                           child: GestureDetector(
                             onTap: (){
-                              SignUp(_email,_password); addAcc(_email,_password);
+                              SignUp(_email,_password);
+                              setState(() {
+                                qrCode = QrImage;
+                                _inputErrorText = null;
+                              });
+//                              _captureAndSharePng();
+                              addAcc();
+
+                              // NEED TO ADD Add ACCOUNT
                             },
                             child: Center(
                               child: Text(
@@ -189,8 +212,10 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         )),
                     SizedBox(height: 20.0),
-
                   ],
-                ))));
+                ),
+            ),
+        ),
+    );
   }
 }

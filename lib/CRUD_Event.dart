@@ -8,9 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class CRUDevent{
 
       final orgEmail;
-
       CRUDevent(this.orgEmail);
-
       final _formKey = GlobalKey<FormState>();
       // final db = Firestore.instance;
       var eventName;

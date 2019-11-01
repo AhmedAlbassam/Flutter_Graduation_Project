@@ -9,8 +9,6 @@ import 'home.dart';
 import 'applicants.dart';
 class Eventorg extends StatelessWidget{
   final _name, _location, _type, _date, _numoft,_emailorg;
-
-
   Eventorg(this._name, this._location,this._type, this._date,this._numoft,this._emailorg);
 
   Widget build(BuildContext context){

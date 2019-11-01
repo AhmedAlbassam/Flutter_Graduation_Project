@@ -10,6 +10,7 @@ import 'home.dart';
 import 'Organization.dart';
 
 class LoginPage extends StatefulWidget {
+
   @override
   _LoginPageState createState() => _LoginPageState();
 
@@ -18,6 +19,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin{
+
 
   TabController _tabController;
   @override
@@ -67,7 +69,6 @@ class IndividualState extends State<Individual> {
   final _formKey = GlobalKey<FormState>();
   String email ,password;
   String UserName;
-
 
   Future<void> Signin() async {
     final formState = _formKey.currentState;
@@ -207,8 +208,10 @@ class IndividualState extends State<Individual> {
 }
 // ==================================================================================================================================>
 class Org extends StatefulWidget {
+
   @override
   OrgState createState() {
+
     return OrgState();
   }
 }
