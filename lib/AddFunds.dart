@@ -1,77 +1,117 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:qr_mobile_vision/qr_camera.dart';
+import 'package:flutter/services.dart';
 
-class Scanner extends StatefulWidget {
-  @override
-  ScannerState createState() => new ScannerState();
-}
 
-class ScannerState extends State<Scanner> {
+class Funds extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-        debugShowCheckedModeBanner: false ,
 
-        home: new Scan());
+      title: 'Add balance demo',
+      theme: new ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: AddFundsPage(title: 'Add balance',),
+
+    );
   }
 }
+class AddFundsPage extends StatefulWidget {
+  AddFundsPage({Key key, this.title}) : super(key: key);
+  final String title;
 
-class Scan extends StatefulWidget {
   @override
-  _ScanState createState() => new _ScanState();
+  _AddFundsPageState createState() => new _AddFundsPageState();
 }
 
-class _ScanState extends State<Scan> {
-  String qr;
-  bool camState = true;
+class _AddFundsPageState extends State<AddFundsPage> {
+  final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-
-  @override
-  initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      //  backgroundColor: (Colors.black54),
-      body: new Center(
-        child: new Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+      resizeToAvoidBottomInset: false,
+      appBar: new AppBar(
+        title: new Text(widget.title, textAlign: TextAlign.center,),
+    leading: IconButton(icon:Icon(Icons.arrow_back),
+    onPressed:() => Navigator.pop(context, false),
+    ),
+      ),
+      body: new SafeArea(
+          top: false,
+          bottom: false,
+          child: new Form(
+              key: _formKey,
+              autovalidate: true,
+              child: new ListView(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                children: <Widget>[
+                  new TextFormField(
+                    decoration: const InputDecoration(
 
-          children: <Widget>[
-            new Expanded(
-                child: camState
-                    ? new Center(
-                  child: new SizedBox(
-                    width: 400.0,
-                    height: 500.0,
-                    child: new QrCamera(
-                      onError: (context, error) => Text(
-                        error.toString(),
-                        style: TextStyle(color: Colors.red),
-                      ),
-                      qrCodeCallback: (code) {
-                        setState(() {
-                          qr = code;
-                        });
-                      },
-                      child: new Container(
-                        decoration: new BoxDecoration(
-                          color: Colors.transparent,
-                               border: Border.all(color: Colors.orange, width: 10.0, style: BorderStyle.solid),
-                        ),
-                      ),
+                      hintText: 'Enter your first name',
+                      labelText: 'First Name',
                     ),
                   ),
-                )
-                    : new Center(child: new Text("Camera inactive"))),
-            new Text("QRCODE: $qr"),
-          ],
-        ),
-      ),
+                  new TextFormField(
+                    decoration: const InputDecoration(
+
+                      hintText: 'Enter your last name',
+                      labelText: 'Last Name',
+                    ),
+                  ),
+                  new TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Enter Card Number',
+                      labelText: 'Card Number',
+                    ),
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(15)
+                      , WhitelistingTextInputFormatter.digitsOnly,
+                    ],
+                    keyboardType: TextInputType.number,
+                  ),
+
+                  TextFormField(
+                    decoration: InputDecoration(
+                        hintText:'Card Expiry Date',
+                        labelText:'Card Expiry Date',
+                        ),
+                    keyboardType: TextInputType.datetime
+                  ),
+
+                  new TextFormField(
+                    decoration: const InputDecoration(
+                      hintText: 'Enter CVV number',
+                      labelText: 'CVV',
+
+                    ) ,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(3),
+                      WhitelistingTextInputFormatter.digitsOnly,
+                    ],
+                  )
+                  ,
+          new TextFormField(
+            decoration: InputDecoration(
+
+              hintText: 'Enter Amount added to balance',
+              labelText: 'Amount',
+            )
+            ,
+            keyboardType: TextInputType.number ,
+          ),
+                  new Container(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      child: new RaisedButton(
+                        child: const Text('Submit'),
+                        onPressed: null,
+                        // API ????
+                      )),
+                ],
+              ))),
     );
   }
 }
