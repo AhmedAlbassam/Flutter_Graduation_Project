@@ -10,7 +10,6 @@ import 'CreateAccount.dart';
 class Event extends StatelessWidget{
   final _name, _location, _type, _date, _numoft, ticketPrice;
 
-
   Event(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice);
 
   Widget build(BuildContext context){

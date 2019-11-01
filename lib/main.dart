@@ -50,7 +50,9 @@ class QuickBee extends StatelessWidget {
       return user;
 
     }
+
 */
+
     @override
     Widget build(BuildContext context) {
       return new Scaffold(
