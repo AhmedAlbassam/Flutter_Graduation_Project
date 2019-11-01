@@ -48,6 +48,7 @@ class _AddEventPageState extends State<AddEventPage> {
     }
 
   }
+
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(

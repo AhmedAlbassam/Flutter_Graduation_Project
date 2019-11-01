@@ -25,6 +25,7 @@ class AddFundsPage extends StatefulWidget {
 }
 
 class _AddFundsPageState extends State<AddFundsPage> {
+
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
 

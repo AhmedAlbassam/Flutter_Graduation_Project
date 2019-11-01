@@ -291,6 +291,7 @@ String balString;
             ),
           ),
           Padding(
+
             padding: const EdgeInsets.all(8.0),
             child: RaisedButton(
               child: Text('Buy a ticket', style: TextStyle(color: Colors.white),),

@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:gproject2020/CRUD_Event.dart';
 import 'package:gproject2020/UpdateEvent.dart';
 import 'CreateAccount.dart';
 import 'home.dart';
@@ -22,6 +21,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
   TabController _tabController;
   @override
   void initState() {
+
     _tabController = new TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -81,7 +81,7 @@ class IndividualState extends State<Individual> {
         UserName=user.email;
         OrganizationPage i = new OrganizationPage(email);
         UpdateEvent ue = new UpdateEvent(email);
-        CRUDevent er = new CRUDevent(email);
+       // CRUDevent er = new CRUDevent(email);
       } catch (e) {
         print(e.message);
       }

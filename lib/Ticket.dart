@@ -14,6 +14,7 @@ class Ticket extends State<TicketState> {
   ScrollController _scroll;
   String current = "";
   _getEvent() async{
+
     final FirebaseAuth auth = FirebaseAuth.instance;
     final FirebaseUser user = await auth.currentUser();
     current = user.email;

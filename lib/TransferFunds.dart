@@ -15,6 +15,7 @@ class Transfer extends StatelessWidget {
   }
 }
 class TransferPage extends StatefulWidget {
+
   TransferPage({Key key, this.title}) : super(key: key);
   final String title;
 

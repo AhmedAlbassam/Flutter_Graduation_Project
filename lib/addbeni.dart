@@ -105,6 +105,7 @@ TextEditingController _controller = TextEditingController();
                   ),
           ),
           SizedBox(height: 20.0),
+
           StreamBuilder<QuerySnapshot>(
               stream: db.collection('Account').where("Email", isEqualTo: qr).snapshots(),
               builder: (context, snapshot) {

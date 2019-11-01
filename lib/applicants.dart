@@ -134,6 +134,7 @@ class bsAppState extends State<bsApp> {
   _getBS() async{
     Query p = _fireStore.collection('Booth Sellers').where('eventName', isEqualTo: _name).orderBy("bsName").limit(100);
     setState(() {
+
       _loaderEvent =true;
     });
 

@@ -53,6 +53,7 @@ class _SignupPageState extends State<SignupPage> {
 
   Future<void> addAcc(String email, String password) async {
     if (added == true) {
+
       //final formState = _formKey.currentState;
 
         try {

@@ -14,6 +14,7 @@ class _UpdateEventState extends State<UpdateEvent> {
   final  _EmailOrg;
 
   _UpdateEventState(this._EmailOrg);
+
   TextEditingController _namecontroller = TextEditingController();
   TextEditingController _loccontroller = TextEditingController();
   TextEditingController _datecontroller = TextEditingController();

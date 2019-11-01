@@ -27,6 +27,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
   Firestore _firestore = Firestore.instance;
   List<DocumentSnapshot> _events = [];
   bool _loadEvent = true;
+
   ScrollController _scroll;
  String userName;
  _OrganizationPageState(this.userName);

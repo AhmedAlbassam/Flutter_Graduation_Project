@@ -85,6 +85,7 @@ class QuickBee extends StatelessWidget {
                             alignment: Alignment.center,
                             height: 60.0,
                             decoration: new BoxDecoration(
+
                                 color: Color(0xFF18D191),
                                 borderRadius: new BorderRadius.circular(9.0)),
                             child: new Text("Sign In With Email",

@@ -29,6 +29,7 @@ class HomePage extends StatelessWidget {
       ),
       body: Center(
         child: Column(
+
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text("Code generated with the text:\n $indiemail",
