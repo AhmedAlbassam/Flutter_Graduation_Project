@@ -91,6 +91,7 @@ TextEditingController _controller = TextEditingController();
               controller: _controller,
               decoration: InputDecoration(hintText: 'Total price'),
 
+
             ),
           ),
           Padding(
