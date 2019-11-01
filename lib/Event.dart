@@ -287,6 +287,7 @@ String balString;
             child: TextField(
               controller: _controller,
               decoration: InputDecoration(hintText: 'Total price'),
+              readOnly: true,
             ),
           ),
           Padding(

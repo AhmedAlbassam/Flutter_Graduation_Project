@@ -1,17 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:gproject2020/CRUD_Event.dart';
-import 'AddEvent.dart';
-import 'Event.dart';
-import 'EventOrg.dart';
-import 'applicants.dart';
-import 'login.dart';
-import 'EventOrg.dart';
-import 'home.dart';
 
 class UpdateEvent extends StatefulWidget {
   final _EmailOrg;
