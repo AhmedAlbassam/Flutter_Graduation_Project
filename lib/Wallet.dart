@@ -14,20 +14,21 @@ class Wallet extends StatelessWidget{
           WalletPage(),
           appBar:AppBar(
           automaticallyImplyLeading: true,
-            backgroundColor: Colors.indigo[900],
+            backgroundColor: Color(0xff282d58),
             elevation: 0.0,
-            title : Text('Wallet', textAlign: TextAlign.end,),
+            title : Text('Wallet', textAlign: TextAlign.end,style: TextStyle(color:Colors.white70),),
             leading: IconButton(icon:Icon(Icons.arrow_back),
+              onPressed:() => Navigator.pop(context, false),
     ),
     ),
           floatingActionButton: FloatingActionButton.extended(
-            icon: Icon(Icons.camera_alt) ,onPressed: (){
+            icon: Icon(Icons.camera_alt , color: Colors.white70,) , onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context) => Scanner(),));
           },
-             label: Text("Scan"),
-           backgroundColor: Colors.indigo[800],),
+             label: Text("Scan",style:TextStyle(color:Colors.white70),),
+           backgroundColor: Colors.indigo[500],),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-          backgroundColor: Colors.indigo[900],
+          backgroundColor:Color(0xff282d58),
 
         ),
     );
@@ -130,26 +131,27 @@ class Walletstates extends State<WalletPage>{
   Widget displayBalance(){
       //getBalance();
       print('Bjjjijijialance is: $balance');
-      return Text('$balance', style:TextStyle(color:Colors.white,fontSize:50),);}
+      return Text('$balance', style:TextStyle(color:Colors.white70,fontSize:50),);}
 
   Widget setupdate(){
     return Container(
-      width: 100, height: 300,
+      width: 100, height: 150,
       child: ListView(
         padding: EdgeInsets.all(12.0),
         children: <Widget>[
           Padding(
             padding: EdgeInsets.symmetric(vertical: 15.0),
             child: TextField(
+              cursorColor: Color(0xff282d58),
               controller: _controller,
-              decoration: InputDecoration(hintText: 'Amount'),
+              decoration: InputDecoration(hintText: 'Amount' , ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: RaisedButton(
-              child: Text('Add to Balance', style: TextStyle(color: Colors.white),),
-              color: Colors.lightBlue,
+              child: Text('Add to Balance', style: TextStyle(color: Colors.white70 )),
+              color: Color(0xff282d58),
               onPressed:(){
                 _updateData();
                 addedSuccess();
@@ -175,12 +177,12 @@ class Walletstates extends State<WalletPage>{
     showDialog(context: context,
         builder: (BuildContext context){
       return AlertDialog(
-        title: Text('Add balance'),
+        title: Text('Add balance', style: TextStyle(color: Color(0xff282d58),)),
         content: setupdate(),
         actions: <Widget>[
           new FlatButton(onPressed: (){
             Navigator.of(context).pop();
-          }, child: Text('Close', style: TextStyle(color: Colors.lightBlue),)
+          }, child: Text('Close', style: TextStyle(color: Color(0xff282d58),),)
           ),
         ],
       );
@@ -192,11 +194,11 @@ class Walletstates extends State<WalletPage>{
   showDialog(context: context,
       builder: (BuildContext context){
         return AlertDialog(
-          content: new Text('balance updated succeffuly', style: TextStyle(color: Colors.lightBlue),),
+          content: new Text('balance updated succeffuly', style: TextStyle(color:Color(0xff282d58),),),
           actions: <Widget>[
             new FlatButton(onPressed: (){
               Navigator.of(context).pop();
-            }, child: Text('Close', style: TextStyle(color: Colors.lightBlue),)
+            }, child: Text('Close', style: TextStyle(color: Color(0xff282d58),),)
             )
           ],
 
@@ -208,47 +210,51 @@ class Walletstates extends State<WalletPage>{
 }
   Widget firstRow(){
 
-    return Container(
-      padding: EdgeInsets.only(top: 70),
-      child: Column(
+    return Center(
+      child : Container(
+        padding: EdgeInsets.only(top: 70),
+      child:Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          RaisedButton(
-          color: Colors.indigo[800],
-            child: Text('Transfer Funds', style:TextStyle(color:Colors.white)),
-          /*child: GestureDetector(
-            onTap: (){
-             // Navigator.push(context, MaterialPageRoute(builder: (context) => Transfer(),));
-              },
-            child: Text('Transfer Funds', style:TextStyle(color:Colors.white)),
-          ),*/
-            onPressed: (){
-            getTheRealDocumentBitch();
-            },
-          ),
-    RaisedButton(
-      color: Colors.indigo[800],
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+        child:  ButtonTheme(
+            minWidth: 100.0,
+            height: 100,
+      child: RaisedButton(
+      color: Colors.white70,
 
-        child: Text('Add Funds', style:TextStyle(color:Colors.white)),
+        child: Text('Add Funds', style:TextStyle(color:Color(0xff282d58) ,  fontSize: 29)),
       onPressed: (){
         balupdate();
       },
     ),
-          RaisedButton(
-            color: Colors.indigo[800],
+    ),
+      ),
+          Padding(
+            padding: const EdgeInsets.all(10.0),
+
+         child: ButtonTheme(
+            minWidth: 100.0,
+            height: 100,
+         child: RaisedButton(
+            color: Colors.white70,
             child: GestureDetector(
               onTap: (){
 
                 Navigator.push(context, MaterialPageRoute(builder: (context) => GenerateScreen(indiemail)));
               },
-              child: Text('QR', style:TextStyle(color:Colors.white)),
+              child: Text('Display QR', style:TextStyle(color:Color(0xff282d58),  fontSize: 29)),
             ),
             onPressed: (){
 
             },
           ),
+    ),
+      ),
         ],
-      ) ,
+      ),
+      ),
     );
   }
 

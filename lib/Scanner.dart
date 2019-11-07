@@ -123,7 +123,7 @@ class _ScanState extends State<Scan> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      //  backgroundColor: (Colors.black54),
+       backgroundColor: (Colors.white70),
       body: new Center(
         child: new Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -159,7 +159,6 @@ class _ScanState extends State<Scan> {
                   ),
                 )
                     : new Center(child: new Text("Camera inactive"))),
-            new Text("QRCODE: $qr"),
           ],
         ),
       ),

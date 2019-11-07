@@ -3,12 +3,14 @@ import 'package:qr/qr.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
 class GenerateScreen extends StatelessWidget {
-String indiemail;
-GenerateScreen(this.indiemail);
+  String indiemail;
+  GenerateScreen(this.indiemail);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter - QR CODE',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -24,17 +26,24 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+          backgroundColor: Colors.white70,
       appBar: AppBar(
-        title: Text("QR CODE"),
+         backgroundColor: Color(0xff282d58),
+        title: Text("QR CODE", style: TextStyle(color: Colors.white70),),
+    leading: IconButton(icon:Icon(Icons.arrow_back , color: Colors.white70,),
+    onPressed:() => Navigator.pop(context, false), ),
+
+
       ),
       body: Center(
         child: Column(
 
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text("Code generated with the text:\n $indiemail",
+            Text("Scan QR Code",
               textAlign: TextAlign.center,
               style: TextStyle(
+                color: Color(0xff282d58),
                 fontSize: 24,
               ),
             ),
@@ -44,18 +53,13 @@ class HomePage extends StatelessWidget {
             QrImage(
               data: indiemail,
               gapless: true,
-              size: 150,
+              size: 300,
               errorCorrectionLevel: QrErrorCorrectLevel.H,
             ),
-            RaisedButton(
-                color: Colors.indigo[800],
-                child: GestureDetector(
-                  onTap: (){
-                    QrImage();
-                  },))
           ],
         ),
       ),
+
     );
   }
 }
