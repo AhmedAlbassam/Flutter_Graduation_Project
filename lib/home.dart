@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gproject2020/addbeni.dart';
+import 'package:gproject2020/Scanner.dart';
 import'Event.dart';
 import 'Wallet.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -34,7 +34,6 @@ class _HomePageState extends State<HomePage> {
       _loadEvent =false;
     });
   }
-
 
   void initState(){
     super.initState();

@@ -59,12 +59,13 @@ class Eventorgstates extends State<EventorgPage> {
         child: Column(
 
             children: [
+              data(),
               eventImage(),
               eventDetails(),
            ticketQnts(),
              // buyButton(),
               participate(),
-              EditEvent(),
+              //EditEvent(),
               DeleteEvent(),
 
             ]
@@ -81,6 +82,25 @@ class Eventorgstates extends State<EventorgPage> {
 
     );
   }
+  Widget data(){
+    return SingleChildScrollView(
+      child: DataTable(
+        columns: [
+          DataColumn(label: Text('name')),
+          DataColumn(label: Text('Tickets'))
+        ],
+        rows: [
+          DataRow(cells: [
+            DataCell(Text('$_name')),
+            DataCell(Text('$_numoft')),
+          ]
+          ),
+        ],
+
+      ),
+    );
+  }
+
   Widget eventDetails(){
 
     //i can use Textspan to make it longer with diffirent styles
@@ -182,7 +202,7 @@ class Eventorgstates extends State<EventorgPage> {
 
     );
   }
-  Widget EditEvent(){
+ Widget EditEvent(){
     return RaisedButton(
       color: Colors.orangeAccent,
       onPressed: () {

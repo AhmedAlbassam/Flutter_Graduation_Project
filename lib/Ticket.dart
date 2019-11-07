@@ -50,11 +50,14 @@ class Ticket extends State<TicketState> {
             itemCount: _tickets.length,
             itemBuilder: (BuildContext ctx, int i){
               String tickNo = _tickets[i].data['ticketNo'].toString();
+             int tickQnt = _tickets[i].data['TicketQnt'];
+              if(tickQnt == null)
+                tickQnt =1;
               return ListTile (
-                trailing: Icon(Icons.business),
+                leading: Icon(Icons.business),
+                trailing: Text('Qnt: '+ tickQnt.toString()),
                 isThreeLine: true,
-                title:Text('Ticket number: '+ tickNo,
-                ),
+                title:Text('Ticket number: '+ tickNo,),
                 subtitle: Text('Event name: '+_tickets[i].data['eventName']+'\nDate: '+_tickets[i].data['Edate']
                     + '\nLocation: '+ _tickets[i].data['eventLoc']),
                 //   trailing: ,

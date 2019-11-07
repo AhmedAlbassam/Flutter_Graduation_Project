@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gproject2020/home.dart';
-import 'addbeni.dart';
+import 'Scanner.dart';
 import 'AddFunds.dart';
-import 'TransferFunds.dart';
-import 'withdraw.dart';
+import 'QRGenerator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 class Wallet extends StatelessWidget{
@@ -22,7 +21,9 @@ class Wallet extends StatelessWidget{
     ),
     ),
           floatingActionButton: FloatingActionButton.extended(
-            icon: Icon(Icons.camera_alt),
+            icon: Icon(Icons.camera_alt) ,onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Scanner(),));
+          },
              label: Text("Scan"),
            backgroundColor: Colors.indigo[800],),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -39,26 +40,33 @@ class WalletPage extends StatefulWidget{
   }
 }
 class Walletstates extends State<WalletPage>{
-  String indiemail; int bal=0;
+  String balance;
+  String indiemail; int bal=0; String oldbal;
   Widget build(context){
     return Container (
       margin: EdgeInsets.all(30.0),
       child: Center(
         child: Column(
           children: <Widget>[
-            balance(),firstRow(),
+            displayBalance(),firstRow(),
 
           ],
         ),
       ),
     );
   }
+  int newbal;
   _updateData() async {
+    print(realDoc.data.values.elementAt(2));
+   String bala = realDoc.data.values.elementAt(2);
+   bal = int.parse(bala);
+    newbal = int.parse(_controller.text);
+    int total = newbal + bal;
     print("the email: $indiemail");
     await db
         .collection('Account')
-        .document(_currentDocument.documentID)
-        .updateData({'balance': _controller.text});
+        .document(realDoc.documentID)
+        .updateData({'balance': total.toString()});
 
   }
   Future <String> getEmail() async {
@@ -70,13 +78,46 @@ class Walletstates extends State<WalletPage>{
   TextEditingController _controller = TextEditingController();
   DocumentSnapshot _currentDocument;
   final db = Firestore.instance;
-  String b;
+   String id;
+
+  QuerySnapshot documents;
+  DocumentSnapshot realDoc;
+
     readData() async{
-    final documents = await db.collection('Account').where('Email', isEqualTo: indiemail).getDocuments();
+     documents = await db.collection('Account').getDocuments();
     final userObject = documents.documents.first.data;
-    b = userObject.values.elementAt(2);
-   int bal = int.parse(b);
-    print(bal);
+
+    // im getting the document reference now:
+    for(int i=0;i < documents.documents.length;i++){
+      if(documents.documents.elementAt(i).data.values.elementAt(0).toString().toLowerCase() == indiemail.toLowerCase()){
+      realDoc = documents.documents.elementAt(i);
+      }
+      }
+    setState(() {
+       balance = realDoc.data.values.elementAt(2);
+      });
+
+      print(realDoc.documentID);
+      print(realDoc.data.values.elementAt(1));
+      print(indiemail);
+      print(realDoc.data.values);
+      print('this is the variable b: '+ balance);
+  }
+
+  getTheRealDocumentBitch(){
+      for(int i=0;i<=3;i++){
+        print(realDoc.data.values.elementAt(i));
+      }
+      print(realDoc.documentID);
+      print(realDoc.data.values.elementAt(0));
+      print("Alooooooo");
+  }
+  String getBalance(){
+      print('this is for method getbalance()');
+      print(realDoc.documentID);
+      print(balance);
+    balance = realDoc.data.values.elementAt(2);
+    return balance;
   }
 
   @override
@@ -84,10 +125,12 @@ class Walletstates extends State<WalletPage>{
     getEmail();
     readData();
     super.initState();
+
   }
-  Widget balance(){
-    return Text('$bal', style:TextStyle(color:Colors.white,fontSize:50),);
-  }
+  Widget displayBalance(){
+      //getBalance();
+      print('Bjjjijijialance is: $balance');
+      return Text('$balance', style:TextStyle(color:Colors.white,fontSize:50),);}
 
   Widget setupdate(){
     return Container(
@@ -109,38 +152,18 @@ class Walletstates extends State<WalletPage>{
               color: Colors.lightBlue,
               onPressed:(){
                 _updateData();
+                addedSuccess();
+                setState(() {
+                  int old = int.parse(balance); int newb = int.parse(_controller.text);
+                  balance = (old + newb).toString();
+
+                });
 
               },
             ),
           ),
           SizedBox(height: 20.0),
-          StreamBuilder<QuerySnapshot>(
-              stream: db.collection('Account').where("Email", isEqualTo: indiemail).snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Column(
-                    children: snapshot.data.documents.map((doc) {
-                      return ListTile(
-                        title: Text('Balance: '+doc.data['balance'] ),
-                        trailing: RaisedButton(
-                          child: Text("Edit", style: TextStyle(color: Colors.white)),
-                          color: Colors.lightBlue,
-                          onPressed: () async {
-                            setState(() {
-                              _currentDocument = doc;
-                              _controller.text = doc.data['balance'];
-                            });
-                            //bal = doc.data['balance'].toString();
-                          },
 
-                        ),
-                      );
-                    }).toList(),
-                  );
-                } else {
-                  return SizedBox();
-                }
-              }),
         ],
       ),
 
@@ -148,7 +171,7 @@ class Walletstates extends State<WalletPage>{
   }
 
 
-Widget balupdate(){
+ balupdate(){
     showDialog(context: context,
         builder: (BuildContext context){
       return AlertDialog(
@@ -165,7 +188,24 @@ Widget balupdate(){
     );
 
 }
+  addedSuccess(){
+  showDialog(context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          content: new Text('balance updated succeffuly', style: TextStyle(color: Colors.lightBlue),),
+          actions: <Widget>[
+            new FlatButton(onPressed: (){
+              Navigator.of(context).pop();
+            }, child: Text('Close', style: TextStyle(color: Colors.lightBlue),)
+            )
+          ],
 
+        );
+      }
+
+
+  );
+}
   Widget firstRow(){
 
     return Container(
@@ -175,19 +215,22 @@ Widget balupdate(){
         children: <Widget>[
           RaisedButton(
           color: Colors.indigo[800],
-          child: GestureDetector(
+            child: Text('Transfer Funds', style:TextStyle(color:Colors.white)),
+          /*child: GestureDetector(
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Transfer(),));
+             // Navigator.push(context, MaterialPageRoute(builder: (context) => Transfer(),));
               },
             child: Text('Transfer Funds', style:TextStyle(color:Colors.white)),
-          ),
+          ),*/
+            onPressed: (){
+            getTheRealDocumentBitch();
+            },
           ),
     RaisedButton(
       color: Colors.indigo[800],
 
         child: Text('Add Funds', style:TextStyle(color:Colors.white)),
       onPressed: (){
-        print('working or not?');
         balupdate();
       },
     ),
@@ -199,20 +242,6 @@ Widget balupdate(){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => GenerateScreen(indiemail)));
               },
               child: Text('QR', style:TextStyle(color:Colors.white)),
-            ),
-            onPressed: (){
-
-            },
-          ),
-          RaisedButton(
-
-            color: Colors.indigo[800],
-            child: GestureDetector(
-              onTap: (){
-                print('the Email: $indiemail');
-                Navigator.push(context, MaterialPageRoute(builder: (context) => Scanner(),));
-              },
-              child: Text('Add Beni', style:TextStyle(color:Colors.white)),
             ),
             onPressed: (){
 

@@ -81,17 +81,33 @@ class Eventstates extends State<EventPage>  {
     print('Added? is it here?');
   }
 String balString;
-
+DocumentSnapshot userDoc;
+DocumentSnapshot eventDoc;
   void readData()async{
+    print(_name);
     final FirebaseAuth auth = FirebaseAuth.instance;
     final FirebaseUser user = await auth.currentUser();
     _indiEmail = user.email;
-  final documents = await db.collection('Account').where('Email', isEqualTo: _indiEmail).getDocuments();
-    final userObject = documents.documents.first.data;
-    balString = userObject.values.elementAt(2);
-    print(userObject.values);
-    bal = int.parse(balString);
-   // bal = int.parse(balString);
+  final documents = await db.collection('Account').getDocuments(); // getting all the documents
+    for(int i=0;i < documents.documents.length;i++){
+      if(documents.documents.elementAt(i).data.values.elementAt(0).toString().toLowerCase() == _indiEmail.toLowerCase()){
+        userDoc = documents.documents.elementAt(i);
+
+      }
+    }
+    bal = int.parse(userDoc.data.values.elementAt(2));
+    print(bal);
+    // setting the document for the user has finished, now we set the event document to update the Ticket qntity
+    final eventDocuments = await db.collection("Events").getDocuments();
+    print(eventDocuments.documents.first.data.values);
+    for(int i=0;i < eventDocuments.documents.length;i++){
+      if(eventDocuments.documents.elementAt(i).data.values.elementAt(2) == _name){
+        eventDoc = eventDocuments.documents.elementAt(i);
+
+      }
+    }
+    print(eventDoc.data.values);
+    print(eventDoc.documentID);
   }
   DocumentSnapshot _currentDocument;
   TextEditingController _controller = TextEditingController();
@@ -99,8 +115,12 @@ String balString;
   _updateData(int newBal) async {
     await db
         .collection('Account')
-        .document(_currentDocument.documentID)
+        .document(userDoc.documentID)
         .updateData({'balance': newBal.toString()});
+    
+    await db.collection('Events')
+    .document(eventDoc.documentID)
+    .updateData({'Number of tickets': (_numoft - ticketQnt)});
   }
   @override
   void initState() {
@@ -120,6 +140,7 @@ String balString;
               eventImage(),
               eventDetails(),
               ticketQnts(),
+              priceTick(),
               buyButton(),
               participate(),
             ]
@@ -144,7 +165,7 @@ String balString;
 
             '$_name' ,
             textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic,),
           ),
 
           Text(
@@ -253,18 +274,18 @@ String balString;
       child: Text('Buy a Ticket',
         style: TextStyle(color: Colors.lightBlue),),
       onPressed: () {
-        buyMethod();
+        buyMethod(totalPrice);
       },
       color: Colors.white70,
 
     );
   }
-  Widget buyMethod(){
+  Widget buyMethod(int totalprice){
     showDialog(context: context,
       builder: (BuildContext context){
         return AlertDialog(
           title: Text('Confirm Payment'),
-          content: setBuy(),
+          content: newBuy(totalprice),
           actions: <Widget>[
             new FlatButton(onPressed: (){
               Navigator.of(context).pop();
@@ -276,6 +297,42 @@ String balString;
     );
 
   }
+  Widget newBuy(int totalprice){
+  return Container(
+    width: 500, height:155,
+    child: Column(
+        children: <Widget>[
+    Padding(
+    padding: EdgeInsets.symmetric(vertical: 15.0),
+    child: TextField(
+      decoration: InputDecoration( labelText: 'Total price: $totalprice', labelStyle: TextStyle(color: Colors.lightBlue)),
+      readOnly: true,
+    ),
+  ),
+    Padding(
+
+    padding: const EdgeInsets.all(8.0),
+    child: RaisedButton(
+    child: Text('purchase', style: TextStyle(color: Colors.white),),
+    color: Colors.lightBlue,
+    onPressed:(){
+    if(ticketQnt >= _numoft || totalPrice > bal) {
+    checkbuy();
+    }
+    else {
+    addTicket();
+    successfulbuy();
+    _updateData((bal - totalPrice));
+    }
+
+    },
+    ),
+    ),
+  ],
+    ),
+
+  );
+  }
   Widget setBuy(){
     return Container(
       width: 500, height: 300,
@@ -285,8 +342,7 @@ String balString;
           Padding(
             padding: EdgeInsets.symmetric(vertical: 15.0),
             child: TextField(
-              controller: _controller,
-              decoration: InputDecoration(hintText: 'Total price'),
+              decoration: InputDecoration( labelText: 'Total price: $totalPrice'),
               readOnly: true,
             ),
           ),
