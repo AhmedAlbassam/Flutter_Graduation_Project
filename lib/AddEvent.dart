@@ -62,12 +62,16 @@ class _AddEventPageState extends State<AddEventPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
 
           children: <Widget>[
+
+
+
             Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
 
               child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Orgnazation Email'),
+                decoration: new InputDecoration(labelText: 'Orgnazation Email',icon: Icon(Icons.email,size: 20.0),
+                ),
 
                 validator: (input){
 
@@ -84,7 +88,8 @@ class _AddEventPageState extends State<AddEventPage> {
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
 
               child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Event Name'),
+                decoration: new InputDecoration(labelText: 'Event Name',icon: Icon(Icons.event,size: 20.0),
+                ),
 
                 validator: (input){
 
@@ -96,29 +101,18 @@ class _AddEventPageState extends State<AddEventPage> {
                 onSaved: (input) => eventName = input,
               ),
             ),
+
+
+
             Padding(
+
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
 
               child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Event Type'),
 
-                validator: (input){
-
-                  if(input.isEmpty){
-                    return 'please enter event type';
-                  }
-                  return null;
-                },
-                onSaved: (input) => eventType = input,
-              ),
-            ),
-            Padding(
-              padding:
-              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
-
-              child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Event Date'),
+                decoration: new InputDecoration(labelText: 'Event Date',icon: Icon(Icons.date_range,size: 20.0),
+                ),
 
                 validator: (input){
 
@@ -136,7 +130,8 @@ class _AddEventPageState extends State<AddEventPage> {
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
               child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Event Location'),
+                decoration: new InputDecoration(labelText: 'Event Location',icon: Icon(Icons.location_on,size: 20.0),
+                ),
 
                 validator: (input){
 
@@ -152,7 +147,8 @@ class _AddEventPageState extends State<AddEventPage> {
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
               child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Number of Tickets'),
+                decoration: new InputDecoration(labelText: 'Number of Tickets',icon: Icon(Icons.assignment,size: 20.0),
+                ),
 
                 validator: (input){
                   if(input.isEmpty){
@@ -180,12 +176,54 @@ class _AddEventPageState extends State<AddEventPage> {
             ),*/
             Padding(
               padding:
-              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
               child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Ticket Price'),
+                decoration: new InputDecoration(labelText: 'Ticket Price',icon: Icon(Icons.monetization_on,size: 20.0),
+                ),
                 onSaved: (input) => ticketPrice =int.parse(input),
               ),
             ),
+              Padding(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 0.0, vertical: 5.0),
+             child: ListTile(
+
+              //padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+              // width: 400.0,
+              leading: const Icon(
+                Icons.burst_mode,
+                color: Colors.grey,
+              ),
+              title: DropdownButton<String>(
+
+                value: eventType,
+                hint: Text('Choose event type',style: TextStyle(fontSize: 17.0,
+                ),),
+                iconSize: 24,
+                elevation: 16,
+                style: TextStyle(
+                    color: Colors.black87
+                ),
+                underline: Container(
+                  height: 1,
+                  color: Colors.grey,
+                ),
+                onChanged: (String newValue) {
+                  setState(() {
+                    eventType = newValue;
+                  });
+                },
+                items: <String>['General', 'Sport', 'Entertainment', 'educational','Conference',]
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                })
+                    .toList(),
+              ),
+            ),
+              ),
             new Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -193,7 +231,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   child: Padding(
 
                     padding: const EdgeInsets.only(
-                        left: 20.0, right: 5.0, top: 10.0),
+                        left: 20.0, right: 5.0, top: 40.0),
                     child: GestureDetector(
                       onTap: (){
                         addEvent();

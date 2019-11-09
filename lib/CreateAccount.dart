@@ -112,6 +112,7 @@ class _SignupPageState extends State<SignupPage> {
 //
 //
 //                  ),
+
                     TextFormField(
                       decoration: InputDecoration(
                           labelText: 'Email',

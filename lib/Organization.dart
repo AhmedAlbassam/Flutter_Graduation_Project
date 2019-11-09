@@ -67,10 +67,19 @@ class _OrganizationPageState extends State<OrganizationPage> {
             itemCount: _events.length,
             itemBuilder: (BuildContext ctx, int i){
 
-              return ListTile (
+     String subtitle = "Location : "+_events[i].data['eventLocation']+ "\nDate : "+_events[i].data['eventDate'].toString() +"\nTickets remaining : "+ _events[i].data['Number of tickets'].toString();
+
+              return  ListTile (
+                  leading: new Icon(Icons.event_note),
                 title:Text( _events[i].data['eventName'],
+                  style: new TextStyle(
+                    fontSize: 20.0,
+                    color: Colors.deepPurple,
+                  ),
 
                 ),
+
+                subtitle: Text(subtitle),
                 onTap:(){
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) => Eventorg(_events[i].data['eventName'],_events[i].data['eventLocation'],
@@ -127,7 +136,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
       ),
 
       appBar: new AppBar(
-          backgroundColor: Colors.blueGrey,
+          backgroundColor: Colors.indigo[800],
           elevation: 0.0,
           iconTheme: new IconThemeData(color: Color(0xFF18D191))),
 

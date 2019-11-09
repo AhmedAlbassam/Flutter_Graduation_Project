@@ -21,6 +21,8 @@ class _HomePageState extends State<HomePage> {
   bool _loadEvent = true;
   ScrollController _scroll;
 
+
+  //
   _getEvent() async{
     Query q = _firestore.collection('Events').orderBy("eventName").limit(100);
     setState(() {
@@ -95,9 +97,29 @@ class _HomePageState extends State<HomePage> {
         ) : ListView.builder(
             controller: _scroll,
             itemCount: _events.length,
+
             itemBuilder: (BuildContext ctx, int i){
+              //
+              String subtitle = "Location : "+_events[i].data['eventLocation']+ "\nDate : "+_events[i].data['eventDate'].toString() +"\nTicket Price : "+ _events[i].data['Ticket Price'].toString()+" SAR";
+              String img = 'http://spmodels.net/malacca/wp-content/uploads/2016/01/Event-Management-service-AnnualDinner.jpg';
+
+              if(_events[i].data['eventType']=="Sport"){
+                 img = 'https://png.pngtree.com/png-clipart/20190613/original/pngtree-grunge-game-design-png-image_3572691.jpg';
+              }else if(_events[i].data['eventType']=="General"){
+                 img = 'http://spmodels.net/malacca/wp-content/uploads/2016/01/Event-Management-service-AnnualDinner.jpg';
+              }else if(_events[i].data['eventType'] == "Entertainment"){
+                 img = 'http://www.partyfanatics.net/wp-content/uploads/balloons-trans.png';
+
+              }else if(_events[i].data['eventType']=="Conference"){
+                 img = 'https://thestarsydney.files.wordpress.com/2015/08/mlf15_star_event_centre_00048.jpg';
+              }else{
+                 img = 'http://spmodels.net/malacca/wp-content/uploads/2016/01/Event-Management-service-AnnualDinner.jpg';
+              }
               return ListTile (
+
+                leading:  CircleAvatar( backgroundImage: NetworkImage(img),),
                 title:Text( _events[i].data['eventName'],),
+                subtitle: Text(subtitle),
                 trailing : _events[i].data['Number of tickets'] == 0 ||  _events[i].data['Number of tickets'] == null
                     ? Icon(Icons.cancel, color: Colors.red,) : Icon(Icons.done, color: Colors.green,),
                 onTap:(){
@@ -119,6 +141,8 @@ class _HomePageState extends State<HomePage> {
 
     );
   }
+
+
   void _signOut() async {
     await FirebaseAuth.instance.signOut();
     Future<FirebaseUser> Function() user = FirebaseAuth.instance.currentUser;

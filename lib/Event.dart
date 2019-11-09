@@ -20,9 +20,9 @@ class Event extends StatelessWidget{
         home: Scaffold(
 
           body: EventPage(this._name, this._location,this._type, this._date, this._numoft, this.ticketPrice),
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Colors.grey,
           appBar: AppBar(
-            backgroundColor: Colors.orangeAccent,
+            backgroundColor: Colors.blue,
             title : Text('Event details', textAlign: TextAlign.center,),
             leading: IconButton(icon:Icon(Icons.arrow_back),
               onPressed:() => Navigator.pop(context, false),
@@ -151,8 +151,22 @@ DocumentSnapshot eventDoc;
 
   }
   Widget eventImage(){
+    String img = 'http://spmodels.net/malacca/wp-content/uploads/2016/01/Event-Management-service-AnnualDinner.jpg';
+
+    if(_type=="Sport"){
+      img = 'https://png.pngtree.com/png-clipart/20190613/original/pngtree-grunge-game-design-png-image_3572691.jpg';
+    }else if(_type=="General"){
+      img = 'http://spmodels.net/malacca/wp-content/uploads/2016/01/Event-Management-service-AnnualDinner.jpg';
+    }else if(_type== "Entertainment"){
+      img = 'http://www.partyfanatics.net/wp-content/uploads/balloons-trans.png';
+
+    }else if(_type=="Conference"){
+      img = 'https://thestarsydney.files.wordpress.com/2015/08/mlf15_star_event_centre_00048.jpg';
+    }else{
+      img = 'http://spmodels.net/malacca/wp-content/uploads/2016/01/Event-Management-service-AnnualDinner.jpg';
+    }
     return Container(
-      child : Image.network("https://i.pinimg.com/564x/b0/df/f0/b0dff0574f141d59c87f6067ea0fae37.jpg", width: 160, height: 160,),
+      child : Image.network(img, width: 160, height: 160,),
 
     );
   }
@@ -227,7 +241,7 @@ DocumentSnapshot eventDoc;
   Widget priceTick(){
      totalPrice = ticketQnt*ticketPrice;
     return Text(
-      'Price: $totalPrice', style: TextStyle(color: Colors.lightBlue, fontSize: 20),
+      'Price: $totalPrice', style: TextStyle(color: Colors.black, fontSize: 20),
     );
   }
   checkbuy(){

@@ -113,6 +113,7 @@ class Walletstates extends State<WalletPage>{
       print(realDoc.data.values.elementAt(0));
       print("Alooooooo");
   }
+
   String getBalance(){
       print('this is for method getbalance()');
       print(realDoc.documentID);
