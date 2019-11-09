@@ -27,7 +27,7 @@ class _SignupPageState extends State<SignupPage> {
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final db = Firestore.instance;
-  var _balance = 0;
+  var _balance = '0';
   var _QRcode = null;
   bool added = false;
   String id;

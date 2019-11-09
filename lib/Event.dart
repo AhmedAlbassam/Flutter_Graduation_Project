@@ -130,8 +130,8 @@ DocumentSnapshot eventDoc;
   // String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
   Widget build(context) {
 
-    return Container (
-
+    return SingleChildScrollView (
+        child : Container(
       margin: EdgeInsets.all(20.0),
       child: Form(
         child: Column(
@@ -146,7 +146,7 @@ DocumentSnapshot eventDoc;
             ]
         ),
       ),
-
+    ),
     );
 
   }
