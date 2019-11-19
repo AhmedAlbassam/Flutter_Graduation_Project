@@ -16,15 +16,15 @@ class Event extends StatelessWidget{
   Widget build(BuildContext context){
 
     return MaterialApp(
-
+          debugShowCheckedModeBanner: false,
         home: Scaffold(
-
+       backgroundColor: Colors.white,
           body: EventPage(this._name, this._location,this._type, this._date, this._numoft, this.ticketPrice),
-          backgroundColor: Colors.grey,
+         // backgroundColor: Colors.grey,
           appBar: AppBar(
-            backgroundColor: Colors.blue,
-            title : Text('Event details', textAlign: TextAlign.center,),
-            leading: IconButton(icon:Icon(Icons.arrow_back),
+            backgroundColor:  Color(0xff4C2F91),
+            title : Text('Event details', textAlign: TextAlign.center,style: TextStyle(color: Colors.white),),
+            leading: IconButton(icon:Icon(Icons.arrow_back , color: Colors.white,),
               onPressed:() => Navigator.pop(context, false),
             ),
 
@@ -106,8 +106,6 @@ DocumentSnapshot eventDoc;
 
       }
     }
-    print(eventDoc.data.values);
-    print(eventDoc.documentID);
   }
   DocumentSnapshot _currentDocument;
   TextEditingController _controller = TextEditingController();
@@ -120,7 +118,7 @@ DocumentSnapshot eventDoc;
     
     await db.collection('Events')
     .document(eventDoc.documentID)
-    .updateData({'Number of tickets': (_numoft - ticketQnt)});
+    .updateData({'Number of tickets': (_numoft - ticketQnt).toString()});
   }
   @override
   void initState() {
@@ -131,22 +129,19 @@ DocumentSnapshot eventDoc;
   Widget build(context) {
 
     return SingleChildScrollView (
-        child : Container(
-      margin: EdgeInsets.all(20.0),
-      child: Form(
-        child: Column(
 
+      child: Column(
             children: [
               eventImage(),
-              eventDetails(),
-              ticketQnts(),
+              desc(),
+              //ticketQnts(),
               priceTick(),
               buyButton(),
-              participate(),
+
+              ticketQnts(),
+              //participate(),
             ]
         ),
-      ),
-    ),
     );
 
   }
@@ -165,53 +160,55 @@ DocumentSnapshot eventDoc;
     }else{
       img = 'http://spmodels.net/malacca/wp-content/uploads/2016/01/Event-Management-service-AnnualDinner.jpg';
     }
+    // Image.network(img, width: 160, height: 160,),
     return Container(
-      child : Image.network(img, width: 160, height: 160,),
+      color: Colors.deepPurpleAccent,
+      height: 100,
+        child : Card(
+      child: ListTile(
+        //leading: CircleAvatar( backgroundImage: NetworkImage(img,  ),radius: 25, ) ,
+        //leading: Image.asset('assets/images/sport.png',),
+        leading: Image(image: NetworkImage(img),),
+        title:Text( '$_name',style: TextStyle(fontSize: 30,color:Colors.deepPurpleAccent),),
+        subtitle: Text('Location: $_location' +'\nDate: $_date' , style: TextStyle(fontSize: 20 ,color: Colors.grey[800] ),),
+
+      ),
+        ),
+      );
+
+  }
+  Widget desc(){
+    return Container(
+     // margin: EdgeInsets.only(top: 10),
+      alignment: Alignment.topLeft,
+     // color: Colors.amber,
+      child: Text('Description, this event is about football match between ali and azooz they gjdkfsghksfhjklsafhjklsahjksahgjsfafhgjkslhfjkh'
+          'ssjksjkfjskhfjkslhfjskhfwjklhfjkwhfjkqwhfjkqhhfjkwhfjkqwhfjklhfuiwhrgfuwhfjksdhufghqerkhsdhrqueighwifhsdkfuhvureihfihufoufh'
+          'vmsjkshvjkehrivhiuahvpuiqvherqpihuvihqpieruhbipeuqrbhieqhbeipqubheruipqbhepiqhuepiuebhepbuhpbbhpehepahepehh',
+        style: TextStyle(fontSize: 20, color: Colors.deepPurpleAccent),
+
+      ),
 
     );
   }
-  Widget eventDetails(){
 
-    //i can use Textspan to make it longer with diffirent styles
-    return Column(
-        children:[
-          Text(
-
-            '$_name' ,
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic,),
-          ),
-
-          Text(
-            '$_location' ,
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
-          ),
-          Text(
-            '$_type' ,
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
-          ),
-          Text(
-            '$_date' ,
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
-          ),
-        ]
-    );
-  }
   Widget ticketQnts(){
-    return  Row(
+    return SingleChildScrollView(
+      child: Container(
+        alignment: Alignment.bottomCenter,
+        //color: Colors.red,
+      child: Row(
       children: <Widget>[
         Expanded(
-          child : Text('Qnt',
-              style: TextStyle(fontSize: 30)
+
+          child : Text('Quantitiy',
+              style: TextStyle(fontSize: 20, color: Colors.deepPurpleAccent), textAlign: TextAlign.right,
           ),
         ),
 
         Flexible(
           child: IconButton(icon:
-          Icon(Icons.add), onPressed: () {
+          Icon(Icons.add, color: Colors.deepPurpleAccent,), onPressed: () {
             setState(() {
               if(ticketQnt>=10)
                 ticketQnt = 1;
@@ -221,11 +218,11 @@ DocumentSnapshot eventDoc;
 
           ,),
         Flexible(
-          child: Text('$ticketQnt', style: TextStyle(fontSize: 30),),
+          child: Text('$ticketQnt', style: TextStyle(fontSize: 30, color: Colors.deepPurpleAccent),),
         ),
         Flexible(
             child: IconButton(icon:
-            Icon(Icons.remove), onPressed: () {
+            Icon(Icons.remove, color: Colors.deepPurpleAccent,), onPressed: () {
               setState(() {
                 ticketQnt--;
                 if(ticketQnt<=1)
@@ -236,12 +233,28 @@ DocumentSnapshot eventDoc;
 
       ],
       mainAxisAlignment: MainAxisAlignment.center,
+    ),
+    ),
     );
   }
   Widget priceTick(){
-     totalPrice = ticketQnt*ticketPrice;
-    return Text(
-      'Price: $totalPrice', style: TextStyle(color: Colors.black, fontSize: 20),
+    totalPrice = ticketQnt* int.parse(ticketPrice);
+     
+    return Row(
+      children: <Widget>[
+        Padding(
+      padding: EdgeInsets.only(top: 10),
+      child :  Text(
+      'Price: $totalPrice', style: TextStyle(
+        color: Colors.white,
+        fontSize: 20,
+
+      backgroundColor: Colors.deepPurpleAccent,
+    ),
+     textAlign: TextAlign.left,
+      ),
+    ),
+    ],
     );
   }
   checkbuy(){
@@ -249,11 +262,11 @@ DocumentSnapshot eventDoc;
       builder: (BuildContext context){
       return AlertDialog(
         title: new Text('Something went Wrong' , style: TextStyle(color: Colors.red),),
-        content: new Text('either unsufficent balance or no more Ticket left', style: TextStyle(color: Colors.lightBlue),),
+        content: new Text('either unsufficent balance or no more Ticket left', style: TextStyle(color: Colors.deepPurpleAccent),),
         actions: <Widget>[
           new FlatButton(onPressed: (){
             Navigator.of(context).pop();
-          }, child: Text('Close', style: TextStyle(color: Colors.lightBlue),)
+          }, child: Text('Close', style: TextStyle(color: Colors.deepPurpleAccent),)
             )
         ],
 
@@ -267,11 +280,11 @@ DocumentSnapshot eventDoc;
     showDialog(context: context,
         builder: (BuildContext context){
           return AlertDialog(
-            content: new Text('Ticket bought succeffuly', style: TextStyle(color: Colors.lightBlue),),
+            content: new Text('Ticket bought succeffuly', style: TextStyle(color: Colors.deepPurpleAccent),),
             actions: <Widget>[
               new FlatButton(onPressed: (){
                 Navigator.of(context).pop();
-              }, child: Text('Close', style: TextStyle(color: Colors.lightBlue),)
+              }, child: Text('Close', style: TextStyle(color: Colors.deepPurpleAccent),)
               )
             ],
 
@@ -284,26 +297,53 @@ DocumentSnapshot eventDoc;
 
   Widget buyButton(){
     print(bal);
-    return RaisedButton(
-      child: Text('Buy a Ticket',
-        style: TextStyle(color: Colors.lightBlue),),
-      onPressed: () {
+    return Container(
+      margin: EdgeInsets.all(10),
+     // color: Colors.pink,
+      child : Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          RaisedButton(
+            elevation: 20,
+            child: Text('Buy a Ticket',
+        style: TextStyle(color: Colors.white),),
+        onPressed: () {
         buyMethod(totalPrice);
       },
-      color: Colors.white70,
+        color: Colors.deepPurpleAccent,
+          ),
+    RaisedButton(
+      elevation: 20,
+    color: Colors.deepPurpleAccent,
+    onPressed: (){},
+      child: GestureDetector(
+    onTap: () {
+    Navigator.push(context, MaterialPageRoute(
+    builder: (context) => Participate(_name),
+    ));
+    },
+    child:Text('Participate',
+    style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic) ),
 
+    ),
+
+
+    ),
+
+      ],
+    ),
     );
   }
   Widget buyMethod(int totalprice){
     showDialog(context: context,
       builder: (BuildContext context){
         return AlertDialog(
-          title: Text('Confirm Payment'),
+          title: Text('Confirm Payment' , style: TextStyle(color: Colors.deepPurpleAccent),),
           content: newBuy(totalprice),
           actions: <Widget>[
             new FlatButton(onPressed: (){
               Navigator.of(context).pop();
-            }, child: Text('Close', style: TextStyle(color: Colors.lightBlue),)
+            }, child: Text('Close', style: TextStyle(color: Colors.deepPurpleAccent),)
             ),
           ],
         );
@@ -314,12 +354,13 @@ DocumentSnapshot eventDoc;
   Widget newBuy(int totalprice){
   return Container(
     width: 500, height:155,
+    child : SingleChildScrollView(
     child: Column(
         children: <Widget>[
     Padding(
     padding: EdgeInsets.symmetric(vertical: 15.0),
     child: TextField(
-      decoration: InputDecoration( labelText: 'Total price: $totalprice', labelStyle: TextStyle(color: Colors.lightBlue)),
+      decoration: InputDecoration( labelText: 'Total price: $totalprice', labelStyle: TextStyle(color: Colors.deepPurpleAccent)),
       readOnly: true,
     ),
   ),
@@ -328,9 +369,9 @@ DocumentSnapshot eventDoc;
     padding: const EdgeInsets.all(8.0),
     child: RaisedButton(
     child: Text('purchase', style: TextStyle(color: Colors.white),),
-    color: Colors.lightBlue,
+    color: Colors.deepPurpleAccent,
     onPressed:(){
-    if(ticketQnt >= _numoft || totalPrice > bal) {
+    if(ticketQnt >= int.parse(_numoft) || totalPrice > bal) {
     checkbuy();
     }
     else {
@@ -344,9 +385,10 @@ DocumentSnapshot eventDoc;
     ),
   ],
     ),
-
+  ),
   );
   }
+
   Widget setBuy(){
     return Container(
       width: 500, height: 300,
@@ -367,7 +409,7 @@ DocumentSnapshot eventDoc;
               child: Text('Buy a ticket', style: TextStyle(color: Colors.white),),
               color: Colors.lightBlue,
               onPressed:(){
-                if(ticketQnt >= _numoft || totalPrice > bal) {
+                if(ticketQnt >= int.parse(_numoft) || totalPrice > bal) {
                   checkbuy();
                 }
                 else {
@@ -409,28 +451,6 @@ DocumentSnapshot eventDoc;
               }),
         ],
       ),
-
-    );
-  }
-  Widget participate(){
-    return RaisedButton(
-      color: Colors.white,
-          onPressed: (){
-
-          },
-
-      child: GestureDetector(
-
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) => Participate(_name),
-          ));
-        },
-        child:Text('Participate',
-            style: TextStyle(color: Colors.orangeAccent, fontStyle: FontStyle.italic) ),
-
-      ),
-
 
     );
   }

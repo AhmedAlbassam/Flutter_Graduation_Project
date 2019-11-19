@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          backgroundColor: Colors.white70,
+          backgroundColor: Colors.white,
       appBar: AppBar(
          backgroundColor: Color(0xff282d58),
         title: Text("QR CODE", style: TextStyle(color: Colors.white70),),

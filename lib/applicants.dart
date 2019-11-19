@@ -22,8 +22,10 @@ class _applicantsPageState extends State<applicantsPage> with SingleTickerProvid
     return new Scaffold(
 
       appBar: new AppBar(
-        backgroundColor: Colors.indigo[800],
-        title: new Text("Applicants"),
+        //backgroundColor: Colors.indigo[800],
+        backgroundColor: Colors.deepPurpleAccent,
+        title: new Text("Applicants",
+        style: TextStyle(color: Colors.white),),
         bottom: TabBar(
           unselectedLabelColor: Colors.white,
           labelColor: Colors.amber,
@@ -95,15 +97,22 @@ class volAppState extends State<volApp> {
             itemCount: _vol.length,
             itemBuilder: (BuildContext ctx, int i){
 
-              return ListTile (
-                trailing: Icon(Icons.accessibility_new),
+              return Card (
+                elevation: 10,
+                color: Colors.white70,
+                child: ListTile(
+                trailing: Icon(Icons.accessibility_new, color: Colors.deepPurpleAccent,),
                 isThreeLine:true,
-                title:Text( _vol[i].data['volName']
+                title:Text( _vol[i].data['volName'],
+                  style: TextStyle(
+                    color: Colors.deepPurpleAccent,
+                  ),
                 ),
                 subtitle: Text('Email: '+_vol[i].data['volEmail']+ " \nPhone Number:"+ _vol[i].data['volPhone']),
 
 
                 //   trailing: ,
+              ),
               );
             }),
       ),
@@ -161,15 +170,23 @@ class bsAppState extends State<bsApp> {
             itemCount: _bs.length,
             itemBuilder: (BuildContext ctx, int i){
 
-              return ListTile (
-                trailing: Icon(Icons.business),
+              return Card (
+                elevation: 10,
+                color: Colors.white70,
+                child: ListTile(
+                trailing: Icon(Icons.business, color: Colors.deepPurpleAccent,),
                 isThreeLine: true,
                 title:Text( _bs[i].data['bsName'],
+                  style: TextStyle(
+                    color: Colors.deepPurpleAccent,
+                  ),
                 ),
                 subtitle: Text('Email: '+_bs[i].data['bsEmail']+'\nPhone: '+_bs[i].data['bsPhone']),
                 //   trailing: ,
+              ),
               );
-            }),
+            }
+            ),
       ),
 
     );

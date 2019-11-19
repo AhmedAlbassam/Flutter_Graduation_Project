@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,11 +7,14 @@ import 'EventOrg.dart';
 import 'home.dart';
 
 class AddEventPage extends StatefulWidget {
+  final userName;
+  AddEventPage(this.userName);
   @override
-  _AddEventPageState createState() => _AddEventPageState();
+  _AddEventPageState createState() => _AddEventPageState(this.userName);
 }
 class _AddEventPageState extends State<AddEventPage> {
-
+final userName;
+_AddEventPageState(this.userName);
 
   final _formKey = GlobalKey<FormState>();
   final db = Firestore.instance;
@@ -51,14 +55,18 @@ class _AddEventPageState extends State<AddEventPage> {
 
   Widget build(BuildContext context) {
     return new Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: new AppBar(
-          backgroundColor:Colors.transparent,
+          title: Text('Add Event', textAlign: TextAlign.center, style: TextStyle(color: Colors.white),),
+          backgroundColor:Colors.deepPurpleAccent,
           elevation: 0.0,
-          iconTheme: new IconThemeData(color: Color(0xFF18D191))),
+          iconTheme: new IconThemeData(color: Colors.white//Color(0xFF18D191)
+          )),
       resizeToAvoidBottomPadding: false,
-      body: Form(
+      body: SingleChildScrollView(
+        child : Form(
         key: _formKey ,
-        child: new Column(
+        child:new Column(
           crossAxisAlignment: CrossAxisAlignment.center,
 
           children: <Widget>[
@@ -70,7 +78,10 @@ class _AddEventPageState extends State<AddEventPage> {
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
 
               child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Orgnazation Email',icon: Icon(Icons.email,size: 20.0),
+                initialValue: '$userName',
+                readOnly: true,
+                decoration: new InputDecoration(labelText: 'Organization Email',labelStyle: TextStyle(color: Colors.deepPurpleAccent)
+                  ,icon: Icon(Icons.event,size: 20.0, color: Colors.deepPurpleAccent,),
                 ),
 
                 validator: (input){
@@ -88,7 +99,8 @@ class _AddEventPageState extends State<AddEventPage> {
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
 
               child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Event Name',icon: Icon(Icons.event,size: 20.0),
+                decoration: new InputDecoration(labelText: 'Event Name',labelStyle: TextStyle(color: Colors.deepPurpleAccent)
+                  ,icon: Icon(Icons.event,size: 20.0, color: Colors.deepPurpleAccent,),
                 ),
 
                 validator: (input){
@@ -110,8 +122,8 @@ class _AddEventPageState extends State<AddEventPage> {
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
 
               child: TextFormField(
-
-                decoration: new InputDecoration(labelText: 'Event Date',icon: Icon(Icons.date_range,size: 20.0),
+                decoration: new InputDecoration(labelText: 'Event Date', labelStyle: TextStyle(color: Colors.deepPurpleAccent)
+                  ,icon: Icon(Icons.date_range,size: 20.0 , color: Colors.deepPurpleAccent,),
                 ),
 
                 validator: (input){
@@ -130,7 +142,8 @@ class _AddEventPageState extends State<AddEventPage> {
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
               child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Event Location',icon: Icon(Icons.location_on,size: 20.0),
+                decoration: new InputDecoration(labelText: 'Event Location',labelStyle: TextStyle(color: Colors.deepPurpleAccent)
+                  ,icon: Icon(Icons.event,size: 20.0, color: Colors.deepPurpleAccent,),
                 ),
 
                 validator: (input){
@@ -147,7 +160,8 @@ class _AddEventPageState extends State<AddEventPage> {
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
               child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Number of Tickets',icon: Icon(Icons.assignment,size: 20.0),
+                decoration: new InputDecoration(labelText: 'Number of Tickets',labelStyle: TextStyle(color: Colors.deepPurpleAccent)
+                  ,icon: Icon(Icons.event,size: 20.0, color: Colors.deepPurpleAccent,),
                 ),
 
                 validator: (input){
@@ -174,15 +188,17 @@ class _AddEventPageState extends State<AddEventPage> {
                 onSaved: (input) => email,
               ),
             ),*/
-            Padding(
+             Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
               child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Ticket Price',icon: Icon(Icons.monetization_on,size: 20.0),
+                decoration: new InputDecoration(labelText: 'Ticket price',labelStyle: TextStyle(color: Colors.deepPurpleAccent)
+                  ,icon: Icon(Icons.event,size: 20.0, color: Colors.deepPurpleAccent,),
                 ),
                 onSaved: (input) => ticketPrice =int.parse(input),
               ),
             ),
+
               Padding(
                 padding:
                 const EdgeInsets.symmetric(horizontal: 0.0, vertical: 5.0),
@@ -192,17 +208,18 @@ class _AddEventPageState extends State<AddEventPage> {
               // width: 400.0,
               leading: const Icon(
                 Icons.burst_mode,
-                color: Colors.grey,
+                color: Colors.deepPurpleAccent,
               ),
               title: DropdownButton<String>(
 
                 value: eventType,
                 hint: Text('Choose event type',style: TextStyle(fontSize: 17.0,
-                ),),
+               color: Colors.deepPurpleAccent, ),),
                 iconSize: 24,
                 elevation: 16,
                 style: TextStyle(
-                    color: Colors.black87
+                    //color: Colors.black87
+                  color: Colors.deepPurpleAccent,
                 ),
                 underline: Container(
                   height: 1,
@@ -241,7 +258,8 @@ class _AddEventPageState extends State<AddEventPage> {
                           alignment: Alignment.center,
                           height: 60.0,
                           decoration: new BoxDecoration(
-                              color: Color(0xFF2196F3),
+                              //color: Color(0xFF2196F3),
+                            color: Colors.deepPurpleAccent,
                               borderRadius: new BorderRadius.circular(9.0)),
                           child: new Text("Add Event",
                               style: new TextStyle(
@@ -255,7 +273,11 @@ class _AddEventPageState extends State<AddEventPage> {
             ),
           ],
         ),
-      ),);
+
+      ),
+    ),
+
+    );
   }
   Widget added(){
     return AlertDialog(

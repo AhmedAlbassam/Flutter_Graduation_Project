@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gproject2020/home.dart';
 import 'Scanner.dart';
@@ -44,16 +45,41 @@ class Walletstates extends State<WalletPage>{
   String balance;
   String indiemail; int bal=0; String oldbal;
   Widget build(context){
-    return Container (
+    return SingleChildScrollView (
+      child : Container(
       margin: EdgeInsets.all(30.0),
       child: Center(
         child: Column(
           children: <Widget>[
-            displayBalance(),firstRow(),
+           imge(),
+            //displayBalance(),
+            firstRow(),
 
           ],
         ),
       ),
+    ),
+    );
+  }
+  Widget imge(){
+    return SingleChildScrollView(
+      child: Row(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 0, 0, 50) ,
+       child:Image( image: ExactAssetImage('assets/images/wallet.png'), height: 100, color: Colors.amber,),
+        ),
+        Padding(
+          padding:EdgeInsets.fromLTRB(50, 0, 0, 50) ,
+       child: Text('$balance', style:TextStyle(color:Colors.white70,fontSize:50 , height: 1.7) ,)
+        ),
+
+      ],
+    //  height: 100,
+      //image: ExactAssetImage('assets/images/wallet.png'),
+      //image: Image.asset("assets/images/wallet.png"),
+
+    ),
     );
   }
   int newbal;
@@ -98,28 +124,7 @@ class Walletstates extends State<WalletPage>{
        balance = realDoc.data.values.elementAt(2);
       });
 
-      print(realDoc.documentID);
-      print(realDoc.data.values.elementAt(1));
-      print(indiemail);
-      print(realDoc.data.values);
-      print('this is the variable b: '+ balance);
-  }
 
-  getTheRealDocumentBitch(){
-      for(int i=0;i<=3;i++){
-        print(realDoc.data.values.elementAt(i));
-      }
-      print(realDoc.documentID);
-      print(realDoc.data.values.elementAt(0));
-      print("Alooooooo");
-  }
-
-  String getBalance(){
-      print('this is for method getbalance()');
-      print(realDoc.documentID);
-      print(balance);
-    balance = realDoc.data.values.elementAt(2);
-    return balance;
   }
 
   @override
@@ -131,7 +136,6 @@ class Walletstates extends State<WalletPage>{
   }
   Widget displayBalance(){
       //getBalance();
-      print('Bjjjijijialance is: $balance');
       return Text('$balance', style:TextStyle(color:Colors.white70,fontSize:50),);}
 
   Widget setupdate(){

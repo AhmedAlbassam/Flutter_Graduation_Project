@@ -21,6 +21,7 @@ class ParticipateState extends State<Participate> with SingleTickerProviderState
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
+        backgroundColor: Colors.deepPurpleAccent,
         bottom: TabBar(
           unselectedLabelColor: Colors.white,
           labelColor: Colors.amber,
@@ -87,12 +88,13 @@ VolunteerState(this._name);
     // Build a Form widget using the _formKey created above.
     return Form(
       key: _formKey,
+      child : SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
             decoration: InputDecoration(
-                hintText: 'Full name'
+                hintText: 'Full name',
             ),
             validator: (value) {
               if (value.isEmpty) {
@@ -131,18 +133,36 @@ VolunteerState(this._name);
           ),
           Padding(
             padding:
-             EdgeInsets.symmetric(horizontal: 150,vertical: 50),
+             EdgeInsets.symmetric(horizontal: 150,vertical: 25),
             child: RaisedButton(
+              color: Colors.deepPurpleAccent,
               padding: EdgeInsets.all(5),
-
-              onPressed: addVol,
-              child: Text('Submit'),
+              onPressed: (){addVol(); submitted();},
+              child: Text('Submit' , style: TextStyle(color: Colors.white),),
             ),
+
           ),
         ],
       ),
+    ),
     );
   }
+submitted(){
+  showDialog(context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          content: new Text('Submitted successfully', style: TextStyle(color: Colors.deepPurpleAccent),),
+          actions: <Widget>[
+            new FlatButton(onPressed: (){
+              Navigator.of(context).pop();
+            }, child: Text('Close', style: TextStyle(color: Colors.deepPurpleAccent),)
+            )
+          ],
+
+        );
+      }
+  );
+}
 }
 //=============================================================================================================================================================================
 class BoothSeller extends StatefulWidget {
@@ -191,8 +211,9 @@ BoothSellerState(this._name);
     // Build a Form widget using the _formKey created above.
     return Form(
       key: _formKey,
+      child : SingleChildScrollView(
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           TextFormField(
             decoration: InputDecoration(
@@ -249,16 +270,38 @@ BoothSellerState(this._name);
               return null;
             }, onSaved: (input) => activityType = input,
           ),
-          Padding(
-            padding:  const EdgeInsets.symmetric(horizontal: 150,vertical: 50),
+           Padding(
+            padding:  const EdgeInsets.symmetric(horizontal: 150,vertical: 20),
             child: RaisedButton(
+              color: Colors.deepPurpleAccent,
               padding: EdgeInsets.all(5),
-              onPressed: addBS,
-              child: Text('Submit'),
+              onPressed: (){
+                addBS();
+                submitted();
+              },
+              child: Text('Submit', style: TextStyle(color: Colors.white),),
             ),
           ),
+
         ],
       ),
+    ),
     );
   }
+submitted(){
+  showDialog(context: context,
+      builder: (BuildContext context){
+        return AlertDialog(
+          content: new Text('Submitted successfully', style: TextStyle(color: Colors.deepPurpleAccent),),
+          actions: <Widget>[
+            new FlatButton(onPressed: (){
+              Navigator.of(context).pop();
+            }, child: Text('Close', style: TextStyle(color: Colors.deepPurpleAccent),)
+            )
+          ],
+
+        );
+      }
+  );
+}
 }

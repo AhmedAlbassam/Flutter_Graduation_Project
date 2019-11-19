@@ -45,17 +45,23 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return new Scaffold(
       endDrawer: Drawer(
+
         child: ListView(
+
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
               decoration: BoxDecoration(
-                  color : Colors.blueGrey
+                  color : Colors.white,
+                image: DecorationImage(
+                    image: ExactAssetImage('assets/images/events.jpg'),
+
+                  ),
               ),
             ),
             ListTile(
-              title: Text('Wallet'),
-              leading: new Icon(Icons.account_balance_wallet),
+              title: Text('Wallet', style: TextStyle(color: Color(0xff4C2F91), fontSize: 20),),
+              leading: new Icon(Icons.account_balance_wallet ,color: Color(0xff4C2F91),),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) => Wallet(),
@@ -63,8 +69,8 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              title: Text('Tickets'),
-              leading: new Icon(Icons.event_note),
+              title: Text('Tickets', style: TextStyle(color: Color(0xff4C2F91),fontSize: 20),),
+              leading: new Icon(Icons.event_note , color: Color(0xff4C2F91)),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) => TicketState(),
@@ -72,13 +78,13 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              title: Text('Settings'),
-              leading: new Icon(Icons.settings),
+              title: Text('Settings',style: TextStyle(color: Color(0xff4C2F91) ,fontSize: 20),),
+              leading: new Icon(Icons.settings, color: Color(0xff4C2F91),),
               onTap: (){},
             ),
             ListTile(
-              title: Text('SignOut'),
-              leading: new Icon(Icons.arrow_back),
+              title: Text('Signout',style: TextStyle(color: Color(0xff4C2F91),fontSize: 20),),
+              leading: new Icon(Icons.arrow_back , color: Color(0xff4C2F91),),
               onTap: (){
 
               },
@@ -88,12 +94,13 @@ class _HomePageState extends State<HomePage> {
       ),
 
       appBar: new AppBar(
-          backgroundColor: Colors.blueGrey,
+        title: Text('All Events' , style: TextStyle(color: Colors.white),),
+          backgroundColor: Color(0xff4C2F91),
           elevation: 0.0,
-          iconTheme: new IconThemeData(color: Color(0xFF18D191))),
+          iconTheme: new IconThemeData(color: Colors.white70)),
       body:Container(
         child : _events.length == 0 ? Center(
-          child: Text("there are no events available"),
+          child: Text("there are no events available", style: TextStyle(fontSize: 20),),
         ) : ListView.builder(
             controller: _scroll,
             itemCount: _events.length,
@@ -115,14 +122,19 @@ class _HomePageState extends State<HomePage> {
               }else{
                  img = 'http://spmodels.net/malacca/wp-content/uploads/2016/01/Event-Management-service-AnnualDinner.jpg';
               }
-              return ListTile (
-
-                leading:  CircleAvatar( backgroundImage: NetworkImage(img),),
-                title:Text( _events[i].data['eventName'],),
-                subtitle: Text(subtitle),
+              return Card (
+                elevation: 10,
+                color: Colors.white70,
+                child: ListTile(
+                  dense: false,
+                leading:  CircleAvatar( backgroundImage: NetworkImage(img),radius: 25,) ,
+                title:Text( _events[i].data['eventName'],style: TextStyle(fontSize: 22,color:Colors.deepPurpleAccent),),
+                subtitle: Text(subtitle , style: TextStyle(fontSize: 15 ,color: Colors.grey[800] ),),
                 trailing : _events[i].data['Number of tickets'] == 0 ||  _events[i].data['Number of tickets'] == null
-                    ? Icon(Icons.cancel, color: Colors.red,) : Icon(Icons.done, color: Colors.green,),
+                    ? Icon(Icons.cancel, color: Colors.redAccent,size: 30,) : Icon(Icons.done, color: Colors.teal, size: 30,),
                 onTap:(){
+                  _events[i].data['Number of tickets'] == 0 ||  _events[i].data['Number of tickets'] == null
+                  ? noTickets() :
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) => Event(_events[i].data['eventName'],_events[i].data['eventLocation'],
                         _events[i].data['eventType'],
@@ -134,13 +146,36 @@ class _HomePageState extends State<HomePage> {
 
                   ));
                 },
+                //
                 //   trailing: ,
+              ),
               );
             }),
       ),
 
     );
   }
+  noTickets(){
+    showDialog(context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: new Text('Something went Wrong' , style: TextStyle(color: Colors.red),),
+            content: new Text('either unsufficent balance or no more Ticket left', style: TextStyle(color: Colors.lightBlue),),
+            actions: <Widget>[
+              new FlatButton(onPressed: (){
+                Navigator.of(context).pop();
+              }, child: Text('Close', style: TextStyle(color: Colors.lightBlue),)
+              )
+            ],
+
+          );
+        }
+
+
+    );
+  }
+
+
 
 
   void _signOut() async {

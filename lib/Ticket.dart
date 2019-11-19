@@ -54,20 +54,20 @@ class Ticket extends State<TicketState> {
               if(tickQnt == null)
                 tickQnt =1;
               return ListTile (
-                leading: Icon(Icons.business),
-                trailing: Text('Qnt: '+ tickQnt.toString()),
+                leading: Icon(Icons.assignment,color: Color(0xff4C2F91),),
+                trailing: Text('Qnt: '+ tickQnt.toString(), style:TextStyle(fontSize: 15 ,color: Colors.grey[800] ),),
                 isThreeLine: true,
-                title:Text('Ticket number: '+ tickNo,),
+                title:Text('Ticket number: '+ tickNo ,style: TextStyle(fontSize: 22,color:Colors.deepPurpleAccent),),
                 subtitle: Text('Event name: '+_tickets[i].data['eventName']+'\nDate: '+_tickets[i].data['Edate']
-                    + '\nLocation: '+ _tickets[i].data['eventLoc']),
+                    + '\nLocation: '+ _tickets[i].data['eventLoc'] , style:TextStyle(fontSize: 15 ,color: Colors.grey[800] ),),
                 //   trailing: ,
               );
             }),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.black12,
-        title : Text('My Tickets', textAlign: TextAlign.center,),
-        leading: IconButton(icon:Icon(Icons.arrow_back),
+        backgroundColor: Color(0xff4C2F91),
+        title : Text('My Tickets', textAlign: TextAlign.center,style: TextStyle(color: Colors.white70,)),
+        leading: IconButton(icon:Icon(Icons.arrow_back, color: Colors.white70,),
           onPressed:() => Navigator.pop(context, false),
         ),
 

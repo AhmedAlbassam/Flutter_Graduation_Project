@@ -30,11 +30,12 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
     return new Scaffold(
 
       appBar: new AppBar(
-        backgroundColor: Colors.indigo[800],
+        //backgroundColor: Colors.indigo[800],
+        backgroundColor: Colors.deepPurpleAccent,
         title: new Text("Login"),
         bottom: TabBar(
-          unselectedLabelColor: Colors.white,
-          labelColor: Colors.amber,
+          unselectedLabelColor: Colors.white70,
+          labelColor: Colors.white,
           tabs: [
             new Tab(text: "Individual",),
             new Tab(text: "Organization"
@@ -110,7 +111,7 @@ class IndividualState extends State<Individual> {
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
 
               child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Email'),
+                decoration: new InputDecoration(labelText: 'Email' , labelStyle: TextStyle(color: Colors.deepPurpleAccent)),
 
                 validator: (input){
 
@@ -129,7 +130,7 @@ class IndividualState extends State<Individual> {
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
               child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Password'),
+                decoration: new InputDecoration(labelText: 'Password',labelStyle: TextStyle(color: Colors.deepPurpleAccent)),
 
                 validator: (input){
 
@@ -155,7 +156,8 @@ class IndividualState extends State<Individual> {
                           alignment: Alignment.center,
                           height: 60.0,
                           decoration: new BoxDecoration(
-                              color: Colors.indigo[900],
+                              //color: Colors.indigo[900],
+                            color: Colors.deepPurpleAccent,
                               borderRadius: new BorderRadius.circular(9.0)),
                           child: new Text("Login",
                               style: new TextStyle(
@@ -173,7 +175,7 @@ class IndividualState extends State<Individual> {
                         height: 60.0,
                         child: new Text("Forgot Password?",
                             style: new TextStyle(
-                                fontSize: 17.0, color: Colors.indigo[900]))),
+                                fontSize: 17.0, color: Colors.deepPurpleAccent))),
                   ),
                 )
               ],
@@ -191,7 +193,7 @@ class IndividualState extends State<Individual> {
                         ));
                       },
                       child: new Text("Create A New Account ",style: new TextStyle(
-                          fontSize: 17.0, color: Colors.indigo[900],
+                          fontSize: 17.0, color: Colors.deepPurpleAccent,
                           fontWeight: FontWeight.bold)),
                     ),
                   ),
@@ -253,7 +255,7 @@ class OrgState extends State<Org> {
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
 
               child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Email'),
+                decoration: new InputDecoration(labelText: 'Email',labelStyle: TextStyle(color: Colors.deepPurpleAccent)),
 
                 validator: (input){
 
@@ -272,7 +274,7 @@ class OrgState extends State<Org> {
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
               child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Password'),
+                decoration: new InputDecoration(labelText: 'Password',labelStyle: TextStyle(color: Colors.deepPurpleAccent)),
 
                 validator: (input){
 
@@ -297,7 +299,7 @@ class OrgState extends State<Org> {
                           alignment: Alignment.center,
                           height: 60.0,
                           decoration: new BoxDecoration(
-                              color: Colors.indigo[900],
+                              color: Colors.deepPurpleAccent,
                               borderRadius: new BorderRadius.circular(9.0)),
                           child: new Text("Login",
                               style: new TextStyle(
@@ -315,7 +317,7 @@ class OrgState extends State<Org> {
                         height: 60.0,
                         child: new Text("Forgot Password?",
                             style: new TextStyle(
-                                fontSize: 17.0, color: Colors.indigo[900]))),
+                                fontSize: 17.0, color: Colors.deepPurpleAccent))),
                   ),
                 )
               ],
@@ -333,7 +335,7 @@ class OrgState extends State<Org> {
                         ));
                       },
                       child: new Text("Create A New Account ",style: new TextStyle(
-                          fontSize: 17.0, color: Colors.indigo[900],
+                          fontSize: 17.0, color: Colors.deepPurpleAccent,
                           fontWeight: FontWeight.bold)),
                     ),
                   ),

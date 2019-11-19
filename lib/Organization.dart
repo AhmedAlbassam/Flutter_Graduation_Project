@@ -69,12 +69,15 @@ class _OrganizationPageState extends State<OrganizationPage> {
 
      String subtitle = "Location : "+_events[i].data['eventLocation']+ "\nDate : "+_events[i].data['eventDate'].toString() +"\nTickets remaining : "+ _events[i].data['Number of tickets'].toString();
 
-              return  ListTile (
-                  leading: new Icon(Icons.event_note),
+              return  Card (
+                elevation: 10,
+                color: Colors.white70,
+                child: ListTile(
+                  leading: new Icon(Icons.event_note, color: Colors.deepPurpleAccent,),
                 title:Text( _events[i].data['eventName'],
                   style: new TextStyle(
                     fontSize: 20.0,
-                    color: Colors.deepPurple,
+                    color: Colors.deepPurpleAccent,
                   ),
 
                 ),
@@ -88,6 +91,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
 
                   ));
                 },
+              ),
               );
 
 
@@ -99,23 +103,27 @@ class _OrganizationPageState extends State<OrganizationPage> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
-              child: Text(userName),
+              //child: Text(userName),
               decoration: BoxDecoration(
-                  color: Colors.blueGrey
+                color : Colors.white,
+                image: DecorationImage(
+                  image: ExactAssetImage('assets/images/events.jpg'),
+
+                ),
               ),
             ),
             ListTile(
-              title: Text('Add Event'),
-              leading: new Icon(Icons.account_balance_wallet),
+              title: Text('Add Event' , style: TextStyle(color: Colors.deepPurpleAccent),),
+              leading: new Icon(Icons.account_balance_wallet, color: Colors.deepPurpleAccent,),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
-                 builder: (context) => AddEventPage(),
+                 builder: (context) => AddEventPage(userName),
                 ));
               },
             ),
             ListTile(
-              title: Text('Edit and Delete Events'),
-              leading: new Icon(Icons.event_note),
+              title: Text('Manage Events' , style: TextStyle(color: Colors.deepPurpleAccent),),
+              leading: new Icon(Icons.event_note , color: Colors.deepPurpleAccent) ,
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
                   builder: (context) => UpdateEvent(userName),
@@ -123,8 +131,8 @@ class _OrganizationPageState extends State<OrganizationPage> {
               },
             ),
             ListTile(
-              title: Text('Settings'),
-              leading: new Icon(Icons.settings),
+              title: Text('Settings' , style: TextStyle(color: Colors.deepPurpleAccent)),
+              leading: new Icon(Icons.settings ,color: Colors.deepPurpleAccent),
               onTap: (){
                 Navigator.push(context, MaterialPageRoute(
                  // builder: (context) => ,
@@ -136,9 +144,12 @@ class _OrganizationPageState extends State<OrganizationPage> {
       ),
 
       appBar: new AppBar(
-          backgroundColor: Colors.indigo[800],
+        title: Text('All Events', style: TextStyle(color: Colors.white),),
+         // backgroundColor: Colors.indigo[800],
+        backgroundColor: Colors.deepPurpleAccent,
           elevation: 0.0,
-          iconTheme: new IconThemeData(color: Color(0xFF18D191))),
+          iconTheme: new IconThemeData(color: Colors.white,//Color(0xFF18D191)
+          )),
 
       //   body: MainContent(),
 

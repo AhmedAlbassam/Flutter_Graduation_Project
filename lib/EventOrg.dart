@@ -7,24 +7,28 @@ import 'Participate.dart';
 import 'UpdateEvent.dart';
 import 'home.dart';
 import 'applicants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 class Eventorg extends StatelessWidget{
   final _name, _location, _type, _date, _numoft,_emailorg;
-
 
   Eventorg(this._name, this._location,this._type, this._date,this._numoft,this._emailorg);
 
   Widget build(BuildContext context){
 
     return MaterialApp(
-
+debugShowCheckedModeBanner: false,
         home: Scaffold(
-
           body: EventorgPage(this._name, this._location,this._type, this._date, this._numoft,this._emailorg),
           appBar: AppBar(
-            backgroundColor: Colors.orangeAccent,
-            title : Text('Event details for org', textAlign: TextAlign.center,),
+            backgroundColor: Colors.deepPurpleAccent,
+            title : Text('Event details', textAlign: TextAlign.center,),
             leading: IconButton(icon:Icon(Icons.arrow_back),
-              onPressed:() => Navigator.pop(context, false),
+              onPressed:() {
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) => OrganizationPage(_emailorg),
+
+                ));
+              }
             ),
 
           ),
@@ -52,84 +56,79 @@ class Eventorgstates extends State<EventorgPage> {
   // String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
   Widget build(context) {
 
-    return Container(
+    return Form(
 
-      margin: EdgeInsets.all(20.0),
-      child: Form(
-        child: Column(
+      child: Column(
 
             children: [
-              data(),
               eventImage(),
               eventDetails(),
            ticketQnts(),
              // buyButton(),
               participate(),
               //EditEvent(),
-              DeleteEvent(),
+              //DeleteEvent(),
 
             ]
         ),
-      ),
+
 
     );
 
   }
   Widget eventImage(){
+    String img = 'http://spmodels.net/malacca/wp-content/uploads/2016/01/Event-Management-service-AnnualDinner.jpg';
+
+    if(_type=="Sport"){
+      img = 'https://png.pngtree.com/png-clipart/20190613/original/pngtree-grunge-game-design-png-image_3572691.jpg';
+    }else if(_type=="General"){
+      img = 'http://spmodels.net/malacca/wp-content/uploads/2016/01/Event-Management-service-AnnualDinner.jpg';
+    }else if(_type== "Entertainment"){
+      img = 'http://www.partyfanatics.net/wp-content/uploads/balloons-trans.png';
+
+    }else if(_type=="Conference"){
+      img = 'https://thestarsydney.files.wordpress.com/2015/08/mlf15_star_event_centre_00048.jpg';
+    }else{
+      img = 'http://spmodels.net/malacca/wp-content/uploads/2016/01/Event-Management-service-AnnualDinner.jpg';
+    }
 
     return Container(
-      child : Image.network("https://user-images.githubusercontent.com/48566979/54383061-9eb8d580-4667-11e9-9f82-e5a23078e8a5.png", width: 160, height: 160,),
+      child : Image.network(img, width: 160, height: 160,),
 
     );
   }
-  Widget data(){
-    return SingleChildScrollView(
-      child: DataTable(
-        columns: [
-          DataColumn(label: Text('name')),
-          DataColumn(label: Text('Tickets'))
-        ],
-        rows: [
-          DataRow(cells: [
-            DataCell(Text('$_name')),
-            DataCell(Text('$_numoft')),
-          ]
-          ),
-        ],
 
-      ),
-    );
-  }
 
   Widget eventDetails(){
 
     //i can use Textspan to make it longer with diffirent styles
-    return Column(
+    return Container(
+      alignment: Alignment.topLeft,
+      child: Column(
         children:[
-
           Text(
-
-            '$_name' ,
+            'Name: $_name' ,
             textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic, color: Colors.deepPurpleAccent),
           ),
 
           Text(
-            '$_location' ,
+            'Location: $_location' ,
             textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic , color: Colors.deepPurpleAccent),
           ),
           Text(
-            '$_type' ,
+            'Type: $_type' ,
             textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic, color: Colors.deepPurpleAccent),
           ),
           Text(
-            '$_date' ,
+            'Date: $_date' ,
             textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic),
+            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic,color: Colors.deepPurpleAccent),
           ),
         ]
+    ),
     );
   }
   Widget ticketQnts(){
@@ -182,8 +181,11 @@ class Eventorgstates extends State<EventorgPage> {
 //    );
 //  }
   Widget participate(){
-    return RaisedButton(
-      color: Colors.white,
+    return Column(
+     crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        RaisedButton(
+      color: Colors.deepPurpleAccent,
       onPressed: () {
 
       }
@@ -195,10 +197,11 @@ class Eventorgstates extends State<EventorgPage> {
           ));
         },
         child:Text('See who are Participate in this event ',
-            style: TextStyle(color: Colors.deepOrange, fontStyle: FontStyle.normal)),
+            style: TextStyle(color: Colors.white, fontStyle: FontStyle.normal)),
 
       ),
-
+        ),
+    ],
 
     );
   }
