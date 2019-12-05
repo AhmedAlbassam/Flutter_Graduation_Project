@@ -158,7 +158,8 @@ class _ScanState extends State<Scan> {
                     ),
                   ),
                 )
-                    : new Center(child: new Text("Camera inactive"))),
+                    : new Center(child: new Text("Camera inactive"))
+            ),
           ],
         ),
       ),

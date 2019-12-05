@@ -94,7 +94,7 @@ VolunteerState(this._name);
         children: <Widget>[
           TextFormField(
             decoration: InputDecoration(
-                hintText: 'Full name',
+                hintText: ' Full name',
             ),
             validator: (value) {
               if (value.isEmpty) {
@@ -105,7 +105,7 @@ VolunteerState(this._name);
           ),
           TextFormField(
             decoration: InputDecoration(
-                hintText: 'Email'
+                hintText: ' Email'
             ),
             validator: (value) {
               if (value.isEmpty) {
@@ -116,7 +116,7 @@ VolunteerState(this._name);
           ),
           TextFormField(
             decoration: InputDecoration(
-                hintText: 'Phone Number'
+                hintText: ' Phone Number'
             ),
             validator: (value) {
               if (value.isEmpty) {
@@ -127,7 +127,7 @@ VolunteerState(this._name);
           ),
           TextFormField(
             decoration: InputDecoration(
-                hintText: 'have you volunteered before? If so, name the events'
+                hintText: ' have you volunteered before? If so, name the events'
             ),  onSaved: (input) => volExp = input,
             maxLines: 3,
           ),
@@ -217,7 +217,7 @@ BoothSellerState(this._name);
         children: <Widget>[
           TextFormField(
             decoration: InputDecoration(
-                hintText: 'Full Name'
+                hintText: ' Full Name'
             ),
             validator: (value) {
               if (value.isEmpty) {
@@ -228,7 +228,7 @@ BoothSellerState(this._name);
           ),
           TextFormField(
             decoration: InputDecoration(
-                hintText: 'Email'
+                hintText:  ' Email'
             ),
             validator: (value) {
               if (value.isEmpty) {
@@ -239,7 +239,7 @@ BoothSellerState(this._name);
           ),
           TextFormField(
             decoration: InputDecoration(
-                hintText: 'Phone Number'
+                hintText: ' Phone Number'
             ),
             validator: (value) {
               if (value.isEmpty) {
@@ -250,7 +250,7 @@ BoothSellerState(this._name);
           ),
           TextFormField(
             decoration: InputDecoration(
-                hintText: 'Number of booths'
+                hintText: ' Number of booths'
             ),
             validator: (value) {
               if (value.isEmpty) {
@@ -261,7 +261,7 @@ BoothSellerState(this._name);
           ),
           TextFormField(
             decoration: InputDecoration(
-                hintText: 'Business activity'
+                hintText: ' Business activity'
             ),
             validator: (value) {
               if (value.isEmpty) {

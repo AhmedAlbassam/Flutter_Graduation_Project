@@ -7,11 +7,12 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'CreateAccount.dart';
+import 'home.dart';
 class Event extends StatelessWidget{
-  final _name, _location, _type, _date, _numoft, ticketPrice;
+  final _name, _location, _type, _date, _numoft, ticketPrice, desc;
 
 
-  Event(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice);
+  Event(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice ,this.desc);
 
   Widget build(BuildContext context){
 
@@ -19,42 +20,42 @@ class Event extends StatelessWidget{
           debugShowCheckedModeBanner: false,
         home: Scaffold(
        backgroundColor: Colors.white,
-          body: EventPage(this._name, this._location,this._type, this._date, this._numoft, this.ticketPrice),
+          body: EventPage(this._name, this._location,this._type, this._date, this._numoft, this.ticketPrice,this.desc),
          // backgroundColor: Colors.grey,
           appBar: AppBar(
             backgroundColor:  Color(0xff4C2F91),
             title : Text('Event details', textAlign: TextAlign.center,style: TextStyle(color: Colors.white),),
             leading: IconButton(icon:Icon(Icons.arrow_back , color: Colors.white,),
-              onPressed:() => Navigator.pop(context, false),
+              onPressed:() => Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage())),    //Navigator.pop(context, false),
             ),
 
           ),
 
-        )
+        ),
     );
   }
 }
 class EventPage extends StatefulWidget{
-  final _name, _location, _type, _date, _numoft, ticketPrice;
+  final _name, _location, _type, _date, _numoft, ticketPrice, desc;
 
 
-  EventPage(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice);
+  EventPage(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice,this.desc);
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return Eventstates(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice);
+    return Eventstates(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice,this.desc);
   }
 }
 class Eventstates extends State<EventPage>  {
   int ticketQnt = 1;
-  var _name,_location, _type, _date, _numoft, ticketPrice;
+  var _name,_location, _type, _date, _numoft, ticketPrice,desc;
   var _ticketId = 0;
   var rand = new Random();
   var _indiEmail = "";
   int bal;
   int totalPrice;
-  Eventstates(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice);
+  Eventstates(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice,this.desc);
   final db = Firestore.instance;
   Future<void> addTicket() async {
     _ticketId =rand.nextInt(999999);
@@ -101,7 +102,7 @@ DocumentSnapshot eventDoc;
     final eventDocuments = await db.collection("Events").getDocuments();
     print(eventDocuments.documents.first.data.values);
     for(int i=0;i < eventDocuments.documents.length;i++){
-      if(eventDocuments.documents.elementAt(i).data.values.elementAt(2) == _name){
+      if(eventDocuments.documents.elementAt(i).data.values.elementAt(3) == _name){
         eventDoc = eventDocuments.documents.elementAt(i);
 
       }
@@ -118,7 +119,7 @@ DocumentSnapshot eventDoc;
     
     await db.collection('Events')
     .document(eventDoc.documentID)
-    .updateData({'Number of tickets': (_numoft - ticketQnt).toString()});
+    .updateData({'Number of tickets': (int.parse(_numoft) - ticketQnt).toString()});
   }
   @override
   void initState() {
@@ -133,9 +134,9 @@ DocumentSnapshot eventDoc;
       child: Column(
             children: [
               eventImage(),
-              desc(),
+              description(),
               //ticketQnts(),
-              priceTick(),
+             priceTick(),
               buyButton(),
 
               ticketQnts(),
@@ -165,26 +166,25 @@ DocumentSnapshot eventDoc;
       color: Colors.deepPurpleAccent,
       height: 100,
         child : Card(
+          semanticContainer: false,
       child: ListTile(
         //leading: CircleAvatar( backgroundImage: NetworkImage(img,  ),radius: 25, ) ,
         //leading: Image.asset('assets/images/sport.png',),
         leading: Image(image: NetworkImage(img),),
-        title:Text( '$_name',style: TextStyle(fontSize: 30,color:Colors.deepPurpleAccent),),
-        subtitle: Text('Location: $_location' +'\nDate: $_date' , style: TextStyle(fontSize: 20 ,color: Colors.grey[800] ),),
+        title:Text( '$_name',style: TextStyle(fontSize: 25,color:Colors.deepPurpleAccent),),
+        subtitle: Text('Location: $_location' +'\nDate: $_date' , style: TextStyle(fontSize: 15 ,color: Colors.grey[800] ),),
 
       ),
         ),
       );
 
   }
-  Widget desc(){
+  Widget description(){
     return Container(
      // margin: EdgeInsets.only(top: 10),
       alignment: Alignment.topLeft,
      // color: Colors.amber,
-      child: Text('Description, this event is about football match between ali and azooz they gjdkfsghksfhjklsafhjklsahjksahgjsfafhgjkslhfjkh'
-          'ssjksjkfjskhfjkslhfjskhfwjklhfjkwhfjkqwhfjkqhhfjkwhfjkqwhfjklhfuiwhrgfuwhfjksdhufghqerkhsdhrqueighwifhsdkfuhvureihfihufoufh'
-          'vmsjkshvjkehrivhiuahvpuiqvherqpihuvihqpieruhbipeuqrbhieqhbeipqubheruipqbhepiqhuepiuebhepbuhpbbhpehepahepehh',
+      child: Text('$desc',
         style: TextStyle(fontSize: 20, color: Colors.deepPurpleAccent),
 
       ),
@@ -239,7 +239,6 @@ DocumentSnapshot eventDoc;
   }
   Widget priceTick(){
     totalPrice = ticketQnt* int.parse(ticketPrice);
-     
     return Row(
       children: <Widget>[
         Padding(
@@ -360,18 +359,19 @@ DocumentSnapshot eventDoc;
     Padding(
     padding: EdgeInsets.symmetric(vertical: 15.0),
     child: TextField(
-      decoration: InputDecoration( labelText: 'Total price: $totalprice', labelStyle: TextStyle(color: Colors.deepPurpleAccent)),
+      decoration: InputDecoration( labelText: 'Total price: $totalprice                  Quantity: $ticketQnt',
+          labelStyle: TextStyle(color: Colors.deepPurpleAccent)),
       readOnly: true,
     ),
   ),
-    Padding(
 
-    padding: const EdgeInsets.all(8.0),
+    Padding(
+      padding: const EdgeInsets.all(8.0),
     child: RaisedButton(
     child: Text('purchase', style: TextStyle(color: Colors.white),),
     color: Colors.deepPurpleAccent,
     onPressed:(){
-    if(ticketQnt >= int.parse(_numoft) || totalPrice > bal) {
+    if(ticketQnt > int.parse(_numoft) || totalPrice > bal) {
     checkbuy();
     }
     else {

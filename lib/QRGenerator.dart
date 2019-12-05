@@ -37,7 +37,6 @@ class HomePage extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text("Scan QR Code",
@@ -49,7 +48,6 @@ class HomePage extends StatelessWidget {
             ),
 
             SizedBox(height: 16,),
-
             QrImage(
               data: indiemail,
               gapless: true,

@@ -2,9 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'EventOrg.dart';
-import 'home.dart';
+
 
 class AddEventPage extends StatefulWidget {
   final userName;
@@ -25,6 +24,7 @@ _AddEventPageState(this.userName);
   var eventLoc;
   var noOfTickets;
   var ticketPrice;
+  var decs;
   //String email;
 
 
@@ -42,15 +42,15 @@ _AddEventPageState(this.userName);
               'eventLocation':eventLoc,
               'Number of tickets': noOfTickets,
               'Ticket Price': ticketPrice,
+              'eventDecscription': decs,
             }
         );
       } catch (e) {
         print(e.message);
       }
-
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Eventorg(eventName,eventLoc,eventType,eventDate,noOfTickets,emailOfOrg)));
+      Navigator.push(context, MaterialPageRoute
+        (builder: (context) => Eventorg(eventName,eventLoc,eventType,eventDate,noOfTickets,emailOfOrg)));
     }
-
   }
 
   Widget build(BuildContext context) {
@@ -63,20 +63,16 @@ _AddEventPageState(this.userName);
           iconTheme: new IconThemeData(color: Colors.white//Color(0xFF18D191)
           )),
       resizeToAvoidBottomPadding: false,
-      body: SingleChildScrollView(
-        child : Form(
+      body: Form(
         key: _formKey ,
+        child : SingleChildScrollView(
         child:new Column(
           crossAxisAlignment: CrossAxisAlignment.center,
-
           children: <Widget>[
-
-
 
             Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
-
               child: TextFormField(
                 initialValue: '$userName',
                 readOnly: true,
@@ -160,6 +156,23 @@ _AddEventPageState(this.userName);
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
               child: TextFormField(
+                decoration: new InputDecoration(labelText: 'Event description',labelStyle: TextStyle(color: Colors.deepPurpleAccent)
+                  ,icon: Icon(Icons.event,size: 20.0, color: Colors.deepPurpleAccent,),
+                ),
+
+                validator: (input){
+                  if(input.isEmpty){
+                    return 'please decs';
+                  }
+                  return null;
+                },
+                onSaved: (input) => decs = input,
+              ),
+            ),
+            Padding(
+              padding:
+              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
+              child: TextFormField(
                 decoration: new InputDecoration(labelText: 'Number of Tickets',labelStyle: TextStyle(color: Colors.deepPurpleAccent)
                   ,icon: Icon(Icons.event,size: 20.0, color: Colors.deepPurpleAccent,),
                 ),
@@ -170,24 +183,10 @@ _AddEventPageState(this.userName);
                   }
                   return null;
                 },
-                onSaved: (input) => noOfTickets = int.parse(input),
+                onSaved: (input) => noOfTickets = input,
               ),
             ),
-            /*Padding(
-              padding:
-              const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
-              child: TextFormField(
-                decoration: new InputDecoration(labelText: 'Email'),
 
-                validator: (input){
-                  if(input.isEmpty){
-                    return 'please Email';
-                  }
-                  return null;
-                },
-                onSaved: (input) => email,
-              ),
-            ),*/
              Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
@@ -195,7 +194,7 @@ _AddEventPageState(this.userName);
                 decoration: new InputDecoration(labelText: 'Ticket price',labelStyle: TextStyle(color: Colors.deepPurpleAccent)
                   ,icon: Icon(Icons.event,size: 20.0, color: Colors.deepPurpleAccent,),
                 ),
-                onSaved: (input) => ticketPrice =int.parse(input),
+                onSaved: (input) => ticketPrice =input,
               ),
             ),
 

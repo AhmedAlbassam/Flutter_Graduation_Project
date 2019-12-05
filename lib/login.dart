@@ -76,10 +76,12 @@ class IndividualState extends State<Individual> {
       formState.save();
 
       try {
+
         FirebaseUser user = (await FirebaseAuth.instance.
         signInWithEmailAndPassword(email: email, password: password)).user;
         Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
         UserName=user.email;
+
         OrganizationPage i = new OrganizationPage(email);
         UpdateEvent ue = new UpdateEvent(email);
        // CRUDevent er = new CRUDevent(email);

@@ -67,7 +67,7 @@ class Walletstates extends State<WalletPage>{
       children: <Widget>[
         Padding(
           padding: EdgeInsets.fromLTRB(0, 0, 0, 50) ,
-       child:Image( image: ExactAssetImage('assets/images/wallet.png'), height: 100, color: Colors.amber,),
+       child:Image( image: ExactAssetImage('assets/images/wallet.png'), height: 100, color: Colors.white70,),
         ),
         Padding(
           padding:EdgeInsets.fromLTRB(50, 0, 0, 50) ,
@@ -84,12 +84,10 @@ class Walletstates extends State<WalletPage>{
   }
   int newbal;
   _updateData() async {
-    print(realDoc.data.values.elementAt(2));
    String bala = realDoc.data.values.elementAt(2);
    bal = int.parse(bala);
     newbal = int.parse(_controller.text);
     int total = newbal + bal;
-    print("the email: $indiemail");
     await db
         .collection('Account')
         .document(realDoc.documentID)
@@ -163,17 +161,13 @@ class Walletstates extends State<WalletPage>{
                 setState(() {
                   int old = int.parse(balance); int newb = int.parse(_controller.text);
                   balance = (old + newb).toString();
-
                 });
-
               },
             ),
           ),
           SizedBox(height: 20.0),
-
         ],
       ),
-
     );
   }
 

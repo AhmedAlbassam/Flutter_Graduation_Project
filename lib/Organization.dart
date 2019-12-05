@@ -3,12 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gproject2020/UpdateEvent.dart';
 import 'AddEvent.dart';
-import 'Event.dart';
 import 'EventOrg.dart';
-import 'applicants.dart';
-import 'login.dart';
+import 'main.dart';
 
-//import 'package:firebase_database/firebase_database.dart';
 
 class OrganizationPage extends StatefulWidget {
   @override
@@ -57,8 +54,9 @@ class _OrganizationPageState extends State<OrganizationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-
+    return new MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
       body:Container(
         child : _events.length == 0 ? Center(
           child: Text("there are no events available"),
@@ -131,12 +129,10 @@ class _OrganizationPageState extends State<OrganizationPage> {
               },
             ),
             ListTile(
-              title: Text('Settings' , style: TextStyle(color: Colors.deepPurpleAccent)),
-              leading: new Icon(Icons.settings ,color: Colors.deepPurpleAccent),
+              title: Text('Singout' , style: TextStyle(color: Colors.deepPurpleAccent)),
+              leading: new Icon(Icons.arrow_back ,color: Colors.deepPurpleAccent),
               onTap: (){
-                Navigator.push(context, MaterialPageRoute(
-                 // builder: (context) => ,
-                ));
+                _signOut();
               },
             ),
           ],
@@ -149,9 +145,19 @@ class _OrganizationPageState extends State<OrganizationPage> {
         backgroundColor: Colors.deepPurpleAccent,
           elevation: 0.0,
           iconTheme: new IconThemeData(color: Colors.white,//Color(0xFF18D191)
-          )),
-
-      //   body: MainContent(),
+          ),
+      ),
+    ),
+    );
+  }
+  void _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    Future<FirebaseUser> Function() user = FirebaseAuth.instance.currentUser;
+    //print('$user');
+    runApp(
+        new MaterialApp(
+          home: new MyHomePage(),
+        )
 
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'CreateAccount.dart';
 import 'login.dart';
-//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
   void main() => runApp(QuickBee());
@@ -31,7 +31,7 @@ class QuickBee extends StatelessWidget {
   class MyHomePage extends StatelessWidget {
 
 
-   /* final GoogleSignIn _googleSignIn = GoogleSignIn();
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
     final FirebaseAuth _auth = FirebaseAuth.instance;
 
     Future<FirebaseUser> _handleSignIn() async {
@@ -50,7 +50,7 @@ class QuickBee extends StatelessWidget {
       return user;
 
     }
-*/
+
     @override
     Widget build(BuildContext context) {
       return new Scaffold(
@@ -119,9 +119,9 @@ class QuickBee extends StatelessWidget {
                       padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
                       child: GestureDetector(
                         onTap: () {
-                         /* _handleSignIn()
+                          _handleSignIn()
                               .then((FirebaseUser user) => print(user))
-                              .catchError((e) => print(e));*/
+                              .catchError((e) => print(e));
                         },
                         child: new Container(
                             alignment: Alignment.center,

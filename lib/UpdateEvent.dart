@@ -21,6 +21,7 @@ class _UpdateEventState extends State<UpdateEvent> {
   TextEditingController _pricecontroller = TextEditingController();
   TextEditingController _noOfTktcontroller = TextEditingController();
   TextEditingController _typecontroller = TextEditingController();
+  TextEditingController _desccontroller = TextEditingController();
   DocumentSnapshot _currentDocument;
   _updateData() async {
     await db
@@ -50,6 +51,10 @@ class _UpdateEventState extends State<UpdateEvent> {
         .collection('Events')
         .document(_currentDocument.documentID)
         .updateData({'Number of tickets': (_noOfTktcontroller.text).toString()});
+    await db
+    .collection('Events')
+    .document(_currentDocument.documentID)
+    .updateData({'eventDecscription' : _desccontroller.text});
 
 
   }
@@ -91,6 +96,7 @@ class _UpdateEventState extends State<UpdateEvent> {
                               _loccontroller.text = doc.data['eventLocation'];
                               _typecontroller.text = doc.data['eventType'];
                               _datecontroller.text = doc.data['eventDate'];
+                              _desccontroller.text = doc.data['eventDecscription'];
                               _pricecontroller.text = doc.data['Ticket Price'].toString();
                               _noOfTktcontroller.text = doc.data['Number of tickets'].toString();
 
@@ -142,7 +148,13 @@ class _UpdateEventState extends State<UpdateEvent> {
               controller: _loccontroller,
               decoration: InputDecoration(hintText: 'Enter loc'),
             ),
-
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 15.0),
+            child: TextField(
+              controller: _desccontroller,
+              decoration: InputDecoration(hintText: 'Enter description'),
+            ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 15.0),

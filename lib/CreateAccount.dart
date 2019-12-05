@@ -52,7 +52,7 @@ class _SignupPageState extends State<SignupPage> {
     }
 
   Future<void> addAcc(String email, String password) async {
-    if (added == true) {
+    if (added) {
 
       //final formState = _formKey.currentState;
 
@@ -89,29 +89,43 @@ class _SignupPageState extends State<SignupPage> {
         appBar: new AppBar(
             backgroundColor:Colors.transparent,
             elevation: 0.0,
-            iconTheme: new IconThemeData(color: Color(0xFF18D191))
+            iconTheme: new IconThemeData(color: Colors.deepPurpleAccent)
         ),
         resizeToAvoidBottomPadding: false,
         body: Form(
           key: _formKey,
             child: Container(
                 padding: EdgeInsets.only(top: 35.0, left: 20.0, right: 20.0),
-                child: Column(
+                child: SingleChildScrollView(
+                  child:Column(
                   children: <Widget>[
 
-//                    TextFormField(
-//                    decoration: InputDecoration(
-//                        labelText: 'Full name',
-//                        labelStyle: TextStyle(
-//                            fontFamily: 'Montserrat',
-//                            fontWeight: FontWeight.bold,
-//                            color: Colors.grey),
-//                        //  hintText: 'example@example.com',
-//                        focusedBorder: UnderlineInputBorder(
-//                            borderSide: BorderSide(color: Colors.green))),
-//
-//
-//                  ),
+                   TextFormField(
+                    decoration: InputDecoration(
+                        labelText: 'Full name',
+                      labelStyle: TextStyle(
+                          fontFamily: 'Montserrat',
+                           fontWeight: FontWeight.bold,
+                           color: Colors.grey),
+                        hintText: 'Abu gheeth',
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.green))),
+
+
+                  ),
+                    TextFormField(
+                      decoration: InputDecoration(
+                          labelText: 'Phone No',
+                          labelStyle: TextStyle(
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey),
+                          hintText: '05555555',
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.green))),
+
+
+                    ),
 
                     TextFormField(
                       decoration: InputDecoration(
@@ -172,7 +186,7 @@ class _SignupPageState extends State<SignupPage> {
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
                           shadowColor: Colors.orangeAccent,
-                          color: Colors.blueAccent,
+                          color: Colors.deepPurpleAccent,
                           elevation: 7.0,
                           child: GestureDetector(
                             onTap: (){
@@ -193,6 +207,10 @@ class _SignupPageState extends State<SignupPage> {
                     SizedBox(height: 20.0),
 
                   ],
-                ))));
+                ),
+            ),
+            ),
+        ),
+    );
   }
 }

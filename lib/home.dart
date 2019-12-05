@@ -21,33 +21,34 @@ class _HomePageState extends State<HomePage> {
   bool _loadEvent = true;
   ScrollController _scroll;
 
-
-  //
   _getEvent() async{
-    Query q = _firestore.collection('Events').orderBy("eventName").limit(100);
+    Query q = _firestore.collection('Events').orderBy("eventName");
     setState(() {
       _loadEvent =true;
     });
 
-    QuerySnapshot _querysnap = await q.getDocuments();
-    _events = _querysnap.documents;
-
-    setState(() {
+      QuerySnapshot _querysnap = await q.getDocuments();
+      _events = _querysnap.documents;
+      setState(() {
+        _events = _querysnap.documents;
+      });
+      setState(() {
       _loadEvent =false;
     });
-  }
 
+  }
   void initState(){
     super.initState();
     _getEvent();
   }
 
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return new MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+
       endDrawer: Drawer(
-
         child: ListView(
-
           padding: EdgeInsets.zero,
           children: <Widget>[
             DrawerHeader(
@@ -78,15 +79,10 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              title: Text('Settings',style: TextStyle(color: Color(0xff4C2F91) ,fontSize: 20),),
-              leading: new Icon(Icons.settings, color: Color(0xff4C2F91),),
-              onTap: (){},
-            ),
-            ListTile(
               title: Text('Signout',style: TextStyle(color: Color(0xff4C2F91),fontSize: 20),),
               leading: new Icon(Icons.arrow_back , color: Color(0xff4C2F91),),
               onTap: (){
-
+              _signOut();
               },
             ),
           ],
@@ -94,10 +90,11 @@ class _HomePageState extends State<HomePage> {
       ),
 
       appBar: new AppBar(
-        title: Text('All Events' , style: TextStyle(color: Colors.white),),
+        title: Text(' All Events' , style: TextStyle(color: Colors.white),textAlign: TextAlign.right,),
           backgroundColor: Color(0xff4C2F91),
           elevation: 0.0,
-          iconTheme: new IconThemeData(color: Colors.white70)),
+         // iconTheme: new IconThemeData(color: Colors.white70),
+      ),
       body:Container(
         child : _events.length == 0 ? Center(
           child: Text("there are no events available", style: TextStyle(fontSize: 20),),
@@ -125,7 +122,7 @@ class _HomePageState extends State<HomePage> {
               return Card (
                 elevation: 10,
                 color: Colors.white70,
-                child: ListTile(
+                child:  ListTile(
                   dense: false,
                 leading:  CircleAvatar( backgroundImage: NetworkImage(img),radius: 25,) ,
                 title:Text( _events[i].data['eventName'],style: TextStyle(fontSize: 22,color:Colors.deepPurpleAccent),),
@@ -133,13 +130,13 @@ class _HomePageState extends State<HomePage> {
                 trailing : _events[i].data['Number of tickets'] == 0 ||  _events[i].data['Number of tickets'] == null
                     ? Icon(Icons.cancel, color: Colors.redAccent,size: 30,) : Icon(Icons.done, color: Colors.teal, size: 30,),
                 onTap:(){
-                  _events[i].data['Number of tickets'] == 0 ||  _events[i].data['Number of tickets'] == null
+                  _events[i].data['Number of tickets'] == "0" ||  _events[i].data['Number of tickets'] == null
                   ? noTickets() :
                   Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => Event(_events[i].data['eventName'],_events[i].data['eventLocation'],
+                    builder: (context) =>  Event(_events[i].data['eventName'],_events[i].data['eventLocation'],
                         _events[i].data['eventType'],
                         _events[i].data['eventDate'],_events[i].data['Number of tickets'],
-                        _events[i].data['Ticket Price']),
+                        _events[i].data['Ticket Price'], _events[i].data['eventDecscription']),
 
 
 
@@ -151,6 +148,7 @@ class _HomePageState extends State<HomePage> {
               ),
               );
             }),
+      ),
       ),
 
     );
