@@ -15,14 +15,14 @@ class GenerateScreen extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(indiemail),
+      home: Generate(indiemail),
     );
   }
 }
 
-class HomePage extends StatelessWidget {
+class Generate extends StatelessWidget {
   String indiemail;
-  HomePage(this.indiemail);
+  Generate(this.indiemail);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,9 +31,8 @@ class HomePage extends StatelessWidget {
          backgroundColor: Color(0xff282d58),
         title: Text("QR CODE", style: TextStyle(color: Colors.white70),),
     leading: IconButton(icon:Icon(Icons.arrow_back , color: Colors.white70,),
-    onPressed:() => Navigator.pop(context, false), ),
-
-
+    onPressed:() => Navigator.pop(context, false)
+    ),
       ),
       body: Center(
         child: Column(

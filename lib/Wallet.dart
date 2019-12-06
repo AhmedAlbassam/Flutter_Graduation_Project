@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gproject2020/home.dart';
 import 'Scanner.dart';
-import 'AddFunds.dart';
+import 'home.dart';
 import 'QRGenerator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -19,7 +18,7 @@ class Wallet extends StatelessWidget{
             elevation: 0.0,
             title : Text('Wallet', textAlign: TextAlign.end,style: TextStyle(color:Colors.white70),),
             leading: IconButton(icon:Icon(Icons.arrow_back),
-              onPressed:() => Navigator.pop(context, false),
+              onPressed:() =>  Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage(),)),
     ),
     ),
           floatingActionButton: FloatingActionButton.extended(
@@ -240,7 +239,6 @@ class Walletstates extends State<WalletPage>{
             color: Colors.white70,
             child: GestureDetector(
               onTap: (){
-
                 Navigator.push(context, MaterialPageRoute(builder: (context) => GenerateScreen(indiemail)));
               },
               child: Text('Display QR', style:TextStyle(color:Color(0xff282d58),  fontSize: 29)),
