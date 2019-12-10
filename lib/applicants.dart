@@ -63,22 +63,16 @@ class volAppState extends State<volApp> {
   volAppState(this._name);
   Firestore _firestore = Firestore.instance;
   List<DocumentSnapshot> _vol = [];
-  bool _loadEvent = true;
   ScrollController _Scroll;
 
 
 
   _getVol() async{
     Query q = _firestore.collection('Volunteers').where('eventName', isEqualTo:_name).orderBy("volName").limit(100);
-    print(_name);
-    setState(() {
-      _loadEvent =true;
-    });
     QuerySnapshot _volSnap = await q.getDocuments();
-    _vol = _volSnap.documents;
-
     setState(() {
-      _loadEvent =false;
+      _vol = _volSnap.documents;
+
     });
   }
   void initState(){
@@ -136,22 +130,14 @@ class bsAppState extends State<bsApp> {
 
   Firestore _fireStore = Firestore.instance;
   List<DocumentSnapshot> _bs = [];
-  bool _loaderEvent = true;
   ScrollController _scroll;
 
 
   _getBS() async{
     Query p = _fireStore.collection('Booth Sellers').where('eventName', isEqualTo: _name).orderBy("bsName").limit(100);
-    setState(() {
-
-      _loaderEvent =true;
-    });
-
     QuerySnapshot _volSnap = await p.getDocuments();
-    _bs = _volSnap.documents;
-
     setState(() {
-      _loaderEvent =false;
+      _bs = _volSnap.documents;
     });
   }
   void initState(){

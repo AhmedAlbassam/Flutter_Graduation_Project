@@ -74,9 +74,6 @@ class Walletstates extends State<WalletPage>{
         ),
 
       ],
-    //  height: 100,
-      //image: ExactAssetImage('assets/images/wallet.png'),
-      //image: Image.asset("assets/images/wallet.png"),
 
     ),
     );
@@ -100,17 +97,12 @@ class Walletstates extends State<WalletPage>{
     return indiemail;
   }
   TextEditingController _controller = TextEditingController();
-  DocumentSnapshot _currentDocument;
   final db = Firestore.instance;
-   String id;
 
   QuerySnapshot documents;
   DocumentSnapshot realDoc;
-
-    readData() async{
+  readData() async{
      documents = await db.collection('Account').getDocuments();
-    final userObject = documents.documents.first.data;
-
     // im getting the document reference now:
     for(int i=0;i < documents.documents.length;i++){
       if(documents.documents.elementAt(i).data.values.elementAt(0).toString().toLowerCase() == indiemail.toLowerCase()){
@@ -144,6 +136,7 @@ class Walletstates extends State<WalletPage>{
           Padding(
             padding: EdgeInsets.symmetric(vertical: 15.0),
             child: TextField(
+              keyboardType: TextInputType.number,
               cursorColor: Color(0xff282d58),
               controller: _controller,
               decoration: InputDecoration(hintText: 'Amount' , ),
@@ -235,18 +228,16 @@ class Walletstates extends State<WalletPage>{
          child: ButtonTheme(
             minWidth: 100.0,
             height: 100,
-         child: RaisedButton(
-            color: Colors.white70,
-            child: GestureDetector(
-              onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => GenerateScreen(indiemail)));
-              },
-              child: Text('Display QR', style:TextStyle(color:Color(0xff282d58),  fontSize: 29)),
-            ),
-            onPressed: (){
 
-            },
-          ),
+              child: RaisedButton(
+                color: Colors.white70,
+              child: Text('Display QR', style:TextStyle(color:Color(0xff282d58),  fontSize: 29)),
+                onPressed: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => GenerateScreen(indiemail)));
+                },
+            ),
+
+
     ),
       ),
         ],

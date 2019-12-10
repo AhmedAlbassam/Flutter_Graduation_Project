@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
           controller: _tabController,
           indicatorColor: Colors.white,
           indicatorSize: TabBarIndicatorSize.tab,),
-        bottomOpacity: 1,
+
       ),
       body: TabBarView(
         children: [
@@ -52,6 +52,7 @@ class _LoginPageState extends State<LoginPage> with SingleTickerProviderStateMix
         ],
         controller: _tabController,),
     );
+
   }
 }
 
@@ -82,9 +83,6 @@ class IndividualState extends State<Individual> {
         Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));
         UserName=user.email;
 
-        OrganizationPage i = new OrganizationPage(email);
-        UpdateEvent ue = new UpdateEvent(email);
-       // CRUDevent er = new CRUDevent(email);
       } catch (e) {
         print(e.message);
       }
@@ -96,7 +94,7 @@ class IndividualState extends State<Individual> {
   Widget build(BuildContext context) {
 
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
-      statusBarColor: Colors.orange, //or set color with: Color(0xFF0000FF)
+      statusBarColor: Colors.white70, //or set color with: Color(0xFF0000FF)
     ));
     return new Scaffold(
 //
@@ -125,13 +123,12 @@ class IndividualState extends State<Individual> {
                 onSaved: (input) => email = input,
               ),
             ),
-            new SizedBox(
-              height: 15.0,
-            ),
+            new SizedBox(height: 15.0,),
             Padding(
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
               child: TextFormField(
+                obscureText: true,
                 decoration: new InputDecoration(labelText: 'Password',labelStyle: TextStyle(color: Colors.deepPurpleAccent)),
 
                 validator: (input){
@@ -169,17 +166,16 @@ class IndividualState extends State<Individual> {
                   ),
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 10.0, right: 20.0, top: 10.0),
+                  child: Padding(padding: const EdgeInsets.only(left: 10.0, right: 20.0, top: 10.0),
                     child: new Container(
                         alignment: Alignment.center,
                         height: 60.0,
                         child: new Text("Forgot Password?",
                             style: new TextStyle(
                                 fontSize: 17.0, color: Colors.deepPurpleAccent))),
-                  ),
-                )
+
+                ),
+                ),
               ],
             ),
             Expanded(
@@ -276,6 +272,7 @@ class OrgState extends State<Org> {
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
               child: TextFormField(
+                obscureText: true,
                 decoration: new InputDecoration(labelText: 'Password',labelStyle: TextStyle(color: Colors.deepPurpleAccent)),
 
                 validator: (input){

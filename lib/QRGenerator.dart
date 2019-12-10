@@ -11,11 +11,19 @@ class GenerateScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter - QR CODE',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Generate(indiemail),
+      home: Scaffold(
+        body: Generate(indiemail),
+        appBar: AppBar(
+          title: Text('QR code'),
+          backgroundColor: Color(0xff282d58),
+        leading: IconButton(icon:Icon(Icons.arrow_back , color: Colors.white70,),
+        onPressed:() => Navigator.pop(context, false)
+        ),
+    ),
+      )
     );
   }
 }
@@ -25,28 +33,10 @@ class Generate extends StatelessWidget {
   Generate(this.indiemail);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-          backgroundColor: Colors.white,
-      appBar: AppBar(
-         backgroundColor: Color(0xff282d58),
-        title: Text("QR CODE", style: TextStyle(color: Colors.white70),),
-    leading: IconButton(icon:Icon(Icons.arrow_back , color: Colors.white70,),
-    onPressed:() => Navigator.pop(context, false)
-    ),
-      ),
-      body: Center(
+      return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Text("Scan QR Code",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Color(0xff282d58),
-                fontSize: 24,
-              ),
-            ),
-
-            SizedBox(height: 16,),
             QrImage(
               data: indiemail,
               gapless: true,
@@ -55,8 +45,8 @@ class Generate extends StatelessWidget {
             ),
           ],
         ),
-      ),
+      );
 
-    );
+
   }
 }

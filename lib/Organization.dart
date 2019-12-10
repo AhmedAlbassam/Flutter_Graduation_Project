@@ -17,13 +17,9 @@ class OrganizationPage extends StatefulWidget {
 }
 
 class _OrganizationPageState extends State<OrganizationPage> {
-
-  int _bottomNavIndex=0;
   @override
-
   Firestore _firestore = Firestore.instance;
   List<DocumentSnapshot> _events = [];
-  bool _loadEvent = true;
 
   ScrollController _scroll;
  String userName;
@@ -31,20 +27,13 @@ class _OrganizationPageState extends State<OrganizationPage> {
 
 
  _getEvent() async{
-   print(userName+'this is my email ahmed ahmed');
     Query q = _firestore.collection('Events').where('emailOrg', isEqualTo: userName).orderBy("eventName").limit(100);
 
-
-    setState(() {
-      _loadEvent =true;
-    });
-
     QuerySnapshot _querysnap = await q.getDocuments();
-    _events = _querysnap.documents;
-
     setState(() {
-      _loadEvent =false;
-    });
+          _events = _querysnap.documents;
+        });
+
   }
 
   void initState(){
@@ -85,7 +74,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
                   Navigator.push(context, MaterialPageRoute(
                     builder: (context) => Eventorg(_events[i].data['eventName'],_events[i].data['eventLocation'],
                         _events[i].data['eventType'],
-                        _events[i].data['eventDate'],_events[i].data['numOft'],_events[i].data['emailOrg']),
+                        _events[i].data['eventDate'],_events[i].data['Number of tickets'],_events[i].data['emailOrg']),
 
                   ));
                 },
@@ -152,13 +141,10 @@ class _OrganizationPageState extends State<OrganizationPage> {
   }
   void _signOut() async {
     await FirebaseAuth.instance.signOut();
-    Future<FirebaseUser> Function() user = FirebaseAuth.instance.currentUser;
-    //print('$user');
     runApp(
         new MaterialApp(
-          home: new MyHomePage(),
+          home: new mainClass(),
         )
-
     );
   }
 

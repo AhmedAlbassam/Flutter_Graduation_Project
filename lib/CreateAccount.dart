@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart' as prefix0;
-
 import 'home.dart';
 import 'login.dart';
 
@@ -12,17 +11,12 @@ class SignupPage extends StatefulWidget {
 
   @override
   _SignupPageState createState() => _SignupPageState();
-  _SignupPageState id = _SignupPageState();
-String getrefID(){
-  return id.getId();
-}
 
 }
-
 class _SignupPageState extends State<SignupPage> {
 
 
-  String _email , _password;
+  String _email , _password, _fullname, _phoneNo;
   int date;
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -53,23 +47,15 @@ class _SignupPageState extends State<SignupPage> {
 
   Future<void> addAcc(String email, String password) async {
     if (added) {
-
-      //final formState = _formKey.currentState;
-
         try {
-      DocumentReference ref = await db.collection("Account").add(
+       await db.collection("Account").add(
               {
                 'Email': _email,
                 'Password': _password,
                 'balance': _balance,
                 'QRcode': _QRcode,
-
-
               }
           );
-          setState(() {
-            id = ref.documentID;
-          });
         } catch (e) {
           print(e.message);
         }
@@ -77,10 +63,6 @@ class _SignupPageState extends State<SignupPage> {
     }
     else
       return;
-  }
-
- String getId(){
-    return id;
   }
 
   @override
@@ -107,10 +89,14 @@ class _SignupPageState extends State<SignupPage> {
                           fontFamily: 'Montserrat',
                            fontWeight: FontWeight.bold,
                            color: Colors.grey),
-                        hintText: 'Abu gheeth',
                         focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Colors.green))),
-
+                            validator: (input){
+                            if(input.isEmpty)
+                              return 'please enter fullName';
+                            return null;
+                            },
+                     onSaved: (input) => _fullname = input,
 
                   ),
                     TextFormField(
@@ -120,10 +106,15 @@ class _SignupPageState extends State<SignupPage> {
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold,
                               color: Colors.grey),
-                          hintText: '05555555',
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.green))),
-
+                            validator: (input){
+                        if(input.isEmpty){
+                          return 'please enter phoneNo';
+                        }
+                        return null;
+                            },
+                      onSaved: (input) => _phoneNo = input,
 
                     ),
 
@@ -134,7 +125,7 @@ class _SignupPageState extends State<SignupPage> {
                               fontFamily: 'Montserrat',
                               fontWeight: FontWeight.bold,
                               color: Colors.grey),
-                         //  hintText: 'example@example.com',
+                      hintText: 'example@example.com',
                           focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.green))),
                       validator: (input){
@@ -171,6 +162,13 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     SizedBox(height: 10.0),
                     TextFormField(
+                        validator: (input){
+
+                          if(input != _password){
+                            return 'please enter your Password Correctly';
+                          }
+                          return null;
+                        },
                       decoration: InputDecoration(
                           labelText: 'Confirm password ',
                           labelStyle: TextStyle(
@@ -185,7 +183,7 @@ class _SignupPageState extends State<SignupPage> {
                         height: 40.0,
                         child: Material(
                           borderRadius: BorderRadius.circular(20.0),
-                          shadowColor: Colors.orangeAccent,
+                          shadowColor: Colors.blueAccent,
                           color: Colors.deepPurpleAccent,
                           elevation: 7.0,
                           child: GestureDetector(

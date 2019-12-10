@@ -37,8 +37,6 @@ class Event extends StatelessWidget{
 }
 class EventPage extends StatefulWidget{
   final _name, _location, _type, _date, _numoft, ticketPrice, desc;
-
-
   EventPage(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice,this.desc);
 
   @override
@@ -50,13 +48,16 @@ class EventPage extends StatefulWidget{
 class Eventstates extends State<EventPage>  {
   int ticketQnt = 1;
   var _name,_location, _type, _date, _numoft, ticketPrice,desc;
+  Eventstates(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice,this.desc);
   var _ticketId = 0;
   var rand = new Random();
   var _indiEmail = "";
   int bal;
   int totalPrice;
-  Eventstates(this._name, this._location,this._type, this._date,this._numoft, this.ticketPrice,this.desc);
   final db = Firestore.instance;
+  String balString;
+  DocumentSnapshot userDoc;
+  DocumentSnapshot eventDoc;
   Future<void> addTicket() async {
     _ticketId =rand.nextInt(999999);
     final FirebaseAuth auth = FirebaseAuth.instance;
@@ -79,16 +80,12 @@ class Eventstates extends State<EventPage>  {
       print(e.message);
     }
 
-    print('Added? is it here?');
   }
-String balString;
-DocumentSnapshot userDoc;
-DocumentSnapshot eventDoc;
   void readData()async{
-    print(_name);
     final FirebaseAuth auth = FirebaseAuth.instance;
     final FirebaseUser user = await auth.currentUser();
     _indiEmail = user.email;
+
   final documents = await db.collection('Account').getDocuments(); // getting all the documents
     for(int i=0;i < documents.documents.length;i++){
       if(documents.documents.elementAt(i).data.values.elementAt(0).toString().toLowerCase() == _indiEmail.toLowerCase()){
@@ -97,19 +94,16 @@ DocumentSnapshot eventDoc;
       }
     }
     bal = int.parse(userDoc.data.values.elementAt(2));
-    print(bal);
     // setting the document for the user has finished, now we set the event document to update the Ticket qntity
     final eventDocuments = await db.collection("Events").getDocuments();
     print(eventDocuments.documents.first.data.values);
     for(int i=0;i < eventDocuments.documents.length;i++){
       if(eventDocuments.documents.elementAt(i).data.values.elementAt(3) == _name){
-        eventDoc = eventDocuments.documents.elementAt(i);
-
+        eventDoc = eventDocuments.documents.elementAt(i); // event document
+          print(eventDoc.data.values);
       }
     }
   }
-  DocumentSnapshot _currentDocument;
-  TextEditingController _controller = TextEditingController();
 
   _updateData(int newBal) async {
     await db
@@ -128,25 +122,20 @@ DocumentSnapshot eventDoc;
   }
   // String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
   Widget build(context) {
-
     return SingleChildScrollView (
-
       child: Column(
             children: [
-              eventImage(),
+              eventDetails(),
               description(),
-              //ticketQnts(),
              priceTick(),
-              buyButton(),
-
+              buyAndParticipateButtons(),
               ticketQnts(),
-              //participate(),
             ]
         ),
     );
 
   }
-  Widget eventImage(){
+  Widget eventDetails(){
     String img = 'http://spmodels.net/malacca/wp-content/uploads/2016/01/Event-Management-service-AnnualDinner.jpg';
 
     if(_type=="Sport"){
@@ -164,7 +153,7 @@ DocumentSnapshot eventDoc;
     // Image.network(img, width: 160, height: 160,),
     return Container(
       color: Colors.deepPurpleAccent,
-      height: 100,
+      height: 110,
         child : Card(
           semanticContainer: false,
       child: ListTile(
@@ -181,12 +170,9 @@ DocumentSnapshot eventDoc;
   }
   Widget description(){
     return Container(
-     // margin: EdgeInsets.only(top: 10),
       alignment: Alignment.topLeft,
-     // color: Colors.amber,
       child: Text('$desc',
         style: TextStyle(fontSize: 20, color: Colors.deepPurpleAccent),
-
       ),
 
     );
@@ -256,46 +242,7 @@ DocumentSnapshot eventDoc;
     ],
     );
   }
-  checkbuy(){
-    showDialog(context: context,
-      builder: (BuildContext context){
-      return AlertDialog(
-        title: new Text('Something went Wrong' , style: TextStyle(color: Colors.red),),
-        content: new Text('either unsufficent balance or no more Ticket left', style: TextStyle(color: Colors.deepPurpleAccent),),
-        actions: <Widget>[
-          new FlatButton(onPressed: (){
-            Navigator.of(context).pop();
-          }, child: Text('Close', style: TextStyle(color: Colors.deepPurpleAccent),)
-            )
-        ],
-
-      );
-      }
-
-
-    );
-  }
-  successfulbuy(){
-    showDialog(context: context,
-        builder: (BuildContext context){
-          return AlertDialog(
-            content: new Text('Ticket bought succeffuly', style: TextStyle(color: Colors.deepPurpleAccent),),
-            actions: <Widget>[
-              new FlatButton(onPressed: (){
-                Navigator.of(context).pop();
-              }, child: Text('Close', style: TextStyle(color: Colors.deepPurpleAccent),)
-              )
-            ],
-
-          );
-        }
-
-
-    );
-  }
-
-  Widget buyButton(){
-    print(bal);
+  Widget buyAndParticipateButtons(){
     return Container(
       margin: EdgeInsets.all(10),
      // color: Colors.pink,
@@ -307,7 +254,7 @@ DocumentSnapshot eventDoc;
             child: Text('Buy a Ticket',
         style: TextStyle(color: Colors.white),),
         onPressed: () {
-        buyMethod(totalPrice);
+        buyConfirmAlert(totalPrice);
       },
         color: Colors.deepPurpleAccent,
           ),
@@ -333,12 +280,12 @@ DocumentSnapshot eventDoc;
     ),
     );
   }
-  Widget buyMethod(int totalprice){
+  Widget buyConfirmAlert(int totalprice){
     showDialog(context: context,
       builder: (BuildContext context){
         return AlertDialog(
           title: Text('Confirm Payment' , style: TextStyle(color: Colors.deepPurpleAccent),),
-          content: newBuy(totalprice),
+          content: purchase(totalprice),
           actions: <Widget>[
             new FlatButton(onPressed: (){
               Navigator.of(context).pop();
@@ -350,7 +297,7 @@ DocumentSnapshot eventDoc;
     );
 
   }
-  Widget newBuy(int totalprice){
+  Widget purchase(int totalprice){
   return Container(
     width: 500, height:155,
     child : SingleChildScrollView(
@@ -388,72 +335,42 @@ DocumentSnapshot eventDoc;
   ),
   );
   }
+  checkbuy(){
+    showDialog(context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            title: new Text('Something went Wrong' , style: TextStyle(color: Colors.red),),
+            content: new Text('either unsufficent balance or no more Ticket left', style: TextStyle(color: Colors.deepPurpleAccent),),
+            actions: <Widget>[
+              new FlatButton(onPressed: (){
+                Navigator.of(context).pop();
+              }, child: Text('Close', style: TextStyle(color: Colors.deepPurpleAccent),)
+              )
+            ],
 
-  Widget setBuy(){
-    return Container(
-      width: 500, height: 300,
-      child: ListView(
-        padding: EdgeInsets.all(12.0),
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: 15.0),
-            child: TextField(
-              decoration: InputDecoration( labelText: 'Total price: $totalPrice'),
-              readOnly: true,
-            ),
-          ),
-          Padding(
+          );
+        }
 
-            padding: const EdgeInsets.all(8.0),
-            child: RaisedButton(
-              child: Text('Buy a ticket', style: TextStyle(color: Colors.white),),
-              color: Colors.lightBlue,
-              onPressed:(){
-                if(ticketQnt >= int.parse(_numoft) || totalPrice > bal) {
-                  checkbuy();
-                }
-                else {
-                  addTicket();
-                  successfulbuy();
-                  _updateData((bal - totalPrice));
-                }
-
-              },
-            ),
-          ),
-          SizedBox(height: 20.0),
-          StreamBuilder<QuerySnapshot>(
-              stream: db.collection('Account').where("Email", isEqualTo: _indiEmail).snapshots(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Column(
-                    children: snapshot.data.documents.map((doc) {
-                      return ListTile(
-                       title:priceTick(),
-                        trailing: RaisedButton(
-                          child: Text("confirm", style: TextStyle(color: Colors.white)),
-                          color: Colors.lightBlue,
-                          onPressed: () async {
-                            setState(() {
-                              _currentDocument = doc;
-                              _controller.text = totalPrice.toString();
-                            });
-                            //bal = doc.data['balance'].toString();
-                          },
-
-                        ),
-                      );
-                    }).toList(),
-                  );
-                } else {
-                  return SizedBox();
-                }
-              }),
-        ],
-      ),
 
     );
   }
-}
+  successfulbuy(){
+    showDialog(context: context,
+        builder: (BuildContext context){
+          return AlertDialog(
+            content: new Text('Ticket bought succeffuly', style: TextStyle(color: Colors.deepPurpleAccent),),
+            actions: <Widget>[
+              new FlatButton(onPressed: (){
+                Navigator.of(context).pop();
+              }, child: Text('Close', style: TextStyle(color: Colors.deepPurpleAccent),)
+              )
+            ],
 
-// Text('Participate',style: TextStyle(color: Colors.white),),
+          );
+        }
+
+
+    );
+  }
+
+}

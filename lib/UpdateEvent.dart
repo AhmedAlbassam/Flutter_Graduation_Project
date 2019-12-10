@@ -22,6 +22,7 @@ class _UpdateEventState extends State<UpdateEvent> {
   TextEditingController _noOfTktcontroller = TextEditingController();
   TextEditingController _typecontroller = TextEditingController();
   TextEditingController _desccontroller = TextEditingController();
+
   DocumentSnapshot _currentDocument;
   _updateData() async {
     await db

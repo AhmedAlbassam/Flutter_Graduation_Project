@@ -4,9 +4,9 @@ import 'login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-  void main() => runApp(QuickBee());
+  void main() => runApp(mainClass());
 
-class QuickBee extends StatelessWidget {
+class mainClass extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,13 +17,8 @@ class QuickBee extends StatelessWidget {
 
         fontFamily: 'Roboto',
       ),
-
       home: MyHomePage(),
-      routes: <String, WidgetBuilder>{
-        '/landingpage':(BuildContext context)=> new LoginPage(),
-        '/signup': (BuildContext context)=> new SignupPage()
 
-      }
     );
   }
 }
@@ -46,7 +41,6 @@ class QuickBee extends StatelessWidget {
 
       final FirebaseUser user = (await _auth.signInWithCredential(credential))
           .user;
-      print("signed in " + user.displayName);
       return user;
 
     }
@@ -54,7 +48,7 @@ class QuickBee extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
       return new Scaffold(
-        body: Center(
+      body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -86,7 +80,7 @@ class QuickBee extends StatelessWidget {
                             height: 60.0,
                             decoration: new BoxDecoration(
 
-                                color: Color(0xFF18D191),
+                                color: Color(0xff4C2F91),
                                 borderRadius: new BorderRadius.circular(9.0)),
                             child: new Text("Sign In With Email",
                                 style: new TextStyle(
@@ -99,21 +93,6 @@ class QuickBee extends StatelessWidget {
               new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                 /* Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20.0, right: 5.0, top: 10.0),
-                      child: new Container(
-                          alignment: Alignment.center,
-                          height: 60.0,
-                          decoration: new BoxDecoration(
-                              color: Color(0xFF4364A1),
-                              borderRadius: new BorderRadius.circular(9.0)),
-                          child: new Text("FaceBook",
-                              style: new TextStyle(
-                                  fontSize: 20.0, color: Colors.white))),
-                    ),
-                  ),*/
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 10.0),
@@ -127,7 +106,7 @@ class QuickBee extends StatelessWidget {
                             alignment: Alignment.center,
                             height: 60.0,
                             decoration: new BoxDecoration(
-                                color: Colors.red,
+                                color: Colors.blue,
                                 borderRadius: new BorderRadius.circular(9.0)),
                             child: new Text("Sign In With Google",
                                 style: new TextStyle(

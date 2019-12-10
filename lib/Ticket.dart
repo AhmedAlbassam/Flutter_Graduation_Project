@@ -10,7 +10,6 @@ class Ticket extends State<TicketState> {
 
   Firestore _firestore = Firestore.instance;
   List<DocumentSnapshot> _tickets = [];
-  bool _loadEvent = true;
   ScrollController _scroll;
   String current = "";
   _getEvent() async{
@@ -19,16 +18,11 @@ class Ticket extends State<TicketState> {
     final FirebaseUser user = await auth.currentUser();
     current = user.email;
     Query q = _firestore.collection('Tickets').where('indiEmail', isEqualTo: current );
-    setState(() {
-      _loadEvent =true;
-    });
 
     QuerySnapshot _querysnap = await q.getDocuments();
     _tickets = _querysnap.documents;
-
-
     setState(() {
-      _loadEvent =false;
+      _tickets = _querysnap.documents;
     });
   }
 
@@ -53,7 +47,9 @@ class Ticket extends State<TicketState> {
              int tickQnt = _tickets[i].data['TicketQnt'];
               if(tickQnt == null)
                 tickQnt =1;
-              return ListTile (
+              return Card (
+                elevation: 10,
+                child : ListTile(
                 leading: Icon(Icons.assignment,color: Color(0xff4C2F91),),
                 trailing: Text('Qnt: '+ tickQnt.toString(), style:TextStyle(fontSize: 15 ,color: Colors.grey[800] ),),
                 isThreeLine: true,
@@ -61,6 +57,7 @@ class Ticket extends State<TicketState> {
                 subtitle: Text('Event name: '+_tickets[i].data['eventName']+'\nDate: '+_tickets[i].data['Edate']
                     + '\nLocation: '+ _tickets[i].data['eventLoc'] , style:TextStyle(fontSize: 15 ,color: Colors.grey[800] ),),
                 //   trailing: ,
+              ),
               );
             }),
       ),

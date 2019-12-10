@@ -1,11 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gproject2020/Organization.dart';
-import 'package:gproject2020/Participate.dart' as prefix0;
-import 'package:gproject2020/home.dart' as pre;
-import 'Participate.dart';
-import 'UpdateEvent.dart';
-import 'home.dart';
 import 'applicants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 class Eventorg extends StatelessWidget{
@@ -16,7 +11,7 @@ class Eventorg extends StatelessWidget{
   Widget build(BuildContext context){
 
     return MaterialApp(
-debugShowCheckedModeBanner: false,
+    debugShowCheckedModeBanner: false,
         home: Scaffold(
           body: EventorgPage(this._name, this._location,this._type, this._date, this._numoft,this._emailorg),
           appBar: AppBar(
@@ -56,23 +51,13 @@ class Eventorgstates extends State<EventorgPage> {
   // String path = "C:\Users\moham\Desktop\Gproject\85871.jpg";
   Widget build(context) {
 
-    return Form(
-
-      child: Column(
-
-            children: [
+    return  Column(
+        children: [
               eventImage(),
               eventDetails(),
-           ticketQnts(),
-             // buyButton(),
+              sizedBox(),
               participate(),
-              //EditEvent(),
-              //DeleteEvent(),
-
             ]
-        ),
-
-
     );
 
   }
@@ -91,95 +76,31 @@ class Eventorgstates extends State<EventorgPage> {
     }else{
       img = 'http://spmodels.net/malacca/wp-content/uploads/2016/01/Event-Management-service-AnnualDinner.jpg';
     }
-
     return Container(
       child : Image.network(img, width: 160, height: 160,),
 
     );
   }
 
+      Widget eventDetails(){
+        return Container(
+          color: Colors.deepPurpleAccent,
+          height: 125,
+          child : Card(
+            semanticContainer: false,
+            child: ListTile(
+              title:Text( '$_name',style: TextStyle(fontSize: 25,color:Colors.deepPurpleAccent),),
+              subtitle: Text('Location: $_location' +'\nDate: $_date' + '\nType: $_type' + '\n Tickekts remained: $_numoft' , style: TextStyle(fontSize: 15 ,color: Colors.grey[800] ),),
 
-  Widget eventDetails(){
-
-    //i can use Textspan to make it longer with diffirent styles
-    return Container(
-      alignment: Alignment.topLeft,
-      child: Column(
-        children:[
-          Text(
-            'Name: $_name' ,
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic, color: Colors.deepPurpleAccent),
+            ),
           ),
-
-          Text(
-            'Location: $_location' ,
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic , color: Colors.deepPurpleAccent),
-          ),
-          Text(
-            'Type: $_type' ,
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic, color: Colors.deepPurpleAccent),
-          ),
-          Text(
-            'Date: $_date' ,
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 30, fontStyle: FontStyle.italic,color: Colors.deepPurpleAccent),
-          ),
-        ]
-    ),
+        );
+      }
+    Widget sizedBox(){
+    return SizedBox(
+      height: 10,
     );
-  }
-  Widget ticketQnts(){
-    return  Row(
-
-      children: <Widget>[
-//        Expanded(
-//          child : Text('Qnt',
-//              style: TextStyle(fontSize: 30)
-//          ),
-//        ),
-
-//        Flexible(
-//          child: IconButton(icon:
-//          Icon(Icons.add), onPressed: () {
-//            setState(() {
-//              ticketQnt++;
-//            });
-//          },)
-//
-//          ,),
-//        Flexible(
-//          child: Text('$ticketQnt', style: TextStyle(fontSize: 30),),
-//        ),
-//        Flexible(
-//            child: IconButton(icon:
-//            Icon(Icons.remove), onPressed: () {
-//              setState(() {
-//                ticketQnt--;
-//                if(ticketQnt<=1)
-//                  ticketQnt = 1;
-//              });
-//            },)
-//        ),
-
-      ],
-      mainAxisAlignment: MainAxisAlignment.center,
-    );
-  }
-//  Widget buyButton(){
-//    var h = new pre.HomePage();
-//    return RaisedButton(
-//      child: Text('Buy a Ticket',
-//        style: TextStyle(color: Colors.white),),
-//      onPressed: (){
-//
-//      },
-//      color: Colors.orangeAccent,
-//
-//    );
-//  }
+    }
   Widget participate(){
     return Column(
      crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -196,66 +117,17 @@ class Eventorgstates extends State<EventorgPage> {
             builder: (context) => applicantsPage(_name),
           ));
         },
-        child:Text('See who are Participate in this event ',
+        child:Text('See who Participates in this event ',
             style: TextStyle(color: Colors.white, fontStyle: FontStyle.normal)),
 
       ),
         ),
+
     ],
 
     );
   }
- Widget EditEvent(){
-    return RaisedButton(
-      color: Colors.orangeAccent,
-      onPressed: () {
 
-      }
-      ,
-      child: GestureDetector(
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(
-
-          builder: (context) => UpdateEvent(_emailorg),
-          ));
-        },
-        child:Text('Edit your event information ',
-            style: TextStyle(color: Colors.black87, fontStyle: FontStyle.normal)),
-
-      ),
-
-
-
-    );
-  }
-
-  Widget DeleteEvent(){
-    DocumentSnapshot doc;
-    return RaisedButton(
-      color: Colors.redAccent,
-      onPressed: () {
-
-      }
-      ,
-      child: GestureDetector(
-        onTap: ()async {
-          await
-          _firestore.collection('Events')
-              .document(doc.documentID)
-              .delete();
-          
-          Navigator.push(context, MaterialPageRoute(
-       //   builder: (context) => OrganizationPage(),
-          ));
-        },
-        child:Text('Delete your event ',
-            style: TextStyle(color: Colors.black87, fontStyle: FontStyle.normal)),
-
-      ),
-
-
-    );
-  }
 }
 
 // Text('Participate',style: TextStyle(color: Colors.white),),

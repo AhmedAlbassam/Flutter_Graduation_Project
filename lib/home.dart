@@ -18,23 +18,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Firestore _firestore = Firestore.instance;
   List<DocumentSnapshot> _events = [];
-  bool _loadEvent = true;
   ScrollController _scroll;
 
   _getEvent() async{
     Query q = _firestore.collection('Events').orderBy("eventName");
-    setState(() {
-      _loadEvent =true;
-    });
-
-      QuerySnapshot _querysnap = await q.getDocuments();
-      _events = _querysnap.documents;
+    QuerySnapshot _querysnap = await q.getDocuments();
       setState(() {
         _events = _querysnap.documents;
       });
-      setState(() {
-      _loadEvent =false;
-    });
 
   }
   void initState(){
@@ -158,7 +149,7 @@ class _HomePageState extends State<HomePage> {
         builder: (BuildContext context){
           return AlertDialog(
             title: new Text('Something went Wrong' , style: TextStyle(color: Colors.red),),
-            content: new Text('either unsufficent balance or no more Ticket left', style: TextStyle(color: Colors.lightBlue),),
+            content: new Text(' no more Tickets left', style: TextStyle(color: Colors.lightBlue),),
             actions: <Widget>[
               new FlatButton(onPressed: (){
                 Navigator.of(context).pop();
@@ -168,14 +159,8 @@ class _HomePageState extends State<HomePage> {
 
           );
         }
-
-
     );
   }
-
-
-
-
   void _signOut() async {
     await FirebaseAuth.instance.signOut();
     Future<FirebaseUser> Function() user = FirebaseAuth.instance.currentUser;
