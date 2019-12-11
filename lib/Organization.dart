@@ -118,7 +118,7 @@ class _OrganizationPageState extends State<OrganizationPage> {
               },
             ),
             ListTile(
-              title: Text('Singout' , style: TextStyle(color: Colors.deepPurpleAccent)),
+              title: Text('Signout' , style: TextStyle(color: Colors.deepPurpleAccent)),
               leading: new Icon(Icons.arrow_back ,color: Colors.deepPurpleAccent),
               onTap: (){
                 _signOut();

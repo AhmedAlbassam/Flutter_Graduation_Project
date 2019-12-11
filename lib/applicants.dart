@@ -90,7 +90,6 @@ class volAppState extends State<volApp> {
             controller: _Scroll,
             itemCount: _vol.length,
             itemBuilder: (BuildContext ctx, int i){
-
               return Card (
                 elevation: 10,
                 color: Colors.white70,
@@ -102,7 +101,7 @@ class volAppState extends State<volApp> {
                     color: Colors.deepPurpleAccent,
                   ),
                 ),
-                subtitle: Text('Email: '+_vol[i].data['volEmail']+ " \nPhone Number:"+ _vol[i].data['volPhone']),
+                subtitle: Text('Email: '+_vol[i].data['volEmail']+ " \nPhone Number: "+ _vol[i].data['volPhone'] + '\nExp: ' + _vol[i].data['volExp']),
 
 
                 //   trailing: ,
@@ -167,7 +166,8 @@ class bsAppState extends State<bsApp> {
                     color: Colors.deepPurpleAccent,
                   ),
                 ),
-                subtitle: Text('Email: '+_bs[i].data['bsEmail']+'\nPhone: '+_bs[i].data['bsPhone']),
+                subtitle: Text('Email: '+_bs[i].data['bsEmail']+'\nPhone: '+_bs[i].data['bsPhone']
+                    + '\nNumber of booths: '+ _bs[i].data['Number of booths'] + '\nBusiness Activity: ' + _bs[i].data['Business Activity']),
                 //   trailing: ,
               ),
               );
