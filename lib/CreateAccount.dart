@@ -1,8 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart' as prefix0;
-import 'home.dart';
 import 'login.dart';
 
 
@@ -16,7 +14,7 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
 
 
-  String _email , _password, _fullname, _phoneNo, _checkPass;
+  String _email , _password, _fullname, _phoneNo;
   int date;
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -51,7 +49,7 @@ class _SignupPageState extends State<SignupPage> {
               {
                 'Full name': _fullname,
                 'Phone No': _phoneNo,
-                'Email': _email,
+                'Email': _email.toLowerCase(),
                 'Password': _password,
                 'balance': _balance,
               }
@@ -163,15 +161,6 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     SizedBox(height: 10.0),
                     TextFormField(
-                      /*onSaved: (input)=> _checkPass = input,
-                        validator: (input){
-                       // print(_checkPass);
-                        print(input);
-                          if(_checkPass != _password){
-                            return 'please enter your Password Correctly';
-                          }
-                          return null;
-                        },*/
                       decoration: InputDecoration(
                           labelText: 'Confirm password ',
                           labelStyle: TextStyle(

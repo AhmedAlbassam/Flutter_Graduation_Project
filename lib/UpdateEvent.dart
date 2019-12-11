@@ -1,7 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'Organization.dart';
 class UpdateEvent extends StatefulWidget {
   final _EmailOrg;
   UpdateEvent(this._EmailOrg);
@@ -69,8 +70,18 @@ class _UpdateEventState extends State<UpdateEvent> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Manage Events" , style: TextStyle(color: Colors.white),),
+    return MaterialApp(
+      home: Scaffold(
+      appBar: AppBar(
+        title: Text ("Manage Events" , style: TextStyle(color: Colors.white),),
+        leading: IconButton(icon:Icon(Icons.arrow_back),
+            onPressed:() {
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => OrganizationPage(_EmailOrg),
+
+              ));
+            }
+        ),
         backgroundColor: Colors.deepPurpleAccent,
       ),
 
@@ -128,6 +139,7 @@ class _UpdateEventState extends State<UpdateEvent> {
 
         ],
       ),
+    ),
     );
   }
   Widget updateContainer(){

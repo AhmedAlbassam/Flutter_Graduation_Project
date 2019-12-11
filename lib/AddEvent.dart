@@ -156,6 +156,7 @@ _AddEventPageState(this.userName);
               padding:
               const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
               child: TextFormField(
+                maxLines: 3,
                 decoration: new InputDecoration(labelText: 'Event description',labelStyle: TextStyle(color: Colors.deepPurpleAccent)
                   ,icon: Icon(Icons.event,size: 20.0, color: Colors.deepPurpleAccent,),
                 ),
@@ -176,7 +177,6 @@ _AddEventPageState(this.userName);
                 decoration: new InputDecoration(labelText: 'Number of Tickets',labelStyle: TextStyle(color: Colors.deepPurpleAccent)
                   ,icon: Icon(Icons.event,size: 20.0, color: Colors.deepPurpleAccent,),
                 ),
-
                 validator: (input){
                   if(input.isEmpty){
                     return 'please enter number of Tickets';
@@ -245,9 +245,8 @@ _AddEventPageState(this.userName);
               children: <Widget>[
                 Expanded(
                   child: Padding(
-
                     padding: const EdgeInsets.only(
-                        left: 20.0, right: 5.0, top: 40.0),
+                        left: 20.0, right: 5.0, top: 20.0),
                     child: GestureDetector(
                       onTap: (){
                         addEvent();

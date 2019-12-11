@@ -94,7 +94,6 @@ class _ScanState extends State<Scan> {
     for(int i =0; i < documents.documents.length; i++){
       if(documents.documents.elementAt(i).data.values.elementAt(0) == indiemail){
         documentForTheCurrentUser = documents.documents.elementAt(i);
-
       }
       if(documents.documents.elementAt(i).data.values.elementAt(0) == qr){
         documentForTheQRUser = documents.documents.elementAt(i);
