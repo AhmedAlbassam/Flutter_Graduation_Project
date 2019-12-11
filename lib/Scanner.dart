@@ -101,8 +101,8 @@ class _ScanState extends State<Scan> {
 
       }
     }
-    int balforcuruser = int.parse(documentForTheCurrentUser.data.values.elementAt(2));
-    int balforQruser = int.parse(documentForTheQRUser.data.values.elementAt(2));
+    int balforcuruser = int.parse(documentForTheCurrentUser.data.values.elementAt(1));
+    int balforQruser = int.parse(documentForTheQRUser.data.values.elementAt(1));
     int amountfield = int.parse(_controller.text);
         if(amountfield > balforcuruser)
           checkBuy();

@@ -80,7 +80,7 @@ class Walletstates extends State<WalletPage>{
   }
   int newbal;
   _updateData() async {
-   String bala = realDoc.data.values.elementAt(2);
+   String bala = realDoc.data.values.elementAt(1);
    bal = int.parse(bala);
     newbal = int.parse(_controller.text);
     int total = newbal + bal;
@@ -105,12 +105,13 @@ class Walletstates extends State<WalletPage>{
      documents = await db.collection('Account').getDocuments();
     // im getting the document reference now:
     for(int i=0;i < documents.documents.length;i++){
+      print(documents.documents.elementAt(i).data.values.elementAt(1));
       if(documents.documents.elementAt(i).data.values.elementAt(0).toString().toLowerCase() == indiemail.toLowerCase()){
       realDoc = documents.documents.elementAt(i);
       }
       }
     setState(() {
-       balance = realDoc.data.values.elementAt(2);
+       balance = realDoc.data.values.elementAt(1);
       });
 
 

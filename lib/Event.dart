@@ -93,7 +93,7 @@ class Eventstates extends State<EventPage>  {
 
       }
     }
-    bal = int.parse(userDoc.data.values.elementAt(2));
+    bal = int.parse(userDoc.data.values.elementAt(1));
     // setting the document for the user has finished, now we set the event document to update the Ticket qntity
     final eventDocuments = await db.collection("Events").getDocuments();
     print(eventDocuments.documents.first.data.values);

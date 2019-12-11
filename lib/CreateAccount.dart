@@ -16,13 +16,12 @@ class SignupPage extends StatefulWidget {
 class _SignupPageState extends State<SignupPage> {
 
 
-  String _email , _password, _fullname, _phoneNo;
+  String _email , _password, _fullname, _phoneNo, _checkPass;
   int date;
   final _formKey = GlobalKey<FormState>();
   final FirebaseAuth auth = FirebaseAuth.instance;
   final db = Firestore.instance;
   var _balance = '0';
-  var _QRcode = null;
   bool added = false;
   String id;
 
@@ -50,10 +49,11 @@ class _SignupPageState extends State<SignupPage> {
         try {
        await db.collection("Account").add(
               {
+                'Full name': _fullname,
+                'Phone No': _phoneNo,
                 'Email': _email,
                 'Password': _password,
                 'balance': _balance,
-                'QRcode': _QRcode,
               }
           );
         } catch (e) {
@@ -119,6 +119,7 @@ class _SignupPageState extends State<SignupPage> {
                     ),
 
                     TextFormField(
+                      keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                           labelText: 'Email',
                           labelStyle: TextStyle(
@@ -162,13 +163,15 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                     SizedBox(height: 10.0),
                     TextFormField(
+                      /*onSaved: (input)=> _checkPass = input,
                         validator: (input){
-
-                          if(input != _password){
+                       // print(_checkPass);
+                        print(input);
+                          if(_checkPass != _password){
                             return 'please enter your Password Correctly';
                           }
                           return null;
-                        },
+                        },*/
                       decoration: InputDecoration(
                           labelText: 'Confirm password ',
                           labelStyle: TextStyle(
