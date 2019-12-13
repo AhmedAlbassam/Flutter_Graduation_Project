@@ -63,20 +63,25 @@ class _UpdateEventState extends State<UpdateEvent> {
   }
   _deleteData()async{
 
-    QuerySnapshot q = await db.collection("Tickets").getDocuments();
+    QuerySnapshot doc = await db.collection("Tickets").getDocuments();
     bool hasTicket = false;
-    for(int i = 0; i< q.documents.length ; i++){
-      if(q.documents.elementAt(i).data['eventName'] ==_namecontroller)
+    for(int i = 0; i< doc.documents.length ; i++){
+      if(doc.documents.elementAt(i).data['eventName'] ==_namecontroller.text) {
+        print(hasTicket);
         hasTicket = true;
+      }
     }
     if(hasTicket) {
-      successfulUpdate();
+      print(hasTicket);
+      cannotDelete();
+    }
+    else {
+      print(hasTicket);
+      deletedSuccessfully();
       await db.collection("Events")
           .document(_currentDocument.documentID)
           .delete();
     }
-    else
-      cannotDelete();
   }
 
   final db = Firestore.instance;
@@ -136,6 +141,7 @@ class _UpdateEventState extends State<UpdateEvent> {
                           onPressed: ()async{
                             setState(() {
                               _currentDocument = doc;
+                              _namecontroller.text =  doc.data['eventName'];
                             });
                             warning(doc.data['eventName']);
                           },
@@ -289,7 +295,6 @@ class _UpdateEventState extends State<UpdateEvent> {
                 child: Text('Confirm'),
                 onPressed: (){
                   _deleteData();
-                  deletedSuccessfully();
                 },
               ),
             ],
