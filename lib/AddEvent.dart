@@ -36,7 +36,7 @@ _AddEventPageState(this.userName);
         await db.collection("Events").add(
             {
               'eventName':eventName,
-              'emailOrg':emailOfOrg,
+              'emailOrg':emailOfOrg.toString().toLowerCase(),
               'eventType':eventType,
               'eventDate':eventDate,
               'eventLocation':eventLoc,

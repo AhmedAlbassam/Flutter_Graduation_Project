@@ -25,6 +25,7 @@ class _UpdateEventState extends State<UpdateEvent> {
   TextEditingController _desccontroller = TextEditingController();
 
   DocumentSnapshot _currentDocument;
+
   _updateData() async {
     await db
         .collection('Events')
@@ -61,9 +62,21 @@ class _UpdateEventState extends State<UpdateEvent> {
 
   }
   _deleteData()async{
-    await db.collection("Events")
-        .document(_currentDocument.documentID)
-        .delete();
+
+    QuerySnapshot q = await db.collection("Tickets").getDocuments();
+    bool hasTicket = false;
+    for(int i = 0; i< q.documents.length ; i++){
+      if(q.documents.elementAt(i).data['eventName'] ==_namecontroller)
+        hasTicket = true;
+    }
+    if(hasTicket) {
+      successfulUpdate();
+      await db.collection("Events")
+          .document(_currentDocument.documentID)
+          .delete();
+    }
+    else
+      cannotDelete();
   }
 
   final db = Firestore.instance;
@@ -209,7 +222,7 @@ class _UpdateEventState extends State<UpdateEvent> {
               color: Colors.deepPurpleAccent,
               onPressed:(){
                 _updateData();
-                successfulUpdate();
+
               },
             ),
           ),
@@ -305,4 +318,23 @@ class _UpdateEventState extends State<UpdateEvent> {
     }
     );
   }
+   cannotDelete(){
+    showDialog(context: context,
+        builder: (BuildContext context)
+    {
+      return AlertDialog(
+        content: new Text('Cannot delete event',
+          style: TextStyle(color: Colors.lightBlue),),
+        actions: <Widget>[
+          new FlatButton(onPressed: () {
+            Navigator.of(context).pop();
+          }, child: Text('Close', style: TextStyle(color: Colors.lightBlue),)
+          )
+        ],
+
+      );
+    }
+    );
+  }
+
 }

@@ -9,10 +9,9 @@ import 'home.dart';
 import 'Organization.dart';
 
 class LoginPage extends StatefulWidget {
+
   @override
   _LoginPageState createState() => _LoginPageState();
-
-
 
 }
 

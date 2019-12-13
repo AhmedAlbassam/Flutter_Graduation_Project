@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                 leading:  CircleAvatar( backgroundImage: NetworkImage(img),radius: 25,) ,
                 title:Text( _events[i].data['eventName'],style: TextStyle(fontSize: 22,color:Colors.deepPurpleAccent),),
                 subtitle: Text(subtitle , style: TextStyle(fontSize: 15 ,color: Colors.grey[800] ),),
-                trailing : _events[i].data['Number of tickets'] == 0 ||  _events[i].data['Number of tickets'] == null
+                trailing : _events[i].data['Number of tickets'] == "0" ||  _events[i].data['Number of tickets'] == null
                     ? Icon(Icons.cancel, color: Colors.redAccent,size: 30,) : Icon(Icons.done, color: Colors.teal, size: 30,),
                 onTap:(){
                   _events[i].data['Number of tickets'] == "0" ||  _events[i].data['Number of tickets'] == null
